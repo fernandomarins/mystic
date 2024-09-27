@@ -12,6 +12,12 @@ struct Herbs: Codable {
 }
 
 // MARK: - Herb
-struct Herb: Codable {
-    let description, name: String
+struct Herb: Codable, Hashable {
+    let name, scientificName, type, description: String
+    
+    enum CodingKeys: String, CodingKey {
+        case name
+        case scientificName = "scientific_name"
+        case type, description
+    }
 }

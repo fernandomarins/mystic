@@ -14,7 +14,7 @@ protocol ServiceProtocol {
     func getSangoma() async -> AnyPublisher<SangomaModel, Error>
     func getAlphabet() async -> AnyPublisher<[LetterModel], Error>
     func getAstrology() async -> AnyPublisher<AstrologyModel, Error>
-    func getHerbs() async -> AnyPublisher<[Herb], Error>
+    func getHerbs() async -> AnyPublisher<Herbs, Error>
 }
 
 class Service: ServiceProtocol {
@@ -48,7 +48,7 @@ class Service: ServiceProtocol {
         request(.getAstrology)
     }
     
-    func getHerbs() async -> AnyPublisher<[Herb], Error> {
+    func getHerbs() async -> AnyPublisher<Herbs, Error> {
         request(.getHerbs)
     }
 }

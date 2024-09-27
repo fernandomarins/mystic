@@ -83,7 +83,7 @@ class ViewModel: ObservableObject {
     
     func fetchHerbs() async {
         await fetchData(fetchFunction: service.getHerbs, onSuccess: { [weak self] response in
-            self?.herbs = response
+            self?.herbs = response.herbs
         })
     }
 }
