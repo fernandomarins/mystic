@@ -30,6 +30,7 @@ enum Endpoint: APIEndpoint {
     case getSangoma
     case getAlphabet
     case getAstrology
+    case getHerbs
     
     var baseURL: URL? {
         return URL(string: "https://excessive-lulu-personal-fmarins-e9736a5f.koyeb.app")
@@ -49,12 +50,14 @@ enum Endpoint: APIEndpoint {
             return "/alphabet"
         case .getAstrology:
             return "/astrology"
+        case .getHerbs:
+            return "/herbs"
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .getCards, .getRunes, .getDaemons, .getSangoma, .getAlphabet, .getAstrology:
+        case .getCards,.getRunes, .getDaemons, .getSangoma, .getAlphabet, .getAstrology, .getHerbs:
             return .get
         }
     }

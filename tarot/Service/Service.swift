@@ -14,32 +14,41 @@ protocol ServiceProtocol {
     func getSangoma() async -> AnyPublisher<SangomaModel, Error>
     func getAlphabet() async -> AnyPublisher<[LetterModel], Error>
     func getAstrology() async -> AnyPublisher<AstrologyModel, Error>
+    func getHerbs() async -> AnyPublisher<[Herb], Error>
 }
 
 class Service: ServiceProtocol {
-    let apiClient = URLSessionAPIClient<Endpoint>()
+    private let apiClient = URLSessionAPIClient<Endpoint>()
+    
+    private func request<T: Decodable>(_ endpoint: Endpoint) -> AnyPublisher<T, Error> {
+        apiClient.request(endpoint)
+    }
     
     func getCards() async -> AnyPublisher<[CardModel], Error> {
-        apiClient.request(.getCards)
+        request(.getCards)
     }
     
     func getRunes() async -> AnyPublisher<[RuneModel], Error> {
-        apiClient.request(.getRunes)
+        request(.getRunes)
     }
     
     func getDaemons() async -> AnyPublisher<[DaemonModel], Error> {
-        apiClient.request(.getDaemons)
+        request(.getDaemons)
     }
     
     func getSangoma() async -> AnyPublisher<SangomaModel, Error> {
-        apiClient.request(.getSangoma)
+        request(.getSangoma)
     }
     
     func getAlphabet() async -> AnyPublisher<[LetterModel], Error> {
-        apiClient.request(.getAlphabet)
+        request(.getAlphabet)
     }
     
     func getAstrology() async -> AnyPublisher<AstrologyModel, Error> {
-        apiClient.request(.getAstrology)
+        request(.getAstrology)
+    }
+    
+    func getHerbs() async -> AnyPublisher<[Herb], Error> {
+        request(.getHerbs)
     }
 }

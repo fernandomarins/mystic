@@ -17,6 +17,7 @@ class ViewModel: ObservableObject {
     @Published var sangoma: SangomaModel = SangomaModel(bones: [], buzios: [])
     @Published var alphabet: [LetterModel] = []
     @Published var astrology: AstrologyModel? = nil
+    @Published var herbs: [Herb] = []
     @Published var errorMessage: String? = nil
     @Published var isLoading = false
     
@@ -77,6 +78,12 @@ class ViewModel: ObservableObject {
     func fetchAstrology() async {
         await fetchData(fetchFunction: service.getAstrology, onSuccess: { [weak self] response in
             self?.astrology = response
+        })
+    }
+    
+    func fetchHerbs() async {
+        await fetchData(fetchFunction: service.getHerbs, onSuccess: { [weak self] response in
+            self?.herbs = response
         })
     }
 }
