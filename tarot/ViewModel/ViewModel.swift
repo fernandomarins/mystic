@@ -18,10 +18,10 @@ class ViewModel: ObservableObject {
     @Published var alphabet: [LetterModel] = []
     @Published var astrology: AstrologyModel? = nil
     @Published var herbs: [Herb] = []
-    @Published var errorMessage: String? = nil
+    @Published var errorMessage: IdentifiableError? = nil
     @Published var isLoading = false
     
-    init(service: ServiceProtocol) {
+    init(service: ServiceProtocol = Service()) {
         self.service = service
     }
     
@@ -37,7 +37,7 @@ class ViewModel: ObservableObject {
                     self?.isLoading = false
                 }
                 if case .failure(let error) = completion {
-                    self?.errorMessage = "Failed to fetch data: \(error.localizedDescription)"
+                    self?.errorMessage = IdentifiableError(message: "Failed to fetch data: \(error.localizedDescription)")
                 }
             }, receiveValue: { value in
                 onSuccess(value)
@@ -85,6 +85,23 @@ class ViewModel: ObservableObject {
         await fetchData(fetchFunction: service.getHerbs, onSuccess: { [weak self] response in
             self?.herbs = response.herbs
         })
+    }
+    
+    func postHerb(_ herb: Herb) async {
+        await MainActor.run { isLoading = true }
+        service.postHerb(herb)
+            .receive(on: RunLoop.main)
+            .sink(receiveCompletion: { [weak self] completion in
+                DispatchQueue.main.async {
+                    self?.isLoading = false
+                }
+                if case .failure(let error) = completion {
+                    self?.errorMessage = IdentifiableError(message: "Failed to post herb: \(error.localizedDescription)")
+                }
+            }, receiveValue: { [weak self] response in
+                self?.herbs.append(response)
+            })
+            .store(in: &cancellables)
     }
 }
 

@@ -15,12 +15,14 @@ protocol APIEndpoint {
 
 enum HTTPMethod: String {
     case get = "GET"
+    case post = "POST"
 }
 
 enum APIError: Error {
     case invalidURL
     case invalidResponse
     case invalidData
+    case encodingFailed
 }
 
 enum Endpoint: APIEndpoint {
@@ -31,6 +33,7 @@ enum Endpoint: APIEndpoint {
     case getAlphabet
     case getAstrology
     case getHerbs
+    case postHerb
     
     var baseURL: URL? {
         return URL(string: "https://excessive-lulu-personal-fmarins-e9736a5f.koyeb.app")
@@ -50,7 +53,7 @@ enum Endpoint: APIEndpoint {
             return "/alphabet"
         case .getAstrology:
             return "/astrology"
-        case .getHerbs:
+        case .getHerbs, .postHerb:
             return "/herbs"
         }
     }
@@ -59,6 +62,8 @@ enum Endpoint: APIEndpoint {
         switch self {
         case .getCards,.getRunes, .getDaemons, .getSangoma, .getAlphabet, .getAstrology, .getHerbs:
             return .get
+        case .postHerb:
+            return .post
         }
     }
 }

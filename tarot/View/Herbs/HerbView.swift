@@ -35,7 +35,10 @@ struct HerbView: View {
                 .italic()
                 .foregroundColor(.secondary)
         }
-        .frame(maxWidth: .infinity, alignment: .center)
+        .frame(
+            maxWidth: .infinity,
+            alignment: .center
+        )
     }
     
     private var herbTypeSection: some View {
@@ -46,13 +49,19 @@ struct HerbView: View {
                 .textCase(.lowercase)
             herbTypeCircle
         }
-        .frame(maxWidth: .infinity, alignment: .center)
+        .frame(
+            maxWidth: .infinity,
+            alignment: .center
+        )
     }
     
     private var herbDescriptionSection: some View {
         Text(herb.description)
             .font(.body)
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(
+                maxWidth: .infinity,
+                alignment: .leading
+            )
     }
     
     private var herbTypeCircle: some View {
@@ -67,7 +76,10 @@ struct HerbView: View {
         }
         return Circle()
             .fill(color)
-            .frame(width: 20, height: 20)
+            .frame(
+                width: 20,
+                height: 20
+            )
     }
 }
 

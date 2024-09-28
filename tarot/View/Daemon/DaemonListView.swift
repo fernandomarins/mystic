@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftfulLoadingIndicators
 
 struct DaemonListView: View {
-    @StateObject private var viewModel = ViewModel(service: Service())
+    @StateObject private var viewModel = ViewModel()
     @State private var searchResults: [DaemonModel] = []
     @State private var searchQuery: String = ""
     @State private var isSearching: Bool = false

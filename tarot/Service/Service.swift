@@ -15,6 +15,7 @@ protocol ServiceProtocol {
     func getAlphabet() async -> AnyPublisher<[LetterModel], Error>
     func getAstrology() async -> AnyPublisher<AstrologyModel, Error>
     func getHerbs() async -> AnyPublisher<Herbs, Error>
+    func postHerb(_ herb: Herb) -> AnyPublisher<Herb, Error>
 }
 
 class Service: ServiceProtocol {
@@ -50,5 +51,9 @@ class Service: ServiceProtocol {
     
     func getHerbs() async -> AnyPublisher<Herbs, Error> {
         request(.getHerbs)
+    }
+    
+    func postHerb(_ herb: Herb) -> AnyPublisher<Herb, Error> {
+        apiClient.post(.postHerb, body: herb)
     }
 }

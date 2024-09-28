@@ -9,7 +9,11 @@ import SwiftUI
 import SwiftfulLoadingIndicators
 
 struct HerbsListView: View {
-    @StateObject private var viewModel = ViewModel(service: Service())
+    @StateObject private var viewModel = ViewModel()
+    @State private var selectedHerbs = Set<Herb>()
+    @State private var isSelectionModeActive = false
+    @State private var isShowingHerbSelectView = false
+    @State private var isShowingHerbAddView = false
     
     var body: some View {
         NavigationStack {
@@ -22,16 +26,57 @@ struct HerbsListView: View {
                     Text("Nenhuma erva encontrada.")
                         .foregroundColor(.gray)
                 }
+                if !viewModel.herbs.isEmpty {
+                    Button(action: {
+                        isShowingHerbAddView.toggle()
+                    }) {
+                        Text("Adicionar Erva")
+                            .fontWeight(.bold)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.purple)
+                            .foregroundColor(.white)
+                            .cornerRadius(16)
+                    }
+                    .padding()
+                    .sheet(isPresented: $isShowingHerbAddView) {
+                        HerbsAddView()
+                    }
+                }
             }
             .navigationTitle("Ervas")
             .onAppear {
                 loadHerbsIfNeeded()
             }
         }
+        .toolbar {
+            selectHerbs
+        }
+        .sheet(isPresented: $isShowingHerbSelectView) {
+            HerbsSelectView(herbs: Array(selectedHerbs))
+        }
+    }
+    
+    @ToolbarContentBuilder
+    private var selectHerbs: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            HStack {
+                if !viewModel.herbs.isEmpty {
+                    Button(action: {
+                        if isSelectionModeActive {
+                            isShowingHerbSelectView = true
+                        }
+                        isSelectionModeActive.toggle()
+                    }) {
+                        Text(isSelectionModeActive ? "Feito" : "Selecine as ervas")
+                    }
+                }
+            }
+        }
     }
     
     private var herbListView: some View {
-        List {
+        List(selection: $selectedHerbs) {
             let hotHerbs = viewModel.getHerbType(type: .hot)
             if !hotHerbs.isEmpty {
                 createSection(title: .hot, herbs: hotHerbs)
@@ -54,6 +99,7 @@ struct HerbsListView: View {
         }
         .textInputAutocapitalization(.never)
         .scrollIndicators(.hidden)
+        .environment(\.editMode, .constant(isSelectionModeActive ? .active : .inactive))
     }
     
     private var loadingIndicator: some View {
@@ -68,10 +114,19 @@ struct HerbsListView: View {
     private func createSection(title: HerbType, herbs: [Herb]) -> some View {
         Section(header: Text(title.rawValue)) {
             ForEach(herbs, id: \.self) { herb in
-                NavigationLink(destination: HerbView(herb: herb)) {
-                    Text(herb.name)
-                }
+                Text(herb.name)
+                    .onTapGesture {
+                        toggleHerbSelection(herb)
+                    }
             }
+        }
+    }
+    
+    private func toggleHerbSelection(_ herb: Herb) {
+        if selectedHerbs.contains(herb) {
+            selectedHerbs.remove(herb)
+        } else {
+            selectedHerbs.insert(herb)
         }
     }
     

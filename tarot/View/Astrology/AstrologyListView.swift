@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftfulLoadingIndicators
 
 struct AstrologyListView: View {
-    @StateObject private var viewModel = ViewModel(service: Service())
+    @StateObject private var viewModel = ViewModel()
     @State private var isSearching: Bool = false
     @State private var hasFetchedData: Bool = false
     
@@ -24,33 +24,35 @@ struct AstrologyListView: View {
                         color: .white,
                         size: .medium
                     )
-                } else {
-                    if let model = viewModel.astrology {
-                        List {
-                            ForEach(planets, id: \.self) { planet in
-                                let description = getDescription(for: planet, in: model.planets)
-                                
-                                if let description = description {
-                                    NavigationLink(destination: AstrologyView(
-                                        planet: description,
-                                        name: planet)
-                                    ) {
-                                        Text(planet)
-                                    }
+                } else if let model = viewModel.astrology {
+                    List {
+                        ForEach(planets, id: \.self) { planet in
+                            let description = getDescription(for: planet, in: model.planets)
+                            
+                            if let description = description {
+                                NavigationLink(destination: AstrologyView(
+                                    planet: description,
+                                    name: planet)
+                                ) {
+                                    Text(planet)
                                 }
                             }
                         }
-                        .navigationTitle("Planetas")
-                        .refreshable {
-                            Task {
-                                if viewModel.astrology == nil {
-                                    await viewModel.fetchAstrology()
-                                }
-                            }
-                        }
-                        .textInputAutocapitalization(.never)
-                        .scrollIndicators(.hidden)
                     }
+                    .navigationTitle("Planetas")
+                    .refreshable {
+                        Task {
+                            if viewModel.astrology == nil {
+                                await viewModel.fetchAstrology()
+                            }
+                        }
+                    }
+                    .textInputAutocapitalization(.never)
+                    .scrollIndicators(.hidden)
+                    
+                } else {
+                    Text("Nenhuma planeta encontrado.")
+                        .foregroundColor(.gray)
                 }
             }
             .onAppear {
@@ -63,12 +65,12 @@ struct AstrologyListView: View {
             }
         }
         .toolbar {
-            resultsView
+            oracleView
         }
     }
     
     @ToolbarContentBuilder
-    private var resultsView: some ToolbarContent {
+    private var oracleView: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             if let model = viewModel.astrology {
                 NavigationLink(destination: AstrologyResultView(model: model)) {
@@ -77,7 +79,7 @@ struct AstrologyListView: View {
             }
         }
     }
-
+    
     private func getDescription(for planet: String, in planets: Planets) -> [String: String]? {
         switch planet {
         case "Sol":

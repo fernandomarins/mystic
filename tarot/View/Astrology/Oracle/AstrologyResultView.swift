@@ -27,10 +27,6 @@ struct AstrologyResultView: View {
     
     let model: AstrologyModel
     
-    init(model: AstrologyModel) {
-        self.model = model
-    }
-    
     var body: some View {
         VStack {
             if !selectedElements.isEmpty {

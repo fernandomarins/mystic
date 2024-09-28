@@ -12,11 +12,6 @@ struct AstrologyView: View {
 
     let planet: [String: String]
     let name: String
-
-    init(planet: [String: String], name: String) {
-        self.planet = planet
-        self.name = name
-    }
     
     var body: some View {
         VStack(alignment: .center) {
