@@ -87,3 +87,9 @@ class ViewModel: ObservableObject {
         })
     }
 }
+
+extension ViewModel {
+    func getHerbType(type: HerbType) -> [Herb] {
+        herbs.filter { $0.type == type }
+    }
+}

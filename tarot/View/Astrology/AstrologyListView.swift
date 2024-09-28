@@ -22,7 +22,7 @@ struct AstrologyListView: View {
                     LoadingIndicator(
                         animation: .circleBars,
                         color: .white,
-                        size: .large
+                        size: .medium
                     )
                 } else {
                     if let model = viewModel.astrology {

@@ -17,7 +17,7 @@ struct SangomaView: View {
                 LoadingIndicator(
                     animation: .circleBars,
                     color: .white,
-                    size: .large
+                    size: .medium
                 )
             } else {
                 List {

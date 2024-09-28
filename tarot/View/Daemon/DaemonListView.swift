@@ -21,7 +21,7 @@ struct DaemonListView: View {
                     LoadingIndicator(
                         animation: .circleBars,
                         color: .white,
-                        size: .large
+                        size: .medium
                     )
                 } else {
                     List {

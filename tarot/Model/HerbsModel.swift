@@ -7,13 +7,21 @@
 
 import Foundation
 
-struct Herbs: Codable {
+enum HerbType: String, Decodable {
+    case hot = "Quente"
+    case warm = "Morna"
+    case cold = "Frita"
+}
+
+struct Herbs: Decodable {
     let herbs: [Herb]
 }
 
 // MARK: - Herb
-struct Herb: Codable, Hashable {
-    let name, scientificName, type, description: String
+struct Herb: Decodable, Hashable {
+    let name, scientificName: String
+    let type: HerbType
+    let description: String
     
     enum CodingKeys: String, CodingKey {
         case name
