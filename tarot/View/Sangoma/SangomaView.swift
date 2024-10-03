@@ -54,6 +54,7 @@ struct SangomaView: View {
                 await viewModel.fetchSangoma()
             }
         }
+        .backButtonStyle()
     }
 }
 

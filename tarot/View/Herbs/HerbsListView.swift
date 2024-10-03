@@ -25,23 +25,23 @@ struct HerbsListView: View {
                 } else {
                     Text("Nenhuma erva encontrada.")
                         .foregroundColor(.gray)
-                }
-                if !viewModel.herbs.isEmpty {
-                    Button(action: {
-                        isShowingHerbAddView.toggle()
-                    }) {
-                        Text("Adicionar Erva")
-                            .fontWeight(.bold)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.purple)
-                            .foregroundColor(.white)
-                            .cornerRadius(16)
-                    }
-                    .padding()
-                    .sheet(isPresented: $isShowingHerbAddView) {
-                        HerbsAddView()
-                    }
+//                }
+//                if !viewModel.herbs.isEmpty {
+//                    Button(action: {
+//                        isShowingHerbAddView.toggle()
+//                    }) {
+//                        Text("Adicionar Erva")
+//                            .fontWeight(.bold)
+//                            .frame(maxWidth: .infinity)
+//                            .padding()
+//                            .background(Color.purple)
+//                            .foregroundColor(.white)
+//                            .cornerRadius(16)
+//                    }
+//                    .padding()
+//                    .sheet(isPresented: $isShowingHerbAddView) {
+//                        HerbsAddView()
+//                    }
                 }
             }
             .navigationTitle("Ervas")
@@ -55,6 +55,7 @@ struct HerbsListView: View {
         .sheet(isPresented: $isShowingHerbSelectView) {
             HerbsSelectView(herbs: Array(selectedHerbs))
         }
+        .backButtonStyle()
     }
     
     @ToolbarContentBuilder
@@ -69,6 +70,7 @@ struct HerbsListView: View {
                         isSelectionModeActive.toggle()
                     }) {
                         Text(isSelectionModeActive ? "Feito" : "Selecine as ervas")
+                            .foregroundStyle(.purple)
                     }
                 }
             }
@@ -114,10 +116,12 @@ struct HerbsListView: View {
     private func createSection(title: HerbType, herbs: [Herb]) -> some View {
         Section(header: Text(title.rawValue)) {
             ForEach(herbs, id: \.self) { herb in
-                Text(herb.name)
-                    .onTapGesture {
-                        toggleHerbSelection(herb)
-                    }
+                NavigationLink(destination: HerbView(herb: herb)) {
+                    Text(herb.name)
+                }
+                .onTapGesture {
+                    toggleHerbSelection(herb)
+                }
             }
         }
     }

@@ -45,6 +45,7 @@ struct CardListView: View {
                 }
             }
         }
+        .backButtonStyle()
     }
 
     @ViewBuilder

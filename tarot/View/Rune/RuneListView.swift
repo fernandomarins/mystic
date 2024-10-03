@@ -53,6 +53,7 @@ struct RuneListView: View {
                 }
             }
         }
+        .backButtonStyle()
     }
     
     private var runeCollectionView: some View {

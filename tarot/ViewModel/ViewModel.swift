@@ -18,6 +18,7 @@ class ViewModel: ObservableObject {
     @Published var alphabet: [LetterModel] = []
     @Published var astrology: AstrologyModel? = nil
     @Published var herbs: [Herb] = []
+    @Published var hoodoo: HoodooModel? = nil
     @Published var errorMessage: IdentifiableError? = nil
     @Published var isLoading = false
     
@@ -84,6 +85,12 @@ class ViewModel: ObservableObject {
     func fetchHerbs() async {
         await fetchData(fetchFunction: service.getHerbs, onSuccess: { [weak self] response in
             self?.herbs = response.herbs
+        })
+    }
+    
+    func fetchHoodoo() async {
+        await fetchData(fetchFunction: service.getHoodoo, onSuccess: { [weak self] response in
+            self?.hoodoo = response
         })
     }
     

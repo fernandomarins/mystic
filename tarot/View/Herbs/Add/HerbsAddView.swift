@@ -39,6 +39,7 @@ struct HerbsAddView: View {
                         ProgressView() // Show a loading indicator while submitting
                     } else {
                         Text("Adicionar erva")
+                            .foregroundStyle(.purple)
                     }
                 }
                 .disabled(name.isEmpty || description.isEmpty || isSubmitting) // Disable if fields are empty or submitting

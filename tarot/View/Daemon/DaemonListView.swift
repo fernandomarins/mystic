@@ -64,8 +64,11 @@ struct DaemonListView: View {
             }
         }
         .toolbar {
-            daemonTypeOptions
+            if !viewModel.daemons.isEmpty {
+                daemonTypeOptions
+            }
         }
+        .backButtonStyle()
     }
     
     @ToolbarContentBuilder

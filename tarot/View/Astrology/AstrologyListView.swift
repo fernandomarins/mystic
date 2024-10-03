@@ -64,6 +64,7 @@ struct AstrologyListView: View {
                 }
             }
         }
+        .backButtonStyle()
         .toolbar {
             oracleView
         }

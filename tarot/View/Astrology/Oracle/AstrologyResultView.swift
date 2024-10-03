@@ -98,6 +98,7 @@ struct AstrologyResultView: View {
         .toolbar {
             clear
         }
+        .backButtonStyle()
     }
     
     @ToolbarContentBuilder
