@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftfulLoadingIndicators
 
 struct RuneListView: View {
-    @StateObject private var viewModel = ViewModel(service: Service())
+    @StateObject private var viewModel = ViewModel()
     @State private var searchQuery: String = ""
     
     private var filteredRunes: [RuneModel] {
@@ -29,7 +29,7 @@ struct RuneListView: View {
                     LoadingIndicator(
                         animation: .circleBars,
                         color: .white,
-                        size: .large
+                        size: .medium
                     )
                 } else {
                     ScrollView {
@@ -53,6 +53,7 @@ struct RuneListView: View {
                 }
             }
         }
+        .backButtonStyle()
     }
     
     private var runeCollectionView: some View {

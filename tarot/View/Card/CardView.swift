@@ -11,10 +11,6 @@ struct CardView: View {
     @Environment(\.colorScheme) var colorScheme
 
     let card: CardModel
-
-    init(card: CardModel) {
-        self.card = card
-    }
     
     var body: some View {
         ScrollView(showsIndicators: false) {

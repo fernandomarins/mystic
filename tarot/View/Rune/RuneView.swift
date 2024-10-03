@@ -12,10 +12,6 @@ struct RuneView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     let rune: RuneModel
-
-    init(rune: RuneModel) {
-        self.rune = rune
-    }
     
     private var sectionColor: Color {
         colorScheme == .dark ? Color.white : Color.black

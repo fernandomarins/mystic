@@ -9,39 +9,20 @@ import SwiftUI
 
 struct MainView: View {
     private let sections: [Main] = [
-        .init(id: 0, name: "Tarot"),
-        .init(id: 1, name: "Runas"),
-        .init(id: 2, name: "Daemons"),
-        .init(id: 3, name: "Ossos"),
-        .init(id: 4, name: "Alfabeto"),
-        .init(id: 5, name: "Astrologia")
-//        .init(id: 4, name: "Sangoma e Búzios")
-//        .init(id: 4, name: "Runas de Hékate"),
-//        .init(id: 5, name: "40 Servidores"),
-//        .init(id: 6, name: "Qlipoth")
+        .init(id: 0, name: .tarot),
+        .init(id: 1, name: .runes),
+        .init(id: 2, name: .daemons),
+        .init(id: 3, name: .bones),
+        .init(id: 4, name: .alphabet),
+        .init(id: 5, name: .astrology),
+        .init(id: 6, name: .herbs)
     ]
     
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack {
-                    ForEach(0..<((sections.count + 1) / 2), id: \.self) { rowIndex in
-                        HStack {
-                            ForEach(0..<2, id: \.self) { columnIndex in
-                                let sectionIndex = rowIndex * 2 + columnIndex
-                                if sectionIndex < sections.count {
-                                    NavigationLink(destination: destinationView(for: sections[sectionIndex])) {
-                                        CollectionViewCell(name: sections[sectionIndex].name)
-                                            .frame(width: 150, height: 150)
-                                            .background(Color.purple)
-                                            .cornerRadius(16)
-                                            .foregroundStyle(.black)
-                                    }
-
-                                }
-                            }
-                        }
-                    }
+                VStack(spacing: 16) {
+                    sectionGrid
                 }
             }
             .padding()
@@ -49,23 +30,50 @@ struct MainView: View {
         }
     }
     
+    private var sectionGrid: some View {
+        ForEach(0..<((sections.count + 1) / 2), id: \.self) { rowIndex in
+            sectionRow(for: rowIndex)
+        }
+    }
+    
+    private func sectionRow(for rowIndex: Int) -> some View {
+        HStack(spacing: 16) {
+            ForEach(0..<2, id: \.self) { columnIndex in
+                let sectionIndex = rowIndex * 2 + columnIndex
+                if sectionIndex < sections.count {
+                    sectionCell(for: sections[sectionIndex])
+                }
+            }
+        }
+    }
+    
+    private func sectionCell(for section: Main) -> some View {
+        NavigationLink(destination: destinationView(for: section)) {
+            CollectionViewCell(name: section.name.rawValue)
+                .frame(width: 150, height: 150)
+                .background(Color.purple)
+                .cornerRadius(16)
+                .foregroundStyle(.black)
+        }
+    }
+    
     @ViewBuilder
     private func destinationView(for section: Main) -> some View {
         switch section.name {
-        case "Tarot":
+        case .tarot:
             CardListView()
-        case "Runas":
+        case .runes:
             RuneListView()
-        case "Daemons":
+        case .daemons:
             DaemonListView()
-        case "Ossos":
+        case .bones:
             SangomaView()
-        case "Alfabeto":
+        case .alphabet:
             AlphabetListView()
-        case "Astrologia":
+        case .astrology:
             AstrologyListView()
-        default:
-            CardListView()
+        case .herbs:
+            HerbsListView()
         }
     }
 }

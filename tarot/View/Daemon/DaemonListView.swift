@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftfulLoadingIndicators
 
 struct DaemonListView: View {
-    @StateObject private var viewModel = ViewModel(service: Service())
+    @StateObject private var viewModel = ViewModel()
     @State private var searchResults: [DaemonModel] = []
     @State private var searchQuery: String = ""
     @State private var isSearching: Bool = false
@@ -21,7 +21,7 @@ struct DaemonListView: View {
                     LoadingIndicator(
                         animation: .circleBars,
                         color: .white,
-                        size: .large
+                        size: .medium
                     )
                 } else {
                     List {
@@ -64,8 +64,11 @@ struct DaemonListView: View {
             }
         }
         .toolbar {
-            daemonTypeOptions
+            if !viewModel.daemons.isEmpty {
+                daemonTypeOptions
+            }
         }
+        .backButtonStyle()
     }
     
     @ToolbarContentBuilder

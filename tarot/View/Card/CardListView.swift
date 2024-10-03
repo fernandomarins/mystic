@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftfulLoadingIndicators
 
 struct CardListView: View {
-    @StateObject private var viewModel = ViewModel(service: Service())
+    @StateObject private var viewModel = ViewModel()
 
     var body: some View {
         NavigationView {
@@ -45,6 +45,7 @@ struct CardListView: View {
                 }
             }
         }
+        .backButtonStyle()
     }
 
     @ViewBuilder

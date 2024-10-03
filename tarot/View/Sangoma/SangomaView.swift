@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftfulLoadingIndicators
 
 struct SangomaView: View {
-    @StateObject private var viewModel = ViewModel(service: Service())
+    @StateObject private var viewModel = ViewModel()
     
     var body: some View {
         VStack {
@@ -17,7 +17,7 @@ struct SangomaView: View {
                 LoadingIndicator(
                     animation: .circleBars,
                     color: .white,
-                    size: .large
+                    size: .medium
                 )
             } else {
                 List {
@@ -54,6 +54,7 @@ struct SangomaView: View {
                 await viewModel.fetchSangoma()
             }
         }
+        .backButtonStyle()
     }
 }
 

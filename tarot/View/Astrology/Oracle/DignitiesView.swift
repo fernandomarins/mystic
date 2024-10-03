@@ -17,10 +17,6 @@ enum Dignity: String {
 struct DignitiesView: View {
     let dignity: Dignity
     
-    init(dignity: Dignity) {
-        self.dignity = dignity
-    }
-    
     var body: some View {
         ZStack {
             RoundedRectangle(cornerSize: CGSize(width: 80, height: 40))
