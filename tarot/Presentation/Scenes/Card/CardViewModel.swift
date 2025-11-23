@@ -13,9 +13,9 @@ class CardViewModel: ObservableObject {
     @Published var errorMessage: IdentifiableError? = nil
     @Published var isLoading = false
     
-    private let service: ServiceProtocol
+    private let service: CardService
     
-    init(service: ServiceProtocol = Service()) {
+    init(service: CardService = CardService()) {
         self.service = service
     }
     

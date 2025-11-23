@@ -18,8 +18,8 @@ protocol APIClient {
     func request<T: Decodable>(_ endpoint: EndpointType) async throws -> T
 }
 
-class URLSessionAPIClient<EndpointType: APIEndpoint>: APIClient {
-    func request<T: Decodable>(_ endpoint: EndpointType) async throws -> T {
+class URLSessionAPIClient: APIClientProtocol {
+    func request<T: Decodable>(_ endpoint: Endpoint) async throws -> T {
         guard let url = endpoint.baseURL?.appendingPathComponent(endpoint.path) else {
             throw APIError.invalidURL
         }
@@ -36,7 +36,7 @@ class URLSessionAPIClient<EndpointType: APIEndpoint>: APIClient {
         return try JSONDecoder().decode(T.self, from: data)
     }
     
-    func post<T: Encodable, U: Decodable>(_ endpoint: EndpointType, body: T) async throws -> U {
+    func post<T: Encodable, U: Decodable>(_ endpoint: Endpoint, body: T) async throws -> U {
         guard let url = endpoint.baseURL?.appendingPathComponent(endpoint.path) else {
             throw APIError.invalidURL
         }

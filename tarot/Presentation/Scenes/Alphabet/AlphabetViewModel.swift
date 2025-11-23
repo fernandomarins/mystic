@@ -13,9 +13,9 @@ class AlphabetViewModel: ObservableObject {
     @Published var errorMessage: IdentifiableError? = nil
     @Published var isLoading = false
     
-    private let service: ServiceProtocol
+    private let service: AlphabetService
     
-    init(service: ServiceProtocol = Service()) {
+    init(service: AlphabetService = AlphabetService()) {
         self.service = service
     }
     

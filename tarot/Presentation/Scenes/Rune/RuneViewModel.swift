@@ -13,9 +13,9 @@ class RuneViewModel: ObservableObject {
     @Published var errorMessage: IdentifiableError? = nil
     @Published var isLoading = false
     
-    private let service: ServiceProtocol
+    private let service: RuneService
     
-    init(service: ServiceProtocol = Service()) {
+    init(service: RuneService = RuneService()) {
         self.service = service
     }
     

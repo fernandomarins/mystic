@@ -13,9 +13,9 @@ class HoodooViewModel: ObservableObject {
     @Published var errorMessage: IdentifiableError? = nil
     @Published var isLoading = false
     
-    private let service: ServiceProtocol
+    private let service: HoodooService
     
-    init(service: ServiceProtocol = Service()) {
+    init(service: HoodooService = HoodooService()) {
         self.service = service
     }
     

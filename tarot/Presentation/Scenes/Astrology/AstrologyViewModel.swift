@@ -13,9 +13,9 @@ class AstrologyViewModel: ObservableObject {
     @Published var errorMessage: IdentifiableError? = nil
     @Published var isLoading = false
     
-    private let service: ServiceProtocol
+    private let service: AstrologyService
     
-    init(service: ServiceProtocol = Service()) {
+    init(service: AstrologyService = AstrologyService()) {
         self.service = service
     }
     

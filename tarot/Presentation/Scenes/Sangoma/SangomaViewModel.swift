@@ -13,9 +13,9 @@ class SangomaViewModel: ObservableObject {
     @Published var errorMessage: IdentifiableError? = nil
     @Published var isLoading = false
     
-    private let service: ServiceProtocol
+    private let service: SangomaService
     
-    init(service: ServiceProtocol = Service()) {
+    init(service: SangomaService = SangomaService()) {
         self.service = service
     }
     

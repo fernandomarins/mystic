@@ -13,9 +13,9 @@ class HerbsViewModel: ObservableObject {
     @Published var errorMessage: IdentifiableError? = nil
     @Published var isLoading = false
     
-    private let service: ServiceProtocol
+    private let service: HerbsService
     
-    init(service: ServiceProtocol = Service()) {
+    init(service: HerbsService = HerbsService()) {
         self.service = service
     }
     
