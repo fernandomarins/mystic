@@ -17,30 +17,38 @@ struct CardView: View {
             VStack(spacing: 0) {
                 // Hero Image Section
                 ZStack(alignment: .bottom) {
-                    // Placeholder for Card Image
-                    Rectangle()
-                        .fill(
-                            LinearGradient(
-                                gradient: Gradient(colors: [Color.purple.opacity(0.6), Color.blue.opacity(0.6)]),
-                                startPoint: .top,
-                                endPoint: .bottom
+                    if card.major {
+                        Image("major_\(card.id)")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(height: 400)
+                            .clipped()
+                            .overlay(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [.clear, Color.black]),
+                                    startPoint: .center,
+                                    endPoint: .bottom
+                                )
                             )
-                        )
-                        .frame(height: 300)
-                        .overlay(
-                            Text(card.name)
-                                .font(.system(size: 40, weight: .bold, design: .serif))
-                                .foregroundColor(.white)
-                                .shadow(color: .black, radius: 4, x: 0, y: 2)
-                        )
+                    } else {
+                        // Fallback for Minor Arcana
+                        Rectangle()
+                            .fill(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [Color.purple.opacity(0.6), Color.blue.opacity(0.6)]),
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                            )
+                            .frame(height: 300)
+                    }
                     
-                    // Gradient fade at bottom
-                    LinearGradient(
-                        gradient: Gradient(colors: [.clear, Color.black.opacity(0.8)]),
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                    .frame(height: 100)
+                    // Title Overlay
+                    Text(card.name)
+                        .font(.system(size: 40, weight: .bold, design: .serif))
+                        .foregroundColor(.white)
+                        .shadow(color: .black, radius: 4, x: 0, y: 2)
+                        .padding(.bottom, 40) // Push up slightly to sit above the fade
                 }
                 
                 // Content Section
