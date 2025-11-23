@@ -14,57 +14,89 @@ struct CardView: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            Text(card.name)
-                .font(.title)
-                .bold()
-            DividerView()
-            
-            VStack(alignment: .leading, spacing: 20) {
-                SectionView(title: "Descrição", content: card.description)
-                SectionView(title: "No trabalho", content: card.work)
-                SectionView(title: "Financeiro", content: card.financial)
-                SectionView(title: "Amor", content: card.love)
-                
-                if let freePerson = card.freePerson {
-                    SectionView(title: "Pessoas livres", content: freePerson)
+            VStack(spacing: 0) {
+                // Hero Image Section
+                ZStack(alignment: .bottom) {
+                    // Placeholder for Card Image
+                    Rectangle()
+                        .fill(
+                            LinearGradient(
+                                gradient: Gradient(colors: [Color.purple.opacity(0.6), Color.blue.opacity(0.6)]),
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        )
+                        .frame(height: 300)
+                        .overlay(
+                            Text(card.name)
+                                .font(.system(size: 40, weight: .bold, design: .serif))
+                                .foregroundColor(.white)
+                                .shadow(color: .black, radius: 4, x: 0, y: 2)
+                        )
+                    
+                    // Gradient fade at bottom
+                    LinearGradient(
+                        gradient: Gradient(colors: [.clear, Color.black.opacity(0.8)]),
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .frame(height: 100)
                 }
-                if let takenPerson = card.takenPerson {
-                    SectionView(title: "Pessoas compromissadas", content: takenPerson)
-                }
                 
-                SectionView(title: "Obstáculo", content: card.obstacle)
-                SectionView(title: "Conselho", content: card.advice)
+                // Content Section
+                VStack(alignment: .leading, spacing: 24) {
+                    SectionView(title: "Descrição", content: card.description, icon: "book.fill")
+                    SectionView(title: "No trabalho", content: card.work, icon: "briefcase.fill")
+                    SectionView(title: "Financeiro", content: card.financial, icon: "dollarsign.circle.fill")
+                    SectionView(title: "Amor", content: card.love, icon: "heart.fill")
+                    
+                    if let freePerson = card.freePerson {
+                        SectionView(title: "Pessoas livres", content: freePerson, icon: "person.fill")
+                    }
+                    if let takenPerson = card.takenPerson {
+                        SectionView(title: "Pessoas compromissadas", content: takenPerson, icon: "person.2.fill")
+                    }
+                    
+                    SectionView(title: "Obstáculo", content: card.obstacle, icon: "exclamationmark.triangle.fill")
+                    SectionView(title: "Conselho", content: card.advice, icon: "star.fill")
+                }
+                .padding()
+                .background(Color.black.opacity(0.8)) // Dark background for content
             }
         }
-        .padding()
+        .edgesIgnoringSafeArea(.top)
+        .background(Color.black)
     }
 }
 
 private struct SectionView: View {
     let title: String
     let content: String
+    let icon: String
 
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(title)
-                .font(.title2)
-                .bold()
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Image(systemName: icon)
+                    .foregroundColor(.purple)
+                Text(title)
+                    .font(.title3)
+                    .bold()
+                    .foregroundColor(.white)
+            }
+            
             Text(content)
-            DividerView()
+                .font(.body)
+                .foregroundColor(.gray)
+                .lineSpacing(4)
+            
+            Divider()
+                .background(Color.gray.opacity(0.3))
         }
     }
 }
 
-private struct DividerView: View {
-    @Environment(\.colorScheme) var colorScheme
-    
-    var body: some View {
-        Rectangle()
-            .fill(colorScheme == .dark ? Color.white : Color.black)
-            .frame(height: 2)
-            .frame(maxWidth: .infinity)
-    }
-}
+
 
 #Preview {
     CardView(card: .init(id: 0, major: true, suit: nil, name: "O Mago", description: "Ousadia", work: "Ousadia", financial: "Ousadia", love: "Ousadia", obstacle: "Ousadia", advice: "Ousadia", freePerson: "Ousadia", takenPerson: "Ousadia"))

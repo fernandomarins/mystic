@@ -10,10 +10,18 @@ import SwiftfulLoadingIndicators
 
 struct CardListView: View {
     @StateObject private var viewModel = CardViewModel()
+    
+    private let columns = [
+        GridItem(.flexible(), spacing: 16),
+        GridItem(.flexible(), spacing: 16)
+    ]
 
     var body: some View {
         NavigationView {
-            VStack {
+            ZStack {
+                // Background
+                Color.black.edgesIgnoringSafeArea(.all)
+                
                 if viewModel.isLoading {
                     LoadingIndicator(
                         animation: .circleBars,
@@ -21,14 +29,47 @@ struct CardListView: View {
                         size: .large
                     )
                 } else {
-                    List {
-                        createSection(title: "Arcanos Maiores", cards: viewModel.cards.filter { $0.major })
-                        createSuitSection(suit: .clubs, title: "Paus ♣️")
-                        createSuitSection(suit: .hearts, title: "Copas ❤️")
-                        createSuitSection(suit: .diamonds, title: "Ouros ♦️")
-                        createSuitSection(suit: .spades, title: "Espadas ♠️")
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 24) {
+                            Text("Selecione um grupo")
+                                .font(.title2)
+                                .bold()
+                                .foregroundColor(.white)
+                                .padding(.leading, 4)
+                            
+                            LazyVGrid(columns: columns, spacing: 16) {
+                                // Major Arcana Selector
+                                CardGroupCell(
+                                    title: "Arcanos Maiores",
+                                    icon: "🌟",
+                                    cards: viewModel.cards.filter { $0.major }
+                                )
+                                
+                                // Minor Arcana Selectors
+                                CardGroupCell(
+                                    title: "Paus",
+                                    icon: "♣️",
+                                    cards: viewModel.cards.filter { $0.suit == .clubs }
+                                )
+                                CardGroupCell(
+                                    title: "Copas",
+                                    icon: "❤️",
+                                    cards: viewModel.cards.filter { $0.suit == .hearts }
+                                )
+                                CardGroupCell(
+                                    title: "Ouros",
+                                    icon: "♦️",
+                                    cards: viewModel.cards.filter { $0.suit == .diamonds }
+                                )
+                                CardGroupCell(
+                                    title: "Espadas",
+                                    icon: "♠️",
+                                    cards: viewModel.cards.filter { $0.suit == .spades }
+                                )
+                            }
+                        }
+                        .padding()
                     }
-                    .scrollIndicators(.hidden)
                     .navigationTitle("Arcanos")
                     .refreshable {
                         Task {
@@ -47,21 +88,36 @@ struct CardListView: View {
         }
         .backButtonStyle()
     }
+}
 
-    @ViewBuilder
-    private func createSection(title: String, cards: [CardModel]) -> some View {
-        Section(header: Text(title)) {
-            ForEach(cards) { card in
-                NavigationLink(destination: CardView(card: card)) {
-                    Text(card.name)
+struct CardGroupCell: View {
+    let title: String
+    let icon: String
+    let cards: [CardModel]
+    
+    var body: some View {
+        NavigationLink(destination: SuitListView(title: "\(title) \(icon)", cards: cards)) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(Color(hex: "1A1A1A"))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                    )
+                    .shadow(color: .black.opacity(0.5), radius: 4, x: 0, y: 2)
+                
+                VStack(spacing: 8) {
+                    Text(icon)
+                        .font(.system(size: 40))
+                    Text(title)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
                 }
+                .padding()
             }
+            .frame(height: 140)
         }
-    }
-
-    @ViewBuilder
-    private func createSuitSection(suit: CardSuit, title: String) -> some View {
-        createSection(title: title, cards: viewModel.cards.filter { $0.suit == suit })
     }
 }
 
