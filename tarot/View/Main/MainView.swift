@@ -15,7 +15,8 @@ struct MainView: View {
         .init(id: 3, name: .bones),
         .init(id: 4, name: .alphabet),
         .init(id: 5, name: .astrology),
-        .init(id: 6, name: .herbs)
+        .init(id: 6, name: .herbs),
+        .init(id: 7, name: .hoodoo)
     ]
     
     var body: some View {
@@ -74,6 +75,8 @@ struct MainView: View {
             AstrologyListView()
         case .herbs:
             HerbsListView()
+        case .hoodoo:
+            HoodooListView()
         }
     }
 }

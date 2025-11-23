@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 
+@MainActor
 class ViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private let service: ServiceProtocol
@@ -31,16 +32,18 @@ class ViewModel: ObservableObject {
         onSuccess: @escaping (T) -> Void
     ) async {
         await MainActor.run { isLoading = true }
+        print("Starting fetch for data...")  // Debugging line
         await fetchFunction()
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [weak self] completion in
-                DispatchQueue.main.async {
+                Task {
                     self?.isLoading = false
                 }
                 if case .failure(let error) = completion {
                     self?.errorMessage = IdentifiableError(message: "Failed to fetch data: \(error.localizedDescription)")
                 }
             }, receiveValue: { value in
+                print("Received data: \(value)")  // Debugging line
                 onSuccess(value)
             })
             .store(in: &cancellables)
@@ -90,6 +93,7 @@ class ViewModel: ObservableObject {
     
     func fetchHoodoo() async {
         await fetchData(fetchFunction: service.getHoodoo, onSuccess: { [weak self] response in
+            print("Hoodoo response: \(response)")  // Add this for debugging
             self?.hoodoo = response
         })
     }

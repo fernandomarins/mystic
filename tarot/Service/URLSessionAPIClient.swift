@@ -30,10 +30,16 @@ class URLSessionAPIClient<EndpointType: APIEndpoint>: APIClient {
         return URLSession.shared.dataTaskPublisher(for: request)
             .subscribe(on: DispatchQueue.global(qos: .background))
             .tryMap { data, response -> Data in
-                guard let httpResponse = response as? HTTPURLResponse,
-                      (200...299).contains(httpResponse.statusCode) else {
+                guard let httpResponse = response as? HTTPURLResponse else {
                     throw APIError.invalidResponse
                 }
+                
+                if !(200...299).contains(httpResponse.statusCode) {
+                    let responseBody = String(data: data, encoding: .utf8) ?? "No response body"
+                    print("Request failed. Status code: \(httpResponse.statusCode), Response body: \(responseBody)")
+                    throw APIError.invalidResponse
+                }
+                //po String(data: data, encoding: .utf8)
                 return data
             }
             .decode(type: T.self, decoder: JSONDecoder())

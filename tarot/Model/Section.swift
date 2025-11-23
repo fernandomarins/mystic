@@ -16,6 +16,7 @@ enum SectionName: String {
     case alphabet = "Alfabeto"
     case astrology = "Astrologia"
     case herbs = "Ervas"
+    case hoodoo = "Hoodoo"
 }
 
 struct Main: Identifiable {
