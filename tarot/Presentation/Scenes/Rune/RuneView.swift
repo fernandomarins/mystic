@@ -18,46 +18,99 @@ struct RuneView: View {
     }
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            Text(rune.name)
-                .font(.title)
-                .bold()
-            Rectangle()
-                .fill(sectionColor)
-                .frame(height: 4)
-                .frame(maxWidth: .infinity)
+        ZStack {
+            Color.black.edgesIgnoringSafeArea(.all)
             
-            Spacer(minLength: 32)
-            
-            Image(uiImage: UIImage(named: rune.name) ?? UIImage())
-                .frame(height: 100)
-                .scaledToFit()
-            
-            VStack(alignment: .leading) {
-                runeSection(title: "Efeitos", content: rune.power)
-                runeSection(title: "Magia", content: rune.magic)
-                runeSection(title: "Árvore", content: rune.tree)
-                runeSection(title: "Pedra(s)", content: rune.rock)
-                runeSection(title: "Cor", content: rune.color)
-            }
-            .padding()
-        }
-    }
-    
-    private func runeSection(title: String, content: String?) -> some View {
-        Group {
-            if let content = content, !content.isEmpty {
-                VStack(alignment: .leading) {
-                    Text(title)
-                        .font(.title2)
-                        .bold()
-                    Text(content)
-                    Rectangle()
-                        .fill(sectionColor)
-                        .frame(height: 2)
-                        .frame(maxWidth: .infinity)
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 24) {
+                    // Hero Section
+                    ZStack {
+                        Circle()
+                            .fill(
+                                RadialGradient(
+                                    gradient: Gradient(colors: [Color.cyan.opacity(0.2), Color.clear]),
+                                    center: .center,
+                                    startRadius: 0,
+                                    endRadius: 150
+                                )
+                            )
+                            .frame(height: 300)
+                        
+                        Image(uiImage: UIImage(named: rune.name) ?? UIImage())
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 180)
+                            .shadow(color: .cyan.opacity(0.8), radius: 20, x: 0, y: 0)
+                    }
+                    .padding(.top, 20)
+                    
+                    // Title
+                    Text(rune.name)
+                        .font(.system(size: 40, weight: .bold, design: .serif))
+                        .foregroundColor(.white)
+                        .shadow(color: .cyan.opacity(0.5), radius: 10)
+                    
+                    // Attributes Grid
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+                        AttributeCell(title: "Árvore", value: rune.tree, icon: "leaf.fill")
+                        AttributeCell(title: "Cor", value: rune.color, icon: "paintpalette.fill")
+                        AttributeCell(title: "Pedra", value: rune.rock, icon: "hexagon.fill")
+                        AttributeCell(title: "Magia", value: rune.magic, icon: "sparkles")
+                    }
+                    .padding(.horizontal)
+                    
+                    // Power/Meaning Section
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Poder & Significado")
+                            .font(.title2)
+                            .bold()
+                            .foregroundColor(.cyan)
+                        
+                        Text(rune.power)
+                            .font(.body)
+                            .foregroundColor(.white.opacity(0.9))
+                            .lineSpacing(6)
+                    }
+                    .padding()
+                    .background(Color(hex: "1C1C1E"))
+                    .cornerRadius(16)
+                    .padding(.horizontal)
+                    
+                    Spacer(minLength: 40)
                 }
             }
+        }
+    }
+}
+
+struct AttributeCell: View {
+    let title: String
+    let value: String?
+    let icon: String
+    
+    var body: some View {
+        if let value = value, !value.isEmpty {
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Image(systemName: icon)
+                        .foregroundColor(.cyan)
+                    Text(title)
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                }
+                Text(value)
+                    .font(.subheadline)
+                    .bold()
+                    .foregroundColor(.white)
+            }
+            .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Color(hex: "1C1C1E"))
+            .cornerRadius(12)
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.white.opacity(0.1), lineWidth: 1)
+            )
         }
     }
 }

@@ -28,7 +28,7 @@ struct BackButtonModifier: ViewModifier {
 
 extension View {
     func backButtonStyle() -> some View {
-        self.modifier(BackButtonModifier())
+        modifier(BackButtonModifier())
     }
 }
 

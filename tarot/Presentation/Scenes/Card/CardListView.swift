@@ -17,72 +17,70 @@ struct CardListView: View {
     ]
 
     var body: some View {
-        NavigationView {
-            ZStack {
-                // Background
-                Color.black.edgesIgnoringSafeArea(.all)
-                
-                if viewModel.isLoading {
-                    LoadingIndicator(
-                        animation: .circleBars,
-                        color: .white,
-                        size: .large
-                    )
-                } else {
-                    ScrollView {
-                        VStack(alignment: .leading, spacing: 24) {
-                            Text("Selecione um grupo")
-                                .font(.title2)
-                                .bold()
-                                .foregroundColor(.white)
-                                .padding(.leading, 4)
+        ZStack {
+            // Background
+            Color.black.edgesIgnoringSafeArea(.all)
+            
+            if viewModel.isLoading {
+                LoadingIndicator(
+                    animation: .circleBars,
+                    color: .white,
+                    size: .large
+                )
+            } else {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 24) {
+                        Text("Selecione um grupo")
+                            .font(.title2)
+                            .bold()
+                            .foregroundColor(.white)
+                            .padding(.leading, 4)
+                        
+                        LazyVGrid(columns: columns, spacing: 16) {
+                            // Major Arcana Selector
+                            CardGroupCell(
+                                title: "Arcanos Maiores",
+                                icon: "🌟",
+                                cards: viewModel.cards.filter { $0.major }
+                            )
                             
-                            LazyVGrid(columns: columns, spacing: 16) {
-                                // Major Arcana Selector
-                                CardGroupCell(
-                                    title: "Arcanos Maiores",
-                                    icon: "🌟",
-                                    cards: viewModel.cards.filter { $0.major }
-                                )
-                                
-                                // Minor Arcana Selectors
-                                CardGroupCell(
-                                    title: "Paus",
-                                    icon: "♣️",
-                                    cards: viewModel.cards.filter { $0.suit == .clubs }
-                                )
-                                CardGroupCell(
-                                    title: "Copas",
-                                    icon: "❤️",
-                                    cards: viewModel.cards.filter { $0.suit == .hearts }
-                                )
-                                CardGroupCell(
-                                    title: "Ouros",
-                                    icon: "♦️",
-                                    cards: viewModel.cards.filter { $0.suit == .diamonds }
-                                )
-                                CardGroupCell(
-                                    title: "Espadas",
-                                    icon: "♠️",
-                                    cards: viewModel.cards.filter { $0.suit == .spades }
-                                )
-                            }
-                        }
-                        .padding()
-                    }
-                    .navigationTitle("Arcanos")
-                    .refreshable {
-                        Task {
-                            await viewModel.fetchCards()
+                            // Minor Arcana Selectors
+                            CardGroupCell(
+                                title: "Paus",
+                                icon: "♣️",
+                                cards: viewModel.cards.filter { $0.suit == .clubs }
+                            )
+                            CardGroupCell(
+                                title: "Copas",
+                                icon: "❤️",
+                                cards: viewModel.cards.filter { $0.suit == .hearts }
+                            )
+                            CardGroupCell(
+                                title: "Ouros",
+                                icon: "♦️",
+                                cards: viewModel.cards.filter { $0.suit == .diamonds }
+                            )
+                            CardGroupCell(
+                                title: "Espadas",
+                                icon: "♠️",
+                                cards: viewModel.cards.filter { $0.suit == .spades }
+                            )
                         }
                     }
+                    .padding()
                 }
-            }
-            .onAppear {
-                if viewModel.cards.isEmpty {
+                .navigationTitle("Arcanos")
+                .refreshable {
                     Task {
                         await viewModel.fetchCards()
                     }
+                }
+            }
+        }
+        .onAppear {
+            if viewModel.cards.isEmpty {
+                Task {
+                    await viewModel.fetchCards()
                 }
             }
         }

@@ -23,64 +23,79 @@ struct RuneListView: View {
     }
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                if viewModel.isLoading {
-                    LoadingIndicator(
-                        animation: .circleBars,
-                        color: .white,
-                        size: .medium
-                    )
-                } else {
-                    ScrollView {
-                        runeCollectionView
-                            .padding(.top, 16)
+        ZStack {
+            // Background
+            Color.black.edgesIgnoringSafeArea(.all)
+            
+            if viewModel.isLoading {
+                LoadingIndicator(
+                    animation: .circleBars,
+                    color: .white,
+                    size: .medium
+                )
+            } else {
+                ScrollView {
+                    LazyVGrid(
+                        columns: [GridItem(.flexible()), GridItem(.flexible())],
+                        spacing: 16
+                    ) {
+                        ForEach(filteredRunes) { rune in
+                            NavigationLink(destination: RuneView(rune: rune)) {
+                                RuneCell(rune: rune)
+                            }
+                        }
                     }
-                    .navigationTitle("Runas")
-                    .refreshable {
-                        await viewModel.fetchRunes()
-                    }
-                    .searchable(text: $searchQuery, prompt: "Runa")
-                    .textInputAutocapitalization(.never)
-                    .scrollIndicators(.hidden)
+                    .padding()
                 }
+                .navigationTitle("Runas")
+                .refreshable {
+                    await viewModel.fetchRunes()
+                }
+                .searchable(text: $searchQuery, prompt: "Buscar Runa")
             }
-            .onAppear {
-                if viewModel.runes.isEmpty {
-                    Task {
-                        await viewModel.fetchRunes()
-                    }
+        }
+        .onAppear {
+            if viewModel.runes.isEmpty {
+                Task {
+                    await viewModel.fetchRunes()
                 }
             }
         }
         .backButtonStyle()
     }
+}
+
+struct RuneCell: View {
+    let rune: RuneModel
     
-    private var runeCollectionView: some View {
-        LazyVGrid(
-            columns: [GridItem(.flexible()), GridItem(.flexible())],
-            spacing: 16
-        ) {
-            ForEach(filteredRunes) { rune in
-                NavigationLink(destination: RuneView(rune: rune)) {
-                    VStack {
-                        Text(rune.name)
-                            .font(.title2)
-                            .foregroundColor(.white)
-                        
-                        runeImage(for: rune)
-                            .frame(width: 75, height: 125)
-                            .scaledToFit()
-                    }
-                    .frame(width: 150, height: 180)
-                }
+    var body: some View {
+        ZStack {
+            // Stone Background
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color(hex: "1C1C1E"))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                )
+                .shadow(color: .black.opacity(0.5), radius: 4, x: 0, y: 2)
+            
+            VStack(spacing: 12) {
+                // Glowing Rune Image
+                Image(uiImage: UIImage(named: rune.name) ?? UIImage())
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 80)
+                    .shadow(color: .cyan.opacity(0.6), radius: 10, x: 0, y: 0)
+                
+                Text(rune.name)
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .multilineTextAlignment(.center)
             }
+            .padding()
         }
-    }
-    
-    private func runeImage(for rune: RuneModel) -> some View {
-        Image(uiImage: UIImage(named: rune.name) ?? UIImage())
-            .resizable()
+        .frame(height: 160)
     }
 }
 

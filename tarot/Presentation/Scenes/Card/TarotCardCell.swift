@@ -12,68 +12,73 @@ struct TarotCardCell: View {
     
     var body: some View {
         ZStack {
-            // Card Background
+            // Card Background (Dark Neutral)
             RoundedRectangle(cornerRadius: 16)
-                .fill(
-                    LinearGradient(
-                        gradient: Gradient(colors: [Color(hex: "2C003E"), Color(hex: "000000")]), // Deep Purple to Black
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
+                .fill(Color(hex: "1C1C1E")) // Dark Grey/Black
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)
                         .stroke(
                             LinearGradient(
-                                gradient: Gradient(colors: [Color.yellow.opacity(0.6), Color.clear, Color.yellow.opacity(0.6)]),
+                                gradient: Gradient(colors: [Color(hex: "D4AF37").opacity(0.6), Color(hex: "D4AF37").opacity(0.2)]), // Gold
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
                             ),
-                            lineWidth: 1.5
+                            lineWidth: 1
                         )
                 )
                 .shadow(color: .black.opacity(0.5), radius: 6, x: 0, y: 4)
             
-            // Decorative Inner Border
-            RoundedRectangle(cornerRadius: 12)
-                .strokeBorder(Color.white.opacity(0.1), lineWidth: 1)
-                .padding(6)
-            
-            // Central Content
-            VStack(spacing: 12) {
-                Spacer()
-                
-                // Decorative Top Icon
-                Image(systemName: "sparkles")
-                    .font(.system(size: 16, weight: .light))
-                    .foregroundColor(.yellow.opacity(0.7))
-                
-                // Card Name (The Art)
-                Text(card.name)
-                    .font(.system(size: 24, weight: .bold, design: .serif))
-                    .foregroundColor(.white.opacity(0.95))
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 12)
-                    .shadow(color: .yellow.opacity(0.2), radius: 8, x: 0, y: 0)
-                    .minimumScaleFactor(0.5) // Allow scaling down for long names
-                
-                // Decorative Bottom Icon or Suit
-                if let suit = card.suit {
-                    Text(suitSymbol(for: suit))
-                        .font(.system(size: 20))
-                        .foregroundColor(.white.opacity(0.6))
-                } else {
-                    Image(systemName: "star.fill")
-                        .font(.system(size: 10))
-                        .foregroundColor(.yellow.opacity(0.5))
+            VStack(spacing: 0) {
+                // Image Area (Top 75%)
+                GeometryReader { geometry in
+                    if card.major {
+                        Image("major_\(card.id)")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: geometry.size.width, height: geometry.size.height)
+                            .clipped()
+                            .overlay(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [.clear, Color(hex: "1C1C1E")]),
+                                    startPoint: .center,
+                                    endPoint: .bottom
+                                )
+                            )
+                    } else {
+                        // Fallback for Minor Arcana
+                        ZStack {
+                            Color.black.opacity(0.3)
+                            Image(systemName: "sparkles")
+                                .font(.system(size: 30, weight: .light))
+                                .foregroundColor(Color(hex: "D4AF37").opacity(0.3))
+                        }
+                    }
                 }
+                .frame(height: 160) // Fixed height for image area
                 
-                Spacer()
+                // Text Area (Bottom 25%)
+                VStack(spacing: 4) {
+                    Text(card.name)
+                        .font(.system(size: 18, weight: .bold, design: .serif))
+                        .foregroundColor(Color(hex: "E5E5EA")) // Light Grey/White
+                        .multilineTextAlignment(.center)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.8)
+                    
+                    if let suit = card.suit {
+                        Text(suitSymbol(for: suit))
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                    }
+                }
+                .padding(.horizontal, 8)
+                .padding(.vertical, 12)
+                .frame(maxWidth: .infinity)
+                .background(Color(hex: "1C1C1E"))
             }
-            .padding()
+            .cornerRadius(16)
         }
-        .frame(height: 220)
-        .aspectRatio(2/3, contentMode: .fit)
+        .frame(height: 240) // Increased height slightly
     }
     
     private func suitSymbol(for suit: CardSuit) -> String {
