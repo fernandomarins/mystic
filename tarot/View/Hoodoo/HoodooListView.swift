@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftfulLoadingIndicators
 
 struct HoodooListView: View {
-    @StateObject private var viewModel = ViewModel()
+    @StateObject private var viewModel = HoodooViewModel()
     @State private var hasFetchedData: Bool = false
     
     var body: some View {

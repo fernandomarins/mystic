@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HerbsAddView: View {
-    @StateObject private var viewModel = ViewModel()
+    @StateObject private var viewModel = HerbsViewModel()
     @State private var name: String = ""
     @State private var type: HerbType = .cold
     @State private var scientificName: String = ""

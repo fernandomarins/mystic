@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftfulLoadingIndicators
 
 struct AstrologyListView: View {
-    @StateObject private var viewModel = ViewModel()
+    @StateObject private var viewModel = AstrologyViewModel()
     @State private var isSearching: Bool = false
     @State private var hasFetchedData: Bool = false
     

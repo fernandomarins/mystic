@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftfulLoadingIndicators
 
 struct AlphabetListView: View {
-    @StateObject private var viewModel = ViewModel()
+    @StateObject private var viewModel = AlphabetViewModel()
     @State private var searchQuery: String = ""
     
     private var filteredLetters: [LetterModel] {
@@ -38,7 +38,7 @@ struct AlphabetListView: View {
                     }
                     .navigationTitle("Alfabeto")
                     .refreshable {
-                        await viewModel.fetchRunes()
+                        await viewModel.fetchAlphabet()
                     }
                     .searchable(text: $searchQuery, prompt: "Letra")
                     .textInputAutocapitalization(.never)

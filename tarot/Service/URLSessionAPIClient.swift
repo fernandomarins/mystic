@@ -15,72 +15,45 @@ struct IdentifiableError: Identifiable {
 
 protocol APIClient {
     associatedtype EndpointType: APIEndpoint
-    func request<T: Decodable>(_ endpoint: EndpointType) -> AnyPublisher<T, Error>
+    func request<T: Decodable>(_ endpoint: EndpointType) async throws -> T
 }
 
 class URLSessionAPIClient<EndpointType: APIEndpoint>: APIClient {
-    func request<T: Decodable>(_ endpoint: EndpointType) -> AnyPublisher<T, Error> {
+    func request<T: Decodable>(_ endpoint: EndpointType) async throws -> T {
         guard let url = endpoint.baseURL?.appendingPathComponent(endpoint.path) else {
-            return Fail(error: APIError.invalidURL)
-                .eraseToAnyPublisher()
+            throw APIError.invalidURL
         }
         var request = URLRequest(url: url)
         request.httpMethod = endpoint.method.rawValue
         
-        return URLSession.shared.dataTaskPublisher(for: request)
-            .subscribe(on: DispatchQueue.global(qos: .background))
-            .tryMap { data, response -> Data in
-                guard let httpResponse = response as? HTTPURLResponse else {
-                    throw APIError.invalidResponse
-                }
-                
-                if !(200...299).contains(httpResponse.statusCode) {
-                    let responseBody = String(data: data, encoding: .utf8) ?? "No response body"
-                    print("Request failed. Status code: \(httpResponse.statusCode), Response body: \(responseBody)")
-                    throw APIError.invalidResponse
-                }
-                //po String(data: data, encoding: .utf8)
-                return data
-            }
-            .decode(type: T.self, decoder: JSONDecoder())
-            .eraseToAnyPublisher()
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            throw APIError.invalidResponse
+        }
+        
+        return try JSONDecoder().decode(T.self, from: data)
     }
     
-    func post<T: Encodable, U: Decodable>(_ endpoint: EndpointType, body: T) -> AnyPublisher<U, Error> {
+    func post<T: Encodable, U: Decodable>(_ endpoint: EndpointType, body: T) async throws -> U {
         guard let url = endpoint.baseURL?.appendingPathComponent(endpoint.path) else {
-            return Fail(error: APIError.invalidURL)
-                .eraseToAnyPublisher()
+            throw APIError.invalidURL
         }
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        do {
-            let encoder = JSONEncoder()
-            request.httpBody = try encoder.encode(body)
-        } catch {
-            return Fail(error: APIError.encodingFailed)
-                .eraseToAnyPublisher()
+        request.httpBody = try JSONEncoder().encode(body)
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            throw APIError.invalidResponse
         }
         
-        print("Request URL: \(request.url?.absoluteString ?? "")")
-        print("Request Method: \(request.httpMethod ?? "")")
-        print("Request Headers: \(request.allHTTPHeaderFields ?? [:])")
-        print("Request Body: \(String(data: request.httpBody ?? Data(), encoding: .utf8) ?? "")")
-        
-        return URLSession.shared.dataTaskPublisher(for: request)
-            .subscribe(on: DispatchQueue.global(qos: .background))
-            .tryMap { data, response -> Data in
-                guard let httpResponse = response as? HTTPURLResponse,
-                      (200...299).contains(httpResponse.statusCode) else {
-                    let responseDataString = String(data: data, encoding: .utf8) ?? "No response data"
-                    print("Error response: \(response as? HTTPURLResponse) - \(responseDataString)")
-                    throw APIError.invalidResponse
-                }
-                return data
-            }
-            .decode(type: U.self, decoder: JSONDecoder())
-            .eraseToAnyPublisher()
+        return try JSONDecoder().decode(U.self, from: data)
     }
 }

@@ -8,57 +8,57 @@
 import Combine
 
 protocol ServiceProtocol {
-    func getCards() async -> AnyPublisher<[CardModel], Error>
-    func getRunes() async -> AnyPublisher<[RuneModel], Error>
-    func getDaemons() async -> AnyPublisher<[DaemonModel], Error>
-    func getSangoma() async -> AnyPublisher<SangomaModel, Error>
-    func getAlphabet() async -> AnyPublisher<[LetterModel], Error>
-    func getAstrology() async -> AnyPublisher<AstrologyModel, Error>
-    func getHerbs() async -> AnyPublisher<Herbs, Error>
-    func getHoodoo() async -> AnyPublisher<HoodooModel, Error>
-    func postHerb(_ herb: Herb) -> AnyPublisher<Herb, Error>
+    func getCards() async throws -> [CardModel]
+    func getRunes() async throws -> [RuneModel]
+    func getDaemons() async throws -> [DaemonModel]
+    func getSangoma() async throws -> SangomaModel
+    func getAlphabet() async throws -> [LetterModel]
+    func getAstrology() async throws -> AstrologyModel
+    func getHerbs() async throws -> Herbs
+    func getHoodoo() async throws -> HoodooModel
+    func postHerb(_ herb: Herb) async throws -> Herb
 }
 
 class Service: ServiceProtocol {
     private let apiClient = URLSessionAPIClient<Endpoint>()
     
-    private func request<T: Decodable>(_ endpoint: Endpoint) -> AnyPublisher<T, Error> {
-        apiClient.request(endpoint)
+    private func request<T: Decodable>(_ endpoint: Endpoint) async throws -> T {
+        try await apiClient.request(endpoint)
     }
     
-    func getCards() async -> AnyPublisher<[CardModel], Error> {
-        request(.getCards)
+    func getCards() async throws -> [CardModel] {
+        try await request(.getCards)
     }
     
-    func getRunes() async -> AnyPublisher<[RuneModel], Error> {
-        request(.getRunes)
+    func getRunes() async throws -> [RuneModel] {
+        try await request(.getRunes)
     }
     
-    func getDaemons() async -> AnyPublisher<[DaemonModel], Error> {
-        request(.getDaemons)
+    func getDaemons() async throws -> [DaemonModel] {
+        try await request(.getDaemons)
     }
     
-    func getSangoma() async -> AnyPublisher<SangomaModel, Error> {
-        request(.getSangoma)
+    func getSangoma() async throws -> SangomaModel {
+        try await request(.getSangoma)
     }
     
-    func getAlphabet() async -> AnyPublisher<[LetterModel], Error> {
-        request(.getAlphabet)
+    func getAlphabet() async throws -> [LetterModel] {
+        try await request(.getAlphabet)
     }
     
-    func getAstrology() async -> AnyPublisher<AstrologyModel, Error> {
-        request(.getAstrology)
+    func getAstrology() async throws -> AstrologyModel {
+        try await request(.getAstrology)
     }
     
-    func getHerbs() async -> AnyPublisher<Herbs, Error> {
-        request(.getHerbs)
+    func getHerbs() async throws -> Herbs {
+        try await request(.getHerbs)
     }
     
-    func getHoodoo() async -> AnyPublisher<HoodooModel, Error> {
-        request(.getHooboo)
+    func getHoodoo() async throws -> HoodooModel {
+        try await request(.getHooboo)
     }
     
-    func postHerb(_ herb: Herb) -> AnyPublisher<Herb, Error> {
-        apiClient.post(.postHerb, body: herb)
+    func postHerb(_ herb: Herb) async throws -> Herb {
+        try await apiClient.post(.postHerb, body: herb)
     }
 }

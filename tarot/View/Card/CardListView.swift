@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftfulLoadingIndicators
 
 struct CardListView: View {
-    @StateObject private var viewModel = ViewModel()
+    @StateObject private var viewModel = CardViewModel()
 
     var body: some View {
         NavigationView {

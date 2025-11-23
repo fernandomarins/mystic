@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftfulLoadingIndicators
 
 struct HerbsListView: View {
-    @StateObject private var viewModel = ViewModel()
+    @StateObject private var viewModel = HerbsViewModel()
     @State private var selectedHerbs = Set<Herb>()
     @State private var isSelectionModeActive = false
     @State private var isShowingHerbSelectView = false
@@ -69,7 +69,7 @@ struct HerbsListView: View {
                         }
                         isSelectionModeActive.toggle()
                     }) {
-                        Text(isSelectionModeActive ? "Feito" : "Selecine as ervas")
+                        Text(isSelectionModeActive ? "Feito" : "Selecione as ervas")
                             .foregroundStyle(.purple)
                     }
                 }

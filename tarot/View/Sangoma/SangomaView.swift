@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftfulLoadingIndicators
 
 struct SangomaView: View {
-    @StateObject private var viewModel = ViewModel()
+    @StateObject private var viewModel = SangomaViewModel()
     
     var body: some View {
         VStack {

@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftfulLoadingIndicators
 
 struct RuneListView: View {
-    @StateObject private var viewModel = ViewModel()
+    @StateObject private var viewModel = RuneViewModel()
     @State private var searchQuery: String = ""
     
     private var filteredRunes: [RuneModel] {
