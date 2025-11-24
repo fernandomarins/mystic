@@ -16,51 +16,38 @@ struct SelectPlanetView: View {
     @Environment(\.dismiss) private var dismiss
     
     private let planets = [
-        "Sol",
-        "Lua",
-        "Mercúrio",
-        "Vênus",
-        "Marte",
-        "Júpiter",
-        "Saturno",
-        "Urano",
-        "Netuno",
-        "Plutão"
+        ("Sol", "☉"),
+        ("Lua", "☽"),
+        ("Mercúrio", "☿"),
+        ("Vênus", "♀"),
+        ("Marte", "♂"),
+        ("Júpiter", "♃"),
+        ("Saturno", "♄"),
+        ("Urano", "♅"),
+        ("Netuno", "♆"),
+        ("Plutão", "♇")
     ]
     
     private let zodiacSigns = [
-        "Áries",
-        "Touro",
-        "Gêmeos",
-        "Câncer",
-        "Leão",
-        "Virgem",
-        "Libra",
-        "Escorpião",
-        "Sagitário",
-        "Capricórnio",
-        "Aquário",
-        "Peixes"
+        ("Áries", "♈"),
+        ("Touro", "♉"),
+        ("Gêmeos", "♊"),
+        ("Câncer", "♋"),
+        ("Leão", "♌"),
+        ("Virgem", "♍"),
+        ("Libra", "♎"),
+        ("Escorpião", "♏"),
+        ("Sagitário", "♐"),
+        ("Capricórnio", "♑"),
+        ("Aquário", "♒"),
+        ("Peixes", "♓")
     ]
     
     @State private var selectedPlanet = "Planeta"
     @State private var selectedSign = "Signo"
     
-    private var selectionMessage: String? {
-        switch (selectedPlanet, selectedSign) {
-        case ("Planeta", "Signo"):
-            return "Selecione um planeta e um signo"
-        case ("Planeta", _):
-            return "Selecione um planeta"
-        case (_, "Signo"):
-            return "Selecione um signo"
-        default:
-            return nil
-        }
-    }
-    
-    private var buttonColor: Color {
-        (selectedPlanet == "Planeta" || selectedSign == "Signo") ? .gray : .white
+    private var canSave: Bool {
+        selectedPlanet != "Planeta" && selectedSign != "Signo"
     }
     
     let mode: FormMode
@@ -80,55 +67,131 @@ struct SelectPlanetView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            selectionMenu(
-                title: "Selecione o planeta",
-                selection: $selectedPlanet, options: planets
+        ZStack {
+            // Cosmic background
+            LinearGradient(
+                colors: [Color(hex: "1A0033"), Color.black],
+                startPoint: .top,
+                endPoint: .bottom
             )
-            selectionMenu(
-                title: "Selecione o signo",
-                selection: $selectedSign, options: zodiacSigns
-            )
-        }
-        .padding(16)
-        VStack(alignment: .center) {
-            Button(mode == .add ? "Adicionar" : "Salvar") {
-                onSelected((selectedPlanet, selectedSign))
-                dismiss.callAsFunction()
-            }
-            .foregroundStyle(buttonColor)
-            .bold()
-            .font(.title)
-            .padding(.top, 60)
-            .disabled(selectedPlanet == "Planeta" || selectedSign == "Signo")
-            if let message = selectionMessage {
-                Text(message)
-                    .font(.caption)
-            }
-        }
-    }
-    
-    private func selectionMenu(
-        title: String,
-        selection: Binding<String>,
-        options: [String]
-    ) -> some View {
-        HStack {
-            Text(title)
-                .font(.title3)
-                .bold()
-                .foregroundColor(.white)
-            Spacer()
-            Menu {
-                ForEach(options, id: \.self) { option in
-                    Button(option) {
-                        selection.wrappedValue = option
+            .ignoresSafeArea()
+            
+            VStack(spacing: 24) {
+                // Title
+                Text(mode == .add ? "Adicionar Planeta" : "Editar Planeta")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .padding(.top, 20)
+                
+                // Planet Selection
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("Planeta")
+                        .font(.headline)
+                        .foregroundColor(.gray)
+                    
+                    Menu {
+                        ForEach(planets, id: \.0) { planet in
+                            Button(action: {
+                                selectedPlanet = planet.0
+                            }) {
+                                HStack {
+                                    Text(planet.1)
+                                    Text(planet.0)
+                                }
+                            }
+                        }
+                    } label: {
+                        HStack {
+                            if let planet = planets.first(where: { $0.0 == selectedPlanet }) {
+                                Text(planet.1)
+                                Text(planet.0)
+                            } else {
+                                Text(selectedPlanet)
+                            }
+                            Spacer()
+                            Image(systemName: "chevron.down")
+                        }
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color(hex: "1C1C1E"))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(Color.purple.opacity(0.3), lineWidth: 1)
+                                )
+                        )
                     }
-                    .foregroundColor(.white)
                 }
-            } label: {
-                Text(selection.wrappedValue)
-                    .foregroundColor(.white)
+                .padding(.horizontal)
+                
+                // Sign Selection
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("Signo")
+                        .font(.headline)
+                        .foregroundColor(.gray)
+                    
+                    Menu {
+                        ForEach(zodiacSigns, id: \.0) { sign in
+                            Button(action: {
+                                selectedSign = sign.0
+                            }) {
+                                HStack {
+                                    Text(sign.1)
+                                    Text(sign.0)
+                                }
+                            }
+                        }
+                    } label: {
+                        HStack {
+                            if let sign = zodiacSigns.first(where: { $0.0 == selectedSign }) {
+                                Text(sign.1)
+                                Text(sign.0)
+                            } else {
+                                Text(selectedSign)
+                            }
+                            Spacer()
+                            Image(systemName: "chevron.down")
+                        }
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color(hex: "1C1C1E"))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(Color.purple.opacity(0.3), lineWidth: 1)
+                                )
+                        )
+                    }
+                }
+                .padding(.horizontal)
+                
+                Spacer()
+                
+                // Save Button
+                Button(action: {
+                    onSelected((selectedPlanet, selectedSign))
+                    dismiss()
+                }) {
+                    Text(mode == .add ? "Adicionar" : "Salvar")
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(
+                            LinearGradient(
+                                colors: canSave ? [Color.purple, Color.blue] : [Color.gray, Color.gray],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .cornerRadius(12)
+                }
+                .disabled(!canSave)
+                .padding(.horizontal)
+                .padding(.bottom, 20)
             }
         }
     }
