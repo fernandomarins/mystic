@@ -1,0 +1,77 @@
+//
+//  AlphabetListView.swift
+//  tarot
+//
+//  Created by Fernando Marins on 22/09/24.
+//
+
+import SwiftUI
+import SwiftfulLoadingIndicators
+
+struct AlphabetListView: View {
+    @StateObject private var viewModel = AlphabetViewModel()
+    @State private var searchQuery: String = ""
+    
+    private var filteredLetters: [LetterModel] {
+        if searchQuery.isEmpty {
+            return viewModel.alphabet
+        } else {
+            return viewModel.alphabet.filter { letter in
+                letter.pronunciation.lowercased().contains(searchQuery.lowercased())
+            }
+        }
+    }
+    
+    var body: some View {
+        NavigationStack {
+            VStack {
+                if viewModel.isLoading {
+                    LoadingIndicator(
+                        animation: .circleBars,
+                        color: .white,
+                        size: .medium
+                    )
+                } else {
+                    ScrollView {
+                        runeCollectionView
+                            .padding(.top, 16)
+                    }
+                    .navigationTitle("Alfabeto")
+                    .refreshable {
+                        await viewModel.fetchAlphabet()
+                    }
+                    .searchable(text: $searchQuery, prompt: "Letra")
+                    .textInputAutocapitalization(.never)
+                    .scrollIndicators(.hidden)
+                }
+            }
+            .onAppear {
+                if viewModel.alphabet.isEmpty {
+                    Task {
+                        await viewModel.fetchAlphabet()
+                    }
+                }
+            }
+        }
+        .backButtonStyle()
+    }
+    
+    private var runeCollectionView: some View {
+        LazyVGrid(
+            columns: [GridItem(.flexible()), GridItem(.flexible())],
+            spacing: 16
+        ) {
+            ForEach(filteredLetters, id: \.self) { letter in
+                NavigationLink(destination: LetterView(letter: letter)) {
+                    Text(letter.letter)
+                        .font(.title)
+                        .foregroundColor(.white)
+                }
+            }
+        }
+    }
+}
+
+#Preview {
+    AlphabetListView()
+}
