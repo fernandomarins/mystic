@@ -15,7 +15,6 @@ struct DaemonListView: View {
     @State private var isSearching: Bool = false
     
     var body: some View {
-        NavigationStack {
             VStack {
                 if viewModel.isLoading {
                     LoadingIndicator(
@@ -24,13 +23,16 @@ struct DaemonListView: View {
                         size: .medium
                     )
                 } else {
-                    List {
-                        let displayedDaemons = isSearching ? searchResults : viewModel.daemons
-                        ForEach(displayedDaemons) { daemon in
-                            NavigationLink(destination: DaemonView(daemon: daemon)) {
-                                Text("\(daemon.id) - \(daemon.name)")
+                    ScrollView {
+                        LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
+                            let displayedDaemons = isSearching ? searchResults : viewModel.daemons
+                            ForEach(displayedDaemons) { daemon in
+                                NavigationLink(destination: DaemonView(daemon: daemon)) {
+                                    DaemonCell(daemon: daemon)
+                                }
                             }
                         }
+                        .padding()
                     }
                     .navigationTitle("Daemons")
                     .refreshable {
@@ -53,6 +55,7 @@ struct DaemonListView: View {
                         }
                     }
                     .scrollIndicators(.hidden)
+                    .background(Color.black) // Ensure background is black for the grid
                 }
             }
             .onAppear {
@@ -62,7 +65,6 @@ struct DaemonListView: View {
                     }
                 }
             }
-        }
         .toolbar {
             if !viewModel.daemons.isEmpty {
                 daemonTypeOptions

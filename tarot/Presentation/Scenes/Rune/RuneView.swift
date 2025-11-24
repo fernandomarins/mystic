@@ -54,8 +54,8 @@ struct RuneView: View {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
                         AttributeCell(title: "Árvore", value: rune.tree, icon: "leaf.fill")
                         AttributeCell(title: "Cor", value: rune.color, icon: "paintpalette.fill")
-                        AttributeCell(title: "Pedra", value: rune.rock, icon: "hexagon.fill")
                         AttributeCell(title: "Magia", value: rune.magic, icon: "sparkles")
+                        AttributeCell(title: "Pedra", value: rune.rock, icon: "hexagon.fill")
                     }
                     .padding(.horizontal)
                     
@@ -83,37 +83,7 @@ struct RuneView: View {
     }
 }
 
-struct AttributeCell: View {
-    let title: String
-    let value: String?
-    let icon: String
-    
-    var body: some View {
-        if let value = value, !value.isEmpty {
-            VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Image(systemName: icon)
-                        .foregroundColor(.cyan)
-                    Text(title)
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                }
-                Text(value)
-                    .font(.subheadline)
-                    .bold()
-                    .foregroundColor(.white)
-            }
-            .padding()
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color(hex: "1C1C1E"))
-            .cornerRadius(12)
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(Color.white.opacity(0.1), lineWidth: 1)
-            )
-        }
-    }
-}
+
 
 #Preview {
     RuneView(rune: .init(id: 0, name: "", power: "", magic: "", tree: "", rock: "", color: ""))

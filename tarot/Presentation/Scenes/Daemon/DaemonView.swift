@@ -56,36 +56,112 @@ struct DaemonView: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            Text("\(daemon.id) - \(daemon.name)")
-                .font(.title)
-                .bold()
-            Rectangle()
-                .fill(sectionColor)
-                .frame(height: 4)
-                .frame(maxWidth: .infinity)
-            VStack(alignment: .leading, spacing: 16) {
-                Image(uiImage: UIImage(named: daemon.name) ?? UIImage())
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: UIScreen.main.bounds.width)
-                    .background(colorScheme == .dark ? Color.white : Color.clear)
-                
-                
-                LazyVStack(
-                    alignment: .leading,
-                    spacing: 16
-                ) {
-                    daemonSection(title: "Enn", content: daemon.enn, contents: nil)
-                    daemonSection(title: "Descrição", content: daemon.description, contents: nil)
-                    daemonSection(title: "Planeta", content: daemon.planet, contents: nil)
-                    daemonSection(title: "Direção", content: daemon.direction, contents: nil)
-                    daemonSection(title: "Pathworking", content: daemon.pathworking, contents: nil)
-                    daemonSection(title: "Casas Astrológicas", content: nil, contents: daemon.houses)
+            VStack(spacing: 0) {
+                // Hero Image Section
+                ZStack(alignment: .bottom) {
+                    // Image Background
+                    Rectangle()
+                        .fill(Color(hex: "1C1C1E"))
+                        .frame(height: 350)
+                    
+                    Image(daemon.name) // Assuming asset name matches daemon name
+                        .resizable()
+                        .renderingMode(.template)
+                        .foregroundColor(.white)
+                        .scaledToFit()
+                        .frame(height: 280)
+                        .shadow(color: .purple.opacity(0.6), radius: 10, x: 0, y: 0)
+                        .padding(.bottom, 40)
+                    
+                    // Gradient fade at bottom
+                    LinearGradient(
+                        gradient: Gradient(colors: [.clear, Color.black]),
+                        startPoint: .center,
+                        endPoint: .bottom
+                    )
+                    .frame(height: 100)
+                    
+                    // Title Overlay
+                    VStack(spacing: 4) {
+                        Text(daemon.name)
+                            .font(.system(size: 40, weight: .bold, design: .serif))
+                            .foregroundColor(.white)
+                            .shadow(color: .purple.opacity(0.5), radius: 4, x: 0, y: 2)
+                        
+                        Text("#\(daemon.id)")
+                            .font(.system(size: 16, weight: .bold, design: .monospaced))
+                            .foregroundColor(.gray)
+                    }
+                    .padding(.bottom, 20)
                 }
-                .padding(.horizontal)
+                
+                // Content Section
+                VStack(alignment: .leading, spacing: 24) {
+                    // Enn (Chant)
+                    if !daemon.enn.isEmpty {
+                        Text("\"\(daemon.enn)\"")
+                            .font(.system(size: 20, weight: .medium, design: .serif))
+                            .italic()
+                            .foregroundColor(Color(hex: "D4AF37")) // Gold
+                            .multilineTextAlignment(.center)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color.white.opacity(0.05))
+                            )
+                    }
+                    
+                    // Attributes Grid
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+                        AttributeCell(title: "Planeta", value: daemon.planet, icon: "globe")
+                        AttributeCell(title: "Direção", value: daemon.direction, icon: "location.north.circle")
+                        AttributeCell(title: "Pathworking", value: daemon.pathworking, icon: "map")
+                    }
+                    
+                    // Description
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            Image(systemName: "book.closed")
+                                .foregroundColor(.purple)
+                            Text("Descrição")
+                                .font(.title3)
+                                .bold()
+                                .foregroundColor(.white)
+                        }
+                        
+                        Text(daemon.description)
+                            .font(.body)
+                            .foregroundColor(.gray)
+                            .lineSpacing(4)
+                    }
+                    
+                    // Houses Detail (if available)
+                    if let houses = daemon.houses, !houses.isEmpty {
+                        VStack(alignment: .leading, spacing: 8) {
+                            HStack {
+                                Image(systemName: "house.fill")
+                                    .foregroundColor(.purple)
+                                Text("Casas Astrológicas")
+                                    .font(.title3)
+                                    .bold()
+                                    .foregroundColor(.white)
+                            }
+                            
+                            ForEach(houses, id: \.self) { house in
+                                Text("• \(house)")
+                                    .foregroundColor(.gray)
+                                    .padding(.leading, 8)
+                            }
+                        }
+                    }
+                }
+                .padding()
+                .background(Color.black)
             }
-            .padding(.top)
         }
+        .edgesIgnoringSafeArea(.top)
+        .background(Color.black)
     }
 }
 

@@ -13,7 +13,7 @@ enum SectionName: String {
     case runes = "Runas"
     case daemons = "Daemons"
     case bones = "Ossos"
-    case alphabet = "Alfabeto"
+
     case astrology = "Astrologia"
     case herbs = "Ervas"
     case hoodoo = "Hoodoo"
