@@ -14,8 +14,7 @@ struct MainView: View {
         .init(id: 2, name: .daemons),
         .init(id: 3, name: .herbs),
         .init(id: 4, name: .astrology),
-        .init(id: 5, name: .herbs),
-        .init(id: 6, name: .bones)
+        .init(id: 5, name: .bones)
     ]
     
     var body: some View {
