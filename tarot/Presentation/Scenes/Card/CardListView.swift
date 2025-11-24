@@ -65,35 +65,32 @@ struct CardListView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.top, 20)
                         
-                        LazyVGrid(columns: columns, spacing: 20) {
-                            // Major Arcana Selector (Full Width)
-                            Section(header: 
-                                Text("Arcanos Maiores")
-                                    .font(.title3)
-                                    .bold()
-                                    .foregroundColor(.white.opacity(0.8))
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.leading, 4)
-                            ) {
-                                TarotGroupCell(
-                                    title: "Arcanos Maiores",
-                                    icon: "🌟",
-                                    cards: viewModel.cards.filter { $0.major },
-                                    colors: [Color(hex: "FFD700"), Color(hex: "8B4513")]
-                                )
-                                .gridCellColumns(2)
-                            }
+                        // Major Arcana Section (Full Width)
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("Arcanos Maiores")
+                                .font(.title3)
+                                .bold()
+                                .foregroundColor(.white.opacity(0.8))
+                                .padding(.leading, 4)
                             
-                            // Minor Arcana Selectors
-                            Section(header: 
-                                Text("Arcanos Menores")
-                                    .font(.title3)
-                                    .bold()
-                                    .foregroundColor(.white.opacity(0.8))
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.leading, 4)
-                                    .padding(.top, 10)
-                            ) {
+                            TarotGroupCell(
+                                title: "Arcanos Maiores",
+                                icon: "🌟",
+                                cards: viewModel.cards.filter { $0.major },
+                                colors: [Color(hex: "FFD700"), Color(hex: "8B4513")]
+                            )
+                        }
+                        .padding(.bottom, 10)
+                        
+                        // Minor Arcana Section
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("Arcanos Menores")
+                                .font(.title3)
+                                .bold()
+                                .foregroundColor(.white.opacity(0.8))
+                                .padding(.leading, 4)
+                            
+                            LazyVGrid(columns: columns, spacing: 20) {
                                 TarotGroupCell(
                                     title: "Paus",
                                     icon: "🔥",
