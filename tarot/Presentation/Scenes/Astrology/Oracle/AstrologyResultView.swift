@@ -387,7 +387,7 @@ struct PlanetSignCard: View {
                 
                 // Dignity Badge
                 if let dignity = dignity {
-                    DignityBadge(dignity: dignity)
+                    DignitiesView(dignity: dignity)
                 }
             }
             
@@ -460,34 +460,6 @@ struct PlanetSignCard: View {
         case "Aquário": return "♒"
         case "Peixes": return "♓"
         default: return ""
-        }
-    }
-}
-
-struct DignityBadge: View {
-    let dignity: Dignity
-    
-    var body: some View {
-        Text(dignity.rawValue)
-            .font(.caption)
-            .fontWeight(.semibold)
-            .foregroundColor(.white)
-            .padding(.horizontal, 12)
-            .padding(.vertical, 6)
-            .background(dignityColor)
-            .cornerRadius(12)
-    }
-    
-    private var dignityColor: Color {
-        switch dignity {
-        case .ruler:
-            return Color(hex: "FFD700")
-        case .exalted:
-            return Color(hex: "4169E1")
-        case .detriment:
-            return Color(hex: "DC143C")
-        case .fall:
-            return Color(hex: "696969")
         }
     }
 }

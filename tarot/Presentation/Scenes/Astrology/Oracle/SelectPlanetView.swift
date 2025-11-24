@@ -92,13 +92,8 @@ struct SelectPlanetView: View {
                     
                     Menu {
                         ForEach(planets, id: \.0) { planet in
-                            Button(action: {
+                            Button(planet.0) {
                                 selectedPlanet = planet.0
-                            }) {
-                                HStack {
-                                    Text(planet.1)
-                                    Text(planet.0)
-                                }
                             }
                         }
                     } label: {
@@ -134,13 +129,8 @@ struct SelectPlanetView: View {
                     
                     Menu {
                         ForEach(zodiacSigns, id: \.0) { sign in
-                            Button(action: {
+                            Button(sign.0) {
                                 selectedSign = sign.0
-                            }) {
-                                HStack {
-                                    Text(sign.1)
-                                    Text(sign.0)
-                                }
                             }
                         }
                     } label: {

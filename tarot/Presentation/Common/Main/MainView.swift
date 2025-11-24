@@ -20,34 +20,64 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                // Background
-                Color.black.edgesIgnoringSafeArea(.all)
+                // Cosmic background
+                LinearGradient(
+                    colors: [Color(hex: "0A0015"), Color(hex: "1A0033"), Color.black],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
+                
+                // Animated stars
+                GeometryReader { geometry in
+                    ForEach(0..<100, id: \.self) { index in
+                        Circle()
+                            .fill(Color.white.opacity(Double.random(in: 0.2...0.9)))
+                            .frame(width: CGFloat.random(in: 1...3))
+                            .position(
+                                x: CGFloat.random(in: 0...geometry.size.width),
+                                y: CGFloat.random(in: 0...geometry.size.height)
+                            )
+                            .blur(radius: CGFloat.random(in: 0...1))
+                    }
+                }
+                .ignoresSafeArea()
                 
                 ScrollView {
-                    VStack(spacing: 24) {
-                        // Header
-                        VStack(spacing: 8) {
+                    VStack(spacing: 32) {
+                        // Mystical Header
+                        VStack(spacing: 12) {
+                            // Mystical symbol
+                            Text("✦")
+                                .font(.system(size: 40))
+                                .foregroundColor(.purple.opacity(0.8))
+                                .shadow(color: .purple, radius: 10, x: 0, y: 0)
+                            
                             Text("Grimório")
-                                .font(.system(size: 32, weight: .bold, design: .serif))
+                                .font(.system(size: 42, weight: .bold, design: .serif))
                                 .foregroundColor(.white)
-                            Text("Escolha seu caminho")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
+                                .shadow(color: .purple.opacity(0.5), radius: 10, x: 0, y: 0)
                         }
-                        .padding(.top, 20)
+                        .padding(.top, 40)
                         
-                        // Grid
+                        // Mystical Grid
                         LazyVGrid(
                             columns: [GridItem(.flexible()), GridItem(.flexible())],
-                            spacing: 16
+                            spacing: 20
                         ) {
                             ForEach(sections) { section in
                                 NavigationLink(destination: destinationView(for: section)) {
-                                    FeatureCell(section: section)
+                                    MysticalFeatureCell(section: section)
                                 }
                             }
                         }
-                        .padding()
+                        .padding(.horizontal, 20)
+                        
+                        // Footer symbol
+                        Text("✧")
+                            .font(.system(size: 24))
+                            .foregroundColor(.purple.opacity(0.5))
+                            .padding(.bottom, 20)
                     }
                 }
             }
@@ -76,13 +106,30 @@ struct MainView: View {
     }
 }
 
-struct FeatureCell: View {
+struct MysticalFeatureCell: View {
     let section: Main
+    @State private var isGlowing = false
     
     var body: some View {
         ZStack {
+            // Outer glow
+            RoundedRectangle(cornerRadius: 24)
+                .fill(
+                    RadialGradient(
+                        colors: [
+                            gradientColors(for: section.name).first?.opacity(0.4) ?? .clear,
+                            .clear
+                        ],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: 100
+                    )
+                )
+                .blur(radius: 20)
+                .opacity(isGlowing ? 0.8 : 0.4)
+            
             // Card Background
-            RoundedRectangle(cornerRadius: 20)
+            RoundedRectangle(cornerRadius: 24)
                 .fill(
                     LinearGradient(
                         gradient: Gradient(colors: gradientColors(for: section.name)),
@@ -91,34 +138,74 @@ struct FeatureCell: View {
                     )
                 )
                 .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                    RoundedRectangle(cornerRadius: 24)
+                        .stroke(
+                            LinearGradient(
+                                colors: [.white.opacity(0.5), .white.opacity(0.1)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ),
+                            lineWidth: 1.5
+                        )
                 )
-                .shadow(color: gradientColors(for: section.name).first?.opacity(0.3) ?? .clear, radius: 8, x: 0, y: 4)
+                .shadow(color: gradientColors(for: section.name).first?.opacity(0.5) ?? .clear, radius: 15, x: 0, y: 8)
             
+            // Content
             VStack(spacing: 16) {
-                // Icon
-                Image(uiImage: UIImage(named: section.name.rawValue) ?? UIImage())
-                    .renderingMode(.template)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 60)
-                    .foregroundColor(.white)
-                    .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 2)
+                // Icon with glow
+                ZStack {
+                    // Icon glow
+                    Image(uiImage: UIImage(named: section.name.rawValue) ?? UIImage())
+                        .renderingMode(.template)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 65)
+                        .foregroundColor(.white)
+                        .blur(radius: 8)
+                        .opacity(0.6)
+                    
+                    // Icon
+                    Image(uiImage: UIImage(named: section.name.rawValue) ?? UIImage())
+                        .renderingMode(.template)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 65)
+                        .foregroundColor(.white)
+                }
                 
                 // Title
                 Text(section.name.rawValue)
-                    .font(.system(.headline, design: .serif))
+                    .font(.system(.title3, design: .serif))
                     .fontWeight(.bold)
                     .foregroundColor(.white)
                     .multilineTextAlignment(.center)
+                    .shadow(color: .black.opacity(0.5), radius: 2, x: 0, y: 2)
+                
+                // Mystical divider
+                HStack(spacing: 4) {
+                    Text("✦")
+                        .font(.system(size: 8))
+                        .foregroundColor(.white.opacity(0.6))
+                    Rectangle()
+                        .fill(Color.white.opacity(0.3))
+                        .frame(width: 30, height: 1)
+                    Text("✦")
+                        .font(.system(size: 8))
+                        .foregroundColor(.white.opacity(0.6))
+                }
             }
             .padding()
         }
-        .frame(height: 160)
+        .frame(height: 180)
+        .onAppear {
+            withAnimation(
+                Animation.easeInOut(duration: 2)
+                    .repeatForever(autoreverses: true)
+            ) {
+                isGlowing = true
+            }
+        }
     }
-    
-
     
     private func gradientColors(for name: SectionName) -> [Color] {
         switch name {
@@ -126,7 +213,6 @@ struct FeatureCell: View {
         case .runes: return [Color(hex: "9B30FF"), Color(hex: "2A0045")] // Purple to Dark Violet
         case .daemons: return [Color(hex: "4B0082"), Color(hex: "150030")] // Indigo to Dark
         case .bones: return [Color(hex: "8A2BE2"), Color(hex: "200040")] // Blue Violet to Dark
-
         case .astrology: return [Color(hex: "BA55D3"), Color(hex: "38004D")] // Medium Orchid to Dark
         case .herbs: return [Color(hex: "7B68EE"), Color(hex: "1C0045")] // Medium Slate Blue to Dark
         case .hoodoo: return [Color(hex: "6A5ACD"), Color(hex: "18003D")] // Slate Blue to Dark
