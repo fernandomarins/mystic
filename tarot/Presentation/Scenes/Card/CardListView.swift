@@ -66,39 +66,59 @@ struct CardListView: View {
                         .padding(.top, 20)
                         
                         LazyVGrid(columns: columns, spacing: 20) {
-                            // Major Arcana Selector
-                            TarotGroupCell(
-                                title: "Arcanos Maiores",
-                                icon: "🌟",
-                                cards: viewModel.cards.filter { $0.major },
-                                colors: [Color(hex: "FFD700"), Color(hex: "8B4513")]
-                            )
+                            // Major Arcana Selector (Full Width)
+                            Section(header: 
+                                Text("Arcanos Maiores")
+                                    .font(.title3)
+                                    .bold()
+                                    .foregroundColor(.white.opacity(0.8))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.leading, 4)
+                            ) {
+                                TarotGroupCell(
+                                    title: "Arcanos Maiores",
+                                    icon: "🌟",
+                                    cards: viewModel.cards.filter { $0.major },
+                                    colors: [Color(hex: "FFD700"), Color(hex: "8B4513")]
+                                )
+                                .gridCellColumns(2)
+                            }
                             
                             // Minor Arcana Selectors
-                            TarotGroupCell(
-                                title: "Paus",
-                                icon: "🔥",
-                                cards: viewModel.cards.filter { $0.suit == .clubs },
-                                colors: [Color(hex: "FF6B35"), Color(hex: "8B0000")]
-                            )
-                            TarotGroupCell(
-                                title: "Copas",
-                                icon: "💧",
-                                cards: viewModel.cards.filter { $0.suit == .hearts },
-                                colors: [Color(hex: "4A90E2"), Color(hex: "1A237E")]
-                            )
-                            TarotGroupCell(
-                                title: "Ouros",
-                                icon: "💎",
-                                cards: viewModel.cards.filter { $0.suit == .diamonds },
-                                colors: [Color(hex: "FFD700"), Color(hex: "B8860B")]
-                            )
-                            TarotGroupCell(
-                                title: "Espadas",
-                                icon: "⚔️",
-                                cards: viewModel.cards.filter { $0.suit == .spades },
-                                colors: [Color(hex: "C0C0C0"), Color(hex: "4A4A4A")]
-                            )
+                            Section(header: 
+                                Text("Arcanos Menores")
+                                    .font(.title3)
+                                    .bold()
+                                    .foregroundColor(.white.opacity(0.8))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.leading, 4)
+                                    .padding(.top, 10)
+                            ) {
+                                TarotGroupCell(
+                                    title: "Paus",
+                                    icon: "🔥",
+                                    cards: viewModel.cards.filter { $0.suit == .clubs },
+                                    colors: [Color(hex: "FF6B35"), Color(hex: "8B0000")]
+                                )
+                                TarotGroupCell(
+                                    title: "Copas",
+                                    icon: "💧",
+                                    cards: viewModel.cards.filter { $0.suit == .hearts },
+                                    colors: [Color(hex: "4A90E2"), Color(hex: "1A237E")]
+                                )
+                                TarotGroupCell(
+                                    title: "Ouros",
+                                    icon: "💎",
+                                    cards: viewModel.cards.filter { $0.suit == .diamonds },
+                                    colors: [Color(hex: "FFD700"), Color(hex: "B8860B")]
+                                )
+                                TarotGroupCell(
+                                    title: "Espadas",
+                                    icon: "⚔️",
+                                    cards: viewModel.cards.filter { $0.suit == .spades },
+                                    colors: [Color(hex: "C0C0C0"), Color(hex: "4A4A4A")]
+                                )
+                            }
                         }
                         
                         // Footer symbol
@@ -143,14 +163,14 @@ struct TarotGroupCell: View {
                 RoundedRectangle(cornerRadius: 20)
                     .fill(
                         RadialGradient(
-                            colors: [colors.first?.opacity(0.4) ?? .clear, .clear],
+                            colors: [colors.first?.opacity(0.2) ?? .clear, .clear],
                             center: .center,
                             startRadius: 0,
                             endRadius: 80
                         )
                     )
                     .blur(radius: 15)
-                    .opacity(isGlowing ? 0.7 : 0.3)
+                    .opacity(isGlowing ? 0.5 : 0.2)
                 
                 // Card Background
                 RoundedRectangle(cornerRadius: 20)
@@ -160,19 +180,20 @@ struct TarotGroupCell: View {
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         )
+                        .opacity(0.25) // Reduced opacity to blend with background
                     )
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(
                                 LinearGradient(
-                                    colors: [.white.opacity(0.6), .white.opacity(0.1)],
+                                    colors: [.white.opacity(0.3), .white.opacity(0.05)],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 ),
-                                lineWidth: 1.5
+                                lineWidth: 1
                             )
                     )
-                    .shadow(color: colors.first?.opacity(0.4) ?? .clear, radius: 12, x: 0, y: 6)
+                    .shadow(color: colors.first?.opacity(0.2) ?? .clear, radius: 12, x: 0, y: 6)
                 
                 VStack(spacing: 12) {
                     // Icon with glow
