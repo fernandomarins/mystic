@@ -13,7 +13,7 @@ struct MainView: View {
         .init(id: 1, name: .runes),
         .init(id: 2, name: .daemons),
         .init(id: 3, name: .bones),
-        .init(id: 4, name: .alphabet),
+
         .init(id: 5, name: .astrology),
         .init(id: 6, name: .herbs),
         .init(id: 7, name: .hoodoo)
@@ -68,8 +68,7 @@ struct MainView: View {
             DaemonListView()
         case .bones:
             SangomaView()
-        case .alphabet:
-            AlphabetListView()
+
         case .astrology:
             AstrologyListView()
         case .herbs:
@@ -130,7 +129,7 @@ struct FeatureCell: View {
         case .runes: return [Color(hex: "9B30FF"), Color(hex: "2A0045")] // Purple to Dark Violet
         case .daemons: return [Color(hex: "4B0082"), Color(hex: "150030")] // Indigo to Dark
         case .bones: return [Color(hex: "8A2BE2"), Color(hex: "200040")] // Blue Violet to Dark
-        case .alphabet: return [Color(hex: "9932CC"), Color(hex: "2E0042")] // Dark Orchid to Dark
+
         case .astrology: return [Color(hex: "BA55D3"), Color(hex: "38004D")] // Medium Orchid to Dark
         case .herbs: return [Color(hex: "7B68EE"), Color(hex: "1C0045")] // Medium Slate Blue to Dark
         case .hoodoo: return [Color(hex: "6A5ACD"), Color(hex: "18003D")] // Slate Blue to Dark
