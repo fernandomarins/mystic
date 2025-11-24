@@ -15,6 +15,7 @@ struct DaemonListView: View {
     @State private var searchResults: [DaemonModel] = []
     @State private var searchQuery: String = ""
     @State private var isSearching: Bool = false
+    @State private var selectedFilter: DaemonType? = nil
     
     var body: some View {
         ZStack {
@@ -57,10 +58,11 @@ struct DaemonListView: View {
                                     .foregroundColor(Color(hex: "FF3300"))
                                     .shadow(color: .red.opacity(0.5), radius: 10)
                                 
-                                Text("Legiões Infernais")
+                                Text(selectedFilter?.rawValue ?? "Legiões Infernais")
                                     .font(.system(.subheadline, design: .serif))
                                     .foregroundColor(.gray)
                                     .italic()
+                                    .animation(.easeInOut, value: selectedFilter)
                                 
                                 Rectangle()
                                     .fill(
@@ -108,8 +110,13 @@ struct DaemonListView: View {
                     .onChange(of: searchQuery) { newValue, _ in
                         if newValue.isEmpty {
                             isSearching = false
+                            // Only reset filter if search was cleared manually and not by filter selection
+                            if selectedFilter == nil {
+                                isSearching = false
+                            }
                         } else {
                             isSearching = true
+                            selectedFilter = nil // Clear filter when searching text
                             fetchSearchResults(for: newValue)
                         }
                     }
@@ -135,13 +142,48 @@ struct DaemonListView: View {
     @ToolbarContentBuilder
     private var daemonTypeOptions: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
-            Menu("Selecione uma especialidade", systemImage: "arrow.up.arrow.down") {
+            Menu {
+                if isSearching {
+                    Button(role: .destructive) {
+                        isSearching = false
+                        searchQuery = ""
+                        selectedFilter = nil
+                    } label: {
+                        Label("Limpar Filtros", systemImage: "xmark.circle")
+                    }
+                    Divider()
+                }
+                
                 ForEach(DaemonType.allCases, id: \.self) { type in
-                    Button(type.rawValue) {
+                    Button {
                         searchResults = selectedDaemon(for: type)
                         isSearching = true
+                        selectedFilter = type
+                        searchQuery = "" // Clear text search when selecting filter
+                    } label: {
+                        Text(type.rawValue)
                     }
                 }
+            } label: {
+                HStack(spacing: 6) {
+                    Text("Poderes")
+                        .font(.system(.subheadline, design: .serif))
+                        .fontWeight(.bold)
+                    Image(systemName: "flame.fill")
+                        .font(.caption)
+                }
+                .foregroundColor(Color(hex: "FF4500"))
+                .padding(.vertical, 6)
+                .padding(.horizontal, 12)
+                .background(
+                    Capsule()
+                        .fill(Color(hex: "1A0505"))
+                        .overlay(
+                            Capsule()
+                                .stroke(Color(hex: "8B0000"), lineWidth: 1)
+                        )
+                        .shadow(color: .red.opacity(0.3), radius: 4, x: 0, y: 2)
+                )
             }
         }
     }
