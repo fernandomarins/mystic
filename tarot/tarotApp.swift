@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct tarotApp: App {
@@ -13,5 +14,6 @@ struct tarotApp: App {
         WindowGroup {
             MainView()
         }
+        .modelContainer(for: CardEntity.self)
     }
 }

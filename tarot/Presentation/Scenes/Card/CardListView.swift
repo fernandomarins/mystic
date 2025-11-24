@@ -7,8 +7,10 @@
 
 import SwiftUI
 import SwiftfulLoadingIndicators
+import SwiftData
 
 struct CardListView: View {
+    @Environment(\.modelContext) var modelContext
     @StateObject private var viewModel = CardViewModel()
     
     private let columns = [
@@ -72,7 +74,7 @@ struct CardListView: View {
                 .navigationTitle("Arcanos")
                 .refreshable {
                     Task {
-                        await viewModel.fetchCards()
+                        await viewModel.fetchCards(context: modelContext)
                     }
                 }
             }
@@ -80,7 +82,7 @@ struct CardListView: View {
         .onAppear {
             if viewModel.cards.isEmpty {
                 Task {
-                    await viewModel.fetchCards()
+                    await viewModel.fetchCards(context: modelContext)
                 }
             }
         }
