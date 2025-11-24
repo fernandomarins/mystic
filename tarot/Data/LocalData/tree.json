@@ -1,0 +1,85 @@
+{
+  "lei_da_criacao": {
+    "titulo": "O Fluxo da Essência (Kether a Malkuth)",
+    "fundamento": "O Cosmos Físico é constituído por Cinco Forças Elementais e suas combinações, irrecuperavelmente conectadas ao padrão do glifo da Árvore da Vida. A substância de Deus (não diferenciada) entra na Árvore em Kether e desce, tornando-se mais densa a cada passo, até se tornar matéria densa em Malkuth.",
+    "fluxo_de_manifestacao": [
+      {
+        "sephirah": "KETHER (#1)",
+        "nome": "Coroa / Abridor",
+        "planeta": "Não tem",
+        "funcao_na_criacao": "Ponto de Entrada da Essência Sutil de Deus, vinda de 'fora' do Cosmos Físico. É o Primeiro Movimento (Primum Mobile) e o início da ação material, ou ‘Movimento de Movimento’.",
+        "elemento_combinado": "AR de AR",
+        "nota_adicional": "O que aconteceu antes da criação física não pode ser manuseado agora (os Três Véus Negativos da Existência)"
+      },
+      {
+        "sephirah": "CHOKMAH (#2)",
+        "nome": "Sabedoria / Caos / Espaço",
+        "planeta": "Primum Mobile",
+        "funcao_na_criacao": "É o 'Gap' ou 'Espaço para operar', criado após a abertura de Kether. É uma influência estimulante, análoga à função fertilizadora masculina. A Luz Astral se espalha para operar aqui.",
+        "elemento_combinado": "ÁGUA de AR. Representa a Condensação do Movimento, formando o Espaço."
+      },
+      {
+        "sephirah": "BINAH (#3)",
+        "nome": "Entendimento / Grande Mãe",
+        "planeta": "Saturno",
+        "funcao_na_criacao": "É a 'forma' ou 'disciplina da Força'. É o primeiro 'Prisma' ou 'Transformador' que modifica a Luz Astral Bruta em uma forma usável. É onde a solidez começa.",
+        "elemento_combinado": "FOGO de AR. Representa a Expansão do Movimento."
+      },
+      {
+        "sephirah": "CHESED (#4)",
+        "nome": "Misericórdia / Júpiter",
+        "planeta": "Júpiter",
+        "funcao_na_criacao": "Esfera do desenvolvimento, especulação e crescimento (todos da natureza do Passado, pois baseados em recursos acumulados). Representa o Pilar da Direita (Passado).",
+        "elemento_combinado": "ÁGUA de FOGO. Significa Contração sobre Expansão (Expansão Controlada)."
+      },
+      {
+        "sephirah": "GEBURAH (#5)",
+        "nome": "Força",
+        "planeta": "Marte",
+        "funcao_na_criacao": "Esfera da guerra, energia e severidade. Liga-se à expansão (fogo) necessária para a ação. Representa o Pilar da Esquerda (Futuro).",
+        "elemento_combinado": "FOGO de FOGO. Expansão da Expansão."
+      },
+      {
+        "sephirah": "TIPHARETH (#6)",
+        "nome": "Beleza",
+        "planeta": "Sol",
+        "funcao_na_criacao": "O centro da Árvore; uma Força de equilíbrio e convergência. Liga-se ao Presente.",
+        "elemento_combinado": "AR de FOGO. Movimento da Expansão."
+      },
+      {
+        "sephirah": "NETZACH (#7)",
+        "nome": "Vitória",
+        "planeta": "Vênus",
+        "funcao_na_criacao": "Representa a esfera do Passado e da acumulação de recursos, sendo o resultado da Contração da Contração. Nesta esfera, a riqueza e os objetos de luxo são o resultado consolidado de ações e expansões anteriores. É o ponto onde o movimento é usado para acumular recursos.",
+        "elemento_combinado": "ÁGUA de ÁGUA. Contração da Contração."
+      },
+      {
+        "sephirah": "HOD (#8)",
+        "nome": "Glória",
+        "planeta": "Mercúrio",
+        "funcao_na_criacao": "Representa a esfera do Futuro. Hod governa o mental, a razão e o planejamento. O Elemental Fogo (expansão) atua sobre a Água (potencial/recursos passados), descrevendo o processo da **mente humana** que usa seu banco de memória (água) para criar algo novo (fogo). Hod é a esfera de todas as operações mágicas, pois toda operação mágica é uma tentativa de mudar o futuro.",
+        "elemento_combinado": "FOGO de ÁGUA. Expansão na Contração."
+      },
+      {
+        "sephirah": "YESOD (#9)",
+        "nome": "Fundação",
+        "planeta": "Lua",
+        "funcao_na_criacao": "É a esfera do Presente. Yesod atua como o canalizador ou funil para todas as Forças das Sephiroth superiores, transmitindo-as para a Terra. O efeito dos alinhamentos astrológicos (conjugações de planetas) não se manifesta na Terra até que a Lua (Yesod) atinja a Lua Cheia. A combinação elemental reflete a natureza mutável da Lua.",
+        "elemento_combinado": "AR de ÁGUA. Movimento de Condensação."
+      },
+      {
+        "sephirah": "MALKUTH (#10)",
+        "nome": "Reino / Esfera dos Elementos",
+        "planeta": "Terra",
+        "funcao_na_criacao": "O resultado final solidificado do Cosmos Físico, onde a Essência Etérica se torna Matéria Física (aparentemente sólida)]. É o grande Armazém Final de todas as Forças. É onde toda a operação mágica deve ser aterrada.",
+        "composicao_elemental": "Malkuth é o único Sephiroth multicompartimentado. Ele consiste em quatro quartos elementais, indicando que todos os Elementos vêm para descansar aqui.",
+        "elementos_de_malkuth": [
+          "AR de TERRA",
+          "FOGO de TERRA",
+          "ÁGUA de TERRA",
+          "TERRA de TERRA"
+        ]
+      }
+    ]
+  }
+}
