@@ -7,8 +7,10 @@
 
 import SwiftUI
 import SwiftfulLoadingIndicators
+import SwiftData
 
 struct RuneListView: View {
+    @Environment(\.modelContext) var modelContext
     @StateObject private var viewModel = RuneViewModel()
     @State private var searchQuery: String = ""
     
@@ -49,7 +51,7 @@ struct RuneListView: View {
                 }
                 .navigationTitle("Runas")
                 .refreshable {
-                    await viewModel.fetchRunes()
+                    await viewModel.fetchRunes(context: modelContext)
                 }
                 .searchable(text: $searchQuery, prompt: "Buscar Runa")
             }
@@ -57,7 +59,7 @@ struct RuneListView: View {
         .onAppear {
             if viewModel.runes.isEmpty {
                 Task {
-                    await viewModel.fetchRunes()
+                    await viewModel.fetchRunes(context: modelContext)
                 }
             }
         }

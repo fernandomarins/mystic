@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftData
 
 @MainActor
 class DaemonViewModel: ObservableObject {
@@ -13,18 +14,18 @@ class DaemonViewModel: ObservableObject {
     @Published var errorMessage: IdentifiableError? = nil
     @Published var isLoading = false
     
-    private let service: DaemonService
+    private let repository: DaemonsRepository
     
-    init(service: DaemonService = DaemonService()) {
-        self.service = service
+    init(repository: DaemonsRepository = DaemonsRepository()) {
+        self.repository = repository
     }
     
-    func fetchDaemons() async {
+    func fetchDaemons(context: ModelContext) async {
         isLoading = true
         defer { isLoading = false }
         
         do {
-            daemons = try await service.getDaemons()
+            daemons = try await repository.fetchDaemons(context: context)
         } catch {
             errorMessage = IdentifiableError(message: "Failed to fetch daemons: \(error.localizedDescription)")
         }

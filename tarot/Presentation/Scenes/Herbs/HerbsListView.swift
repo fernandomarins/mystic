@@ -7,8 +7,10 @@
 
 import SwiftUI
 import SwiftfulLoadingIndicators
+import SwiftData
 
 struct HerbsListView: View {
+    @Environment(\.modelContext) var modelContext
     @StateObject private var viewModel = HerbsViewModel()
     @State private var selectedHerbs = Set<Herb>()
     @State private var isSelectionModeActive = false
@@ -80,7 +82,7 @@ struct HerbsListView: View {
         }
         .refreshable {
             Task {
-                await viewModel.fetchHerbs()
+                await viewModel.fetchHerbs(context: modelContext)
             }
         }
         .scrollIndicators(.hidden)
@@ -131,7 +133,7 @@ struct HerbsListView: View {
     private func loadHerbsIfNeeded() {
         if viewModel.herbs.isEmpty {
             Task {
-                await viewModel.fetchHerbs()
+                await viewModel.fetchHerbs(context: modelContext)
             }
         }
     }

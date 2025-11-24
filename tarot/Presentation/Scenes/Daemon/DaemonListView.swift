@@ -7,8 +7,10 @@
 
 import SwiftUI
 import SwiftfulLoadingIndicators
+import SwiftData
 
 struct DaemonListView: View {
+    @Environment(\.modelContext) var modelContext
     @StateObject private var viewModel = DaemonViewModel()
     @State private var searchResults: [DaemonModel] = []
     @State private var searchQuery: String = ""
@@ -40,7 +42,7 @@ struct DaemonListView: View {
                     .navigationTitle("Daemons")
                     .refreshable {
                         Task {
-                            await viewModel.fetchDaemons()
+                            await viewModel.fetchDaemons(context: modelContext)
                         }
                     }
                     .searchable(
@@ -64,7 +66,7 @@ struct DaemonListView: View {
             .onAppear {
                 if viewModel.daemons.isEmpty {
                     Task {
-                        await viewModel.fetchDaemons()
+                        await viewModel.fetchDaemons(context: modelContext)
                     }
                 }
             }
