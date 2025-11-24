@@ -18,26 +18,80 @@ struct DaemonListView: View {
     
     var body: some View {
         ZStack {
-            Color.black.edgesIgnoringSafeArea(.all)
+            // Hell Background
+            LinearGradient(
+                colors: [Color(hex: "2A0000"), Color(hex: "1A0000"), Color.black],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+            
+            // Fire particles overlay
+            GeometryReader { geometry in
+                ForEach(0..<40, id: \.self) { _ in
+                    Circle()
+                        .fill(Color(hex: "FF4500").opacity(Double.random(in: 0.1...0.3)))
+                        .frame(width: CGFloat.random(in: 2...4))
+                        .position(
+                            x: CGFloat.random(in: 0...geometry.size.width),
+                            y: CGFloat.random(in: 0...geometry.size.height)
+                        )
+                }
+            }
+            .ignoresSafeArea()
             
             if viewModel.isLoading {
                 LoadingIndicator(
                     animation: .circleBars,
-                    color: .white,
+                    color: .red,
                     size: .large
                 )
             } else {
-                VStack {
+                VStack(spacing: 0) {
                     ScrollView {
-                        LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
-                            let displayedDaemons = isSearching ? searchResults : viewModel.daemons
-                            ForEach(displayedDaemons) { daemon in
-                                NavigationLink(destination: DaemonView(daemon: daemon)) {
-                                    DaemonCell(daemon: daemon)
+                        VStack(spacing: 24) {
+                            // Hell Header
+                            VStack(spacing: 8) {
+                                Text("Ars Goetia")
+                                    .font(.system(size: 40, weight: .bold, design: .serif))
+                                    .foregroundColor(Color(hex: "FF3300"))
+                                    .shadow(color: .red.opacity(0.5), radius: 10)
+                                
+                                Text("Legiões Infernais")
+                                    .font(.system(.subheadline, design: .serif))
+                                    .foregroundColor(.gray)
+                                    .italic()
+                                
+                                Rectangle()
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [.clear, Color(hex: "8B0000"), .clear],
+                                            startPoint: .leading,
+                                            endPoint: .trailing
+                                        )
+                                    )
+                                    .frame(height: 1)
+                                    .frame(width: 120)
+                                    .padding(.top, 8)
+                            }
+                            .padding(.top, 20)
+                            
+                            LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
+                                let displayedDaemons = isSearching ? searchResults : viewModel.daemons
+                                ForEach(displayedDaemons) { daemon in
+                                    NavigationLink(destination: DaemonView(daemon: daemon)) {
+                                        DaemonCell(daemon: daemon)
+                                    }
                                 }
                             }
+                            .padding()
+                            
+                            // Footer symbol
+                            Text("⛧")
+                                .font(.system(size: 30))
+                                .foregroundColor(Color(hex: "8B0000").opacity(0.5))
+                                .padding(.bottom, 20)
                         }
-                        .padding()
                     }
                     .navigationTitle("Daemons")
                     .refreshable {
@@ -63,13 +117,13 @@ struct DaemonListView: View {
                 }
             }
         }
-            .onAppear {
-                if viewModel.daemons.isEmpty {
-                    Task {
-                        await viewModel.fetchDaemons(context: modelContext)
-                    }
+        .onAppear {
+            if viewModel.daemons.isEmpty {
+                Task {
+                    await viewModel.fetchDaemons(context: modelContext)
                 }
             }
+        }
         .toolbar {
             if !viewModel.daemons.isEmpty {
                 daemonTypeOptions

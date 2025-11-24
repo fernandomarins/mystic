@@ -12,21 +12,27 @@ struct DaemonCell: View {
     
     var body: some View {
         ZStack {
-            // Background (Dark Stone/Metal look)
+            // Hell Card Background
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color(hex: "1C1C1E"))
+                .fill(
+                    LinearGradient(
+                        colors: [Color(hex: "1A0505"), Color(hex: "0A0000")],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)
                         .stroke(
                             LinearGradient(
-                                gradient: Gradient(colors: [Color.gray.opacity(0.5), Color.clear, Color.gray.opacity(0.5)]),
+                                colors: [Color(hex: "FF4500").opacity(0.6), Color(hex: "8B0000").opacity(0.2)],
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
                             ),
-                            lineWidth: 1
+                            lineWidth: 1.5
                         )
                 )
-                .shadow(color: .black.opacity(0.5), radius: 4, x: 0, y: 2)
+                .shadow(color: Color(hex: "FF0000").opacity(0.3), radius: 8, x: 0, y: 4)
             
             VStack(spacing: 12) {
                 // Rank/Number
@@ -34,29 +40,40 @@ struct DaemonCell: View {
                     Spacer()
                     Text("#\(daemon.id)")
                         .font(.system(size: 12, weight: .bold, design: .monospaced))
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color(hex: "FF4500").opacity(0.7))
                 }
                 .padding(.top, 12)
                 .padding(.trailing, 12)
                 
-                // Sigil/Image
-                Image(daemon.name) // Assuming asset name matches daemon name
-                    .resizable()
-                    .renderingMode(.template) // Make it white/glowing
-                    .foregroundColor(.white.opacity(0.9))
-                    .scaledToFit()
-                    .frame(height: 60)
-                    .shadow(color: .purple.opacity(0.5), radius: 8, x: 0, y: 0) // Mystical glow
+                // Sigil/Image with Fire Glow
+                ZStack {
+                    Image(daemon.name)
+                        .resizable()
+                        .renderingMode(.template)
+                        .foregroundColor(Color(hex: "FF4500"))
+                        .scaledToFit()
+                        .frame(height: 60)
+                        .blur(radius: 6)
+                        .opacity(0.6)
+                    
+                    Image(daemon.name)
+                        .resizable()
+                        .renderingMode(.template)
+                        .foregroundColor(.white)
+                        .scaledToFit()
+                        .frame(height: 60)
+                }
                 
                 Spacer()
                 
                 // Name
                 Text(daemon.name)
-                    .font(.system(size: 16, weight: .bold, design: .serif))
-                    .foregroundColor(.white)
+                    .font(.system(size: 18, weight: .bold, design: .serif))
+                    .foregroundColor(Color(hex: "FFE5B4")) // Pale gold/flesh
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 16)
                     .padding(.horizontal, 8)
+                    .shadow(color: .red.opacity(0.5), radius: 2)
             }
         }
         .frame(height: 160)
