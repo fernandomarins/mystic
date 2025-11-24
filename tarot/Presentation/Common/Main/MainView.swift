@@ -220,7 +220,7 @@ struct MysticalFeatureCell: View {
         case .astrology: return [Color(hex: "BA55D3"), Color(hex: "38004D")] // Medium Orchid to Dark
         case .herbs: return [Color(hex: "7B68EE"), Color(hex: "1C0045")] // Medium Slate Blue to Dark
         case .hoodoo: return [Color(hex: "6A5ACD"), Color(hex: "18003D")] // Slate Blue to Dark
-        case .cabala: return [Color(hex: "FFD700"), Color(hex: "191970")] // Gold to Midnight Blue
+        case .cabala: return [Color(hex: "6A5ACD"), Color(hex: "18003D")] // Gold to Midnight Blue
         }
     }
 }

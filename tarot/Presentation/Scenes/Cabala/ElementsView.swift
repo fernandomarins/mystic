@@ -101,15 +101,26 @@ struct ElementsView: View {
 struct ElementCell: View {
     let element: ForcasElementares
     @State private var isExpanded = false
+    @State private var showFullScreen = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             // Header
             HStack {
                 // Symbol Shape
-                ElementShape(shapeName: element.simbolo.forma, color: elementColor(element.simbolo.cor))
-                    .frame(width: 50, height: 50)
-                    .shadow(color: elementColor(element.simbolo.cor).opacity(0.5), radius: 10, x: 0, y: 0)
+                Button(action: {
+                    if element.nome.uppercased() != "AKASHA" {
+                        showFullScreen = true
+                    }
+                }) {
+                    ElementShape(shapeName: element.simbolo.forma, color: elementColor(element.simbolo.cor))
+                        .frame(width: 50, height: 50)
+                        .shadow(color: elementColor(element.simbolo.cor).opacity(0.5), radius: 10, x: 0, y: 0)
+                }
+                .buttonStyle(PlainButtonStyle())
+                .fullScreenCover(isPresented: $showFullScreen) {
+                    ElementFullScreenView(elementName: element.nome, isPresented: $showFullScreen)
+                }
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(element.nome)
@@ -185,8 +196,8 @@ struct ElementCell: View {
         if colorString.contains("Vermelho") { return .red }
         if colorString.contains("Azul") { return .blue }
         if colorString.contains("Amarelo") { return .yellow }
-        if colorString.contains("Índigo") || colorString.contains("Preto") { return Color(hex: "4B0082") } // Indigo
-        if colorString.contains("Branco") || colorString.contains("Cinza") { return .white }
+        if colorString.contains("Índigo") { return Color(hex: "4B0082") } // Indigo
+        if colorString.contains("Branco") || colorString.contains("Cinza") { return .black }
         return .gray
     }
 }
