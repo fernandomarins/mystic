@@ -7,8 +7,10 @@
 
 import SwiftUI
 import SwiftfulLoadingIndicators
+import SwiftData
 
 struct HerbsListView: View {
+    @Environment(\.modelContext) var modelContext
     @StateObject private var viewModel = HerbsViewModel()
     @State private var selectedHerbs = Set<Herb>()
     @State private var isSelectionModeActive = false
@@ -16,44 +18,71 @@ struct HerbsListView: View {
     @State private var isShowingHerbAddView = false
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                if viewModel.isLoading {
-                    loadingIndicator
-                } else if !viewModel.herbs.isEmpty {
-                    herbListView
-                } else {
-                    Text("Nenhuma erva encontrada.")
-                        .foregroundColor(.gray)
-//                }
-//                if !viewModel.herbs.isEmpty {
-//                    Button(action: {
-//                        isShowingHerbAddView.toggle()
-//                    }) {
-//                        Text("Adicionar Erva")
-//                            .fontWeight(.bold)
-//                            .frame(maxWidth: .infinity)
-//                            .padding()
-//                            .background(Color.purple)
-//                            .foregroundColor(.white)
-//                            .cornerRadius(16)
-//                    }
-//                    .padding()
-//                    .sheet(isPresented: $isShowingHerbAddView) {
-//                        HerbsAddView()
-//                    }
+        ZStack {
+            // Forest Background
+            LinearGradient(
+                colors: [Color(hex: "051A05"), Color(hex: "0A200A"), Color.black],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+            
+            // Fireflies/Magic particles overlay
+            GeometryReader { geometry in
+                ForEach(0..<25, id: \.self) { _ in
+                    Circle()
+                        .fill(Color(hex: "CCFF00").opacity(Double.random(in: 0.1...0.3)))
+                        .frame(width: CGFloat.random(in: 2...4))
+                        .position(
+                            x: CGFloat.random(in: 0...geometry.size.width),
+                            y: CGFloat.random(in: 0...geometry.size.height)
+                        )
+                        .shadow(color: .green, radius: 4)
                 }
             }
-            .navigationTitle("Ervas")
-            .onAppear {
-                loadHerbsIfNeeded()
+            .ignoresSafeArea()
+            
+            if viewModel.isLoading {
+                loadingIndicator
+            } else {
+                VStack(spacing: 0) {
+                    ScrollView {
+                        VStack(spacing: 24) {
+                            // Forest Header
+                            VStack(spacing: 8) {
+                                Text("Grimório Verde")
+                                    .font(.system(size: 36, weight: .bold, design: .serif))
+                                    .foregroundColor(Color(hex: "90EE90")) // Light Green
+                                    .shadow(color: .green.opacity(0.5), radius: 10)
+                                
+                                Image(systemName: "leaf.fill")
+                                    .font(.system(size: 24))
+                                    .foregroundColor(Color(hex: "228B22")) // Forest Green
+                                    .padding(.top, 4)
+                            }
+                            .padding(.top, 20)
+                            
+                            if !viewModel.herbs.isEmpty {
+                                herbListView
+                            } else {
+                                Text("Nenhuma erva encontrada.")
+                                    .foregroundColor(.gray)
+                                    .padding(.top, 40)
+                            }
+                        }
+                    }
+                    .refreshable {
+                        Task {
+                            await viewModel.fetchHerbs(context: modelContext)
+                        }
+                    }
+                    .scrollIndicators(.hidden)
+                }
             }
         }
-        .toolbar {
-            selectHerbs
-        }
-        .sheet(isPresented: $isShowingHerbSelectView) {
-            HerbsSelectView(herbs: Array(selectedHerbs))
+        .navigationTitle("Ervas")
+        .onAppear {
+            loadHerbsIfNeeded()
         }
         .backButtonStyle()
     }
@@ -69,8 +98,9 @@ struct HerbsListView: View {
                         }
                         isSelectionModeActive.toggle()
                     }) {
-                        Text(isSelectionModeActive ? "Feito" : "Selecione as ervas")
-                            .foregroundStyle(.purple)
+                        Text(isSelectionModeActive ? "Feito" : "Selecionar")
+                            .font(.system(.body, design: .serif))
+                            .foregroundStyle(Color(hex: "90EE90"))
                     }
                 }
             }
@@ -78,7 +108,7 @@ struct HerbsListView: View {
     }
     
     private var herbListView: some View {
-        List(selection: $selectedHerbs) {
+        LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
             let hotHerbs = viewModel.getHerbType(type: .hot)
             if !hotHerbs.isEmpty {
                 createSection(title: .hot, herbs: hotHerbs)
@@ -94,33 +124,37 @@ struct HerbsListView: View {
                 createSection(title: .cold, herbs: coldHerbs)
             }
         }
-        .refreshable {
-            Task {
-                await viewModel.fetchHerbs()
-            }
-        }
-        .textInputAutocapitalization(.never)
-        .scrollIndicators(.hidden)
-        .environment(\.editMode, .constant(isSelectionModeActive ? .active : .inactive))
+        .padding()
     }
     
     private var loadingIndicator: some View {
         LoadingIndicator(
             animation: .circleBars,
             color: .white,
-            size: .medium
+            size: .large
         )
     }
     
     @ViewBuilder
     private func createSection(title: HerbType, herbs: [Herb]) -> some View {
-        Section(header: Text(title.rawValue)) {
+        Section(header: 
+            Text(title.rawValue)
+                .font(.title2)
+                .bold()
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top, 16)
+        ) {
             ForEach(herbs, id: \.self) { herb in
-                NavigationLink(destination: HerbView(herb: herb)) {
-                    Text(herb.name)
-                }
-                .onTapGesture {
-                    toggleHerbSelection(herb)
+                if isSelectionModeActive {
+                    HerbCell(herb: herb, isSelected: selectedHerbs.contains(herb))
+                        .onTapGesture {
+                            toggleHerbSelection(herb)
+                        }
+                } else {
+                    NavigationLink(destination: HerbView(herb: herb)) {
+                        HerbCell(herb: herb, isSelected: false)
+                    }
                 }
             }
         }
@@ -137,7 +171,7 @@ struct HerbsListView: View {
     private func loadHerbsIfNeeded() {
         if viewModel.herbs.isEmpty {
             Task {
-                await viewModel.fetchHerbs()
+                await viewModel.fetchHerbs(context: modelContext)
             }
         }
     }

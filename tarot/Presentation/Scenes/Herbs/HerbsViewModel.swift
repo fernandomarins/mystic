@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftData
 
 @MainActor
 class HerbsViewModel: ObservableObject {
@@ -13,33 +14,20 @@ class HerbsViewModel: ObservableObject {
     @Published var errorMessage: IdentifiableError? = nil
     @Published var isLoading = false
     
-    private let service: HerbsService
+    private let repository: HerbsRepository
     
-    init(service: HerbsService = HerbsService()) {
-        self.service = service
+    init(repository: HerbsRepository = HerbsRepository()) {
+        self.repository = repository
     }
     
-    func fetchHerbs() async {
+    func fetchHerbs(context: ModelContext) async {
         isLoading = true
         defer { isLoading = false }
         
         do {
-            let response = try await service.getHerbs()
-            herbs = response.herbs
+            herbs = try await repository.fetchHerbs(context: context)
         } catch {
             errorMessage = IdentifiableError(message: "Failed to fetch herbs: \(error.localizedDescription)")
-        }
-    }
-    
-    func postHerb(_ herb: Herb) async {
-        isLoading = true
-        defer { isLoading = false }
-        
-        do {
-            let response = try await service.postHerb(herb)
-            herbs.append(response)
-        } catch {
-            errorMessage = IdentifiableError(message: "Failed to post herb: \(error.localizedDescription)")
         }
     }
     

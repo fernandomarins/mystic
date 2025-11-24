@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftData
 
 @MainActor
 class RuneViewModel: ObservableObject {
@@ -13,18 +14,18 @@ class RuneViewModel: ObservableObject {
     @Published var errorMessage: IdentifiableError? = nil
     @Published var isLoading = false
     
-    private let service: RuneService
+    private let repository: RunesRepository
     
-    init(service: RuneService = RuneService()) {
-        self.service = service
+    init(repository: RunesRepository = RunesRepository()) {
+        self.repository = repository
     }
     
-    func fetchRunes() async {
+    func fetchRunes(context: ModelContext) async {
         isLoading = true
         defer { isLoading = false }
         
         do {
-            runes = try await service.getRunes()
+            runes = try await repository.fetchRunes(context: context)
         } catch {
             errorMessage = IdentifiableError(message: "Failed to fetch runes: \(error.localizedDescription)")
         }

@@ -54,7 +54,7 @@ struct TarotCardCell: View {
                         }
                     }
                 }
-                .frame(height: 160) // Fixed height for image area
+                .frame(height: card.major ? 160 : 40) // Fixed height for image area
                 
                 // Text Area (Bottom 25%)
                 VStack(spacing: 4) {
@@ -78,7 +78,7 @@ struct TarotCardCell: View {
             }
             .cornerRadius(16)
         }
-        .frame(height: 240) // Increased height slightly
+        .frame(height: card.major ? 240 : 120) // Reduced height for Minor Arcana
     }
     
     private func suitSymbol(for suit: CardSuit) -> String {

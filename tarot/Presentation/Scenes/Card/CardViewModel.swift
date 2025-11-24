@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftData
 
 @MainActor
 class CardViewModel: ObservableObject {
@@ -13,18 +14,18 @@ class CardViewModel: ObservableObject {
     @Published var errorMessage: IdentifiableError? = nil
     @Published var isLoading = false
     
-    private let service: CardService
+    private let repository: CardRepository
     
-    init(service: CardService = CardService()) {
-        self.service = service
+    init(repository: CardRepository = CardRepository()) {
+        self.repository = repository
     }
     
-    func fetchCards() async {
+    func fetchCards(context: ModelContext) async {
         isLoading = true
         defer { isLoading = false }
         
         do {
-            cards = try await service.getCards()
+            cards = try await repository.fetchCards(context: context)
         } catch {
             errorMessage = IdentifiableError(message: "Failed to fetch cards: \(error.localizedDescription)")
         }

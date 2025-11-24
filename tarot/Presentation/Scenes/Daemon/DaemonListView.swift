@@ -7,37 +7,98 @@
 
 import SwiftUI
 import SwiftfulLoadingIndicators
+import SwiftData
 
 struct DaemonListView: View {
+    @Environment(\.modelContext) var modelContext
     @StateObject private var viewModel = DaemonViewModel()
     @State private var searchResults: [DaemonModel] = []
     @State private var searchQuery: String = ""
     @State private var isSearching: Bool = false
+    @State private var selectedFilter: DaemonType? = nil
     
     var body: some View {
-            VStack {
-                if viewModel.isLoading {
-                    LoadingIndicator(
-                        animation: .circleBars,
-                        color: .white,
-                        size: .medium
-                    )
-                } else {
+        ZStack {
+            // Hell Background
+            LinearGradient(
+                colors: [Color(hex: "2A0000"), Color(hex: "1A0000"), Color.black],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+            
+            // Fire particles overlay
+            GeometryReader { geometry in
+                ForEach(0..<40, id: \.self) { _ in
+                    Circle()
+                        .fill(Color(hex: "FF4500").opacity(Double.random(in: 0.1...0.3)))
+                        .frame(width: CGFloat.random(in: 2...4))
+                        .position(
+                            x: CGFloat.random(in: 0...geometry.size.width),
+                            y: CGFloat.random(in: 0...geometry.size.height)
+                        )
+                }
+            }
+            .ignoresSafeArea()
+            
+            if viewModel.isLoading {
+                LoadingIndicator(
+                    animation: .circleBars,
+                    color: .red,
+                    size: .large
+                )
+            } else {
+                VStack(spacing: 0) {
                     ScrollView {
-                        LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
-                            let displayedDaemons = isSearching ? searchResults : viewModel.daemons
-                            ForEach(displayedDaemons) { daemon in
-                                NavigationLink(destination: DaemonView(daemon: daemon)) {
-                                    DaemonCell(daemon: daemon)
+                        VStack(spacing: 24) {
+                            // Hell Header
+                            VStack(spacing: 8) {
+                                Text("Ars Goetia")
+                                    .font(.system(size: 40, weight: .bold, design: .serif))
+                                    .foregroundColor(Color(hex: "FF3300"))
+                                    .shadow(color: .red.opacity(0.5), radius: 10)
+                                
+                                Text(selectedFilter?.rawValue ?? "Legiões Infernais")
+                                    .font(.system(.subheadline, design: .serif))
+                                    .foregroundColor(.gray)
+                                    .italic()
+                                    .animation(.easeInOut, value: selectedFilter)
+                                
+                                Rectangle()
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [.clear, Color(hex: "8B0000"), .clear],
+                                            startPoint: .leading,
+                                            endPoint: .trailing
+                                        )
+                                    )
+                                    .frame(height: 1)
+                                    .frame(width: 120)
+                                    .padding(.top, 8)
+                            }
+                            .padding(.top, 20)
+                            
+                            LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
+                                let displayedDaemons = isSearching ? searchResults : viewModel.daemons
+                                ForEach(displayedDaemons) { daemon in
+                                    NavigationLink(destination: DaemonView(daemon: daemon)) {
+                                        DaemonCell(daemon: daemon)
+                                    }
                                 }
                             }
+                            .padding()
+                            
+                            // Footer symbol
+                            Text("⛧")
+                                .font(.system(size: 30))
+                                .foregroundColor(Color(hex: "8B0000").opacity(0.5))
+                                .padding(.bottom, 20)
                         }
-                        .padding()
                     }
                     .navigationTitle("Daemons")
                     .refreshable {
                         Task {
-                            await viewModel.fetchDaemons()
+                            await viewModel.fetchDaemons(context: modelContext)
                         }
                     }
                     .searchable(
@@ -49,22 +110,27 @@ struct DaemonListView: View {
                     .onChange(of: searchQuery) { newValue, _ in
                         if newValue.isEmpty {
                             isSearching = false
+                            // Only reset filter if search was cleared manually and not by filter selection
+                            if selectedFilter == nil {
+                                isSearching = false
+                            }
                         } else {
                             isSearching = true
+                            selectedFilter = nil // Clear filter when searching text
                             fetchSearchResults(for: newValue)
                         }
                     }
                     .scrollIndicators(.hidden)
-                    .background(Color.black) // Ensure background is black for the grid
                 }
             }
-            .onAppear {
-                if viewModel.daemons.isEmpty {
-                    Task {
-                        await viewModel.fetchDaemons()
-                    }
+        }
+        .onAppear {
+            if viewModel.daemons.isEmpty {
+                Task {
+                    await viewModel.fetchDaemons(context: modelContext)
                 }
             }
+        }
         .toolbar {
             if !viewModel.daemons.isEmpty {
                 daemonTypeOptions
@@ -76,13 +142,48 @@ struct DaemonListView: View {
     @ToolbarContentBuilder
     private var daemonTypeOptions: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
-            Menu("Selecione uma especialidade", systemImage: "arrow.up.arrow.down") {
+            Menu {
+                if isSearching {
+                    Button(role: .destructive) {
+                        isSearching = false
+                        searchQuery = ""
+                        selectedFilter = nil
+                    } label: {
+                        Label("Limpar Filtros", systemImage: "xmark.circle")
+                    }
+                    Divider()
+                }
+                
                 ForEach(DaemonType.allCases, id: \.self) { type in
-                    Button(type.rawValue) {
+                    Button {
                         searchResults = selectedDaemon(for: type)
                         isSearching = true
+                        selectedFilter = type
+                        searchQuery = "" // Clear text search when selecting filter
+                    } label: {
+                        Text(type.rawValue)
                     }
                 }
+            } label: {
+                HStack(spacing: 6) {
+                    Text("Poderes")
+                        .font(.system(.subheadline, design: .serif))
+                        .fontWeight(.bold)
+                    Image(systemName: "flame.fill")
+                        .font(.caption)
+                }
+                .foregroundColor(Color(hex: "FF4500"))
+                .padding(.vertical, 6)
+                .padding(.horizontal, 12)
+                .background(
+                    Capsule()
+                        .fill(Color(hex: "1A0505"))
+                        .overlay(
+                            Capsule()
+                                .stroke(Color(hex: "8B0000"), lineWidth: 1)
+                        )
+                        .shadow(color: .red.opacity(0.3), radius: 4, x: 0, y: 2)
+                )
             }
         }
     }

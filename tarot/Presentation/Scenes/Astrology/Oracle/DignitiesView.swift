@@ -8,53 +8,40 @@
 import SwiftUI
 
 enum Dignity: String {
-    case ruler
-    case detriment
-    case exalted
-    case fall
+    case ruler = "DOMICÍLIO"
+    case detriment = "EXÍLIO"
+    case exalted = "EXALTAÇÃO"
+    case fall = "QUEDA"
 }
 
 struct DignitiesView: View {
     let dignity: Dignity
     
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerSize: CGSize(width: 80, height: 40))
-                .foregroundStyle(changeColor())
-                .frame(width: 100, height: 20)
-            Text(addText())
-                .bold()
-                .font(.caption)
-        }
+        Text(dignity.rawValue)
+            .font(.caption)
+            .fontWeight(.semibold)
+            .foregroundColor(.white)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
+            .background(dignityColor)
+            .cornerRadius(12)
     }
     
-    private func changeColor() -> Color {
+    private var dignityColor: Color {
         switch dignity {
         case .ruler:
-            .blue
-        case .detriment:
-            .red
+            return Color(hex: "FFD700") // Gold
         case .exalted:
-            .yellow
-        case .fall:
-            .gray
-        }
-    }
-    
-    private func addText() -> String {
-        switch dignity {
-        case .ruler:
-            "DOMICÍLIO"
+            return Color(hex: "4169E1") // Blue
         case .detriment:
-            "EXÍLIO"
-        case .exalted:
-            "EXALTAÇÃO"
+            return Color(hex: "DC143C") // Red
         case .fall:
-            "QUEDA"
+            return Color(hex: "696969") // Gray
         }
     }
 }
 
 #Preview {
-    DignitiesView(dignity: Dignity(rawValue: "ruler") ?? .detriment)
+    DignitiesView(dignity: .ruler)
 }
