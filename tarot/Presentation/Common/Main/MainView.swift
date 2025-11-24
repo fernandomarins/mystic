@@ -12,11 +12,10 @@ struct MainView: View {
         .init(id: 0, name: .tarot),
         .init(id: 1, name: .runes),
         .init(id: 2, name: .daemons),
-        .init(id: 3, name: .bones),
-
-        .init(id: 5, name: .astrology),
-        .init(id: 6, name: .herbs),
-        .init(id: 7, name: .hoodoo)
+        .init(id: 3, name: .herbs),
+        .init(id: 4, name: .astrology),
+        .init(id: 5, name: .herbs),
+        .init(id: 6, name: .bones)
     ]
     
     var body: some View {
@@ -68,7 +67,6 @@ struct MainView: View {
             DaemonListView()
         case .bones:
             SangomaView()
-
         case .astrology:
             AstrologyListView()
         case .herbs:

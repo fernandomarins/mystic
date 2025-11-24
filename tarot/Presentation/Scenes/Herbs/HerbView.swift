@@ -11,75 +11,80 @@ struct HerbView: View {
     let herb: Herb
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 16) {
-                herbTitleSection
-                Divider()
-                herbTypeSection
-                Divider()
-                herbDescriptionSection
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 24) {
+                // Hero Section
+                VStack(spacing: 8) {
+                    Image(systemName: "leaf.fill") // Placeholder
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 80)
+                        .foregroundColor(typeColor)
+                        .shadow(color: typeColor.opacity(0.5), radius: 10, x: 0, y: 0)
+                    
+                    Text(herb.name)
+                        .font(.system(size: 32, weight: .bold, design: .serif))
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                    
+                    Text(herb.scientificName)
+                        .font(.title3)
+                        .italic()
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.center)
+                }
+                .padding(.top, 20)
+                
+                // Attributes
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+                    AttributeCell(
+                        title: "Tipo",
+                        value: herb.type.rawValue,
+                        icon: "flame.fill", // Generic icon, color indicates type
+                        accentColor: typeColor
+                    )
+                    
+                    AttributeCell(
+                        title: "Nome Científico",
+                        value: herb.scientificName,
+                        icon: "text.book.closed.fill",
+                        accentColor: .purple
+                    )
+                }
+                
+                // Description
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Image(systemName: "book.closed")
+                            .foregroundColor(.purple)
+                        Text("Descrição")
+                            .font(.title3)
+                            .bold()
+                            .foregroundColor(.white)
+                    }
+                    
+                    Text(herb.description)
+                        .font(.body)
+                        .foregroundColor(.gray)
+                        .lineSpacing(4)
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color(hex: "1C1C1E"))
+                        )
+                }
             }
             .padding()
         }
-        .scrollIndicators(.hidden)
+        .background(Color.black)
     }
     
-    private var herbTitleSection: some View {
-        VStack(spacing: 4) {
-            Text(herb.name)
-                .font(.title)
-                .bold()
-            
-            Text(herb.scientificName)
-                .font(.caption)
-                .italic()
-                .foregroundColor(.secondary)
-        }
-        .frame(
-            maxWidth: .infinity,
-            alignment: .center
-        )
-    }
-    
-    private var herbTypeSection: some View {
-        HStack {
-            Text("Tipo:")
-                .bold()
-            Text(herb.type.rawValue.capitalized)
-                .textCase(.lowercase)
-            herbTypeCircle
-        }
-        .frame(
-            maxWidth: .infinity,
-            alignment: .center
-        )
-    }
-    
-    private var herbDescriptionSection: some View {
-        Text(herb.description)
-            .font(.body)
-            .frame(
-                maxWidth: .infinity,
-                alignment: .leading
-            )
-    }
-    
-    private var herbTypeCircle: some View {
-        let color: Color
+    private var typeColor: Color {
         switch herb.type {
-        case .hot:
-            color = .red
-        case .warm:
-            color = .yellow
-        case .cold:
-            color = .blue
+        case .hot: return .red
+        case .warm: return .yellow
+        case .cold: return .blue
         }
-        return Circle()
-            .fill(color)
-            .frame(
-                width: 20,
-                height: 20
-            )
     }
 }
 

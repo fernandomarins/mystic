@@ -16,7 +16,6 @@ struct HerbsListView: View {
     @State private var isShowingHerbAddView = false
     
     var body: some View {
-        NavigationStack {
             VStack {
                 if viewModel.isLoading {
                     loadingIndicator
@@ -48,13 +47,12 @@ struct HerbsListView: View {
             .onAppear {
                 loadHerbsIfNeeded()
             }
-        }
-        .toolbar {
-            selectHerbs
-        }
-        .sheet(isPresented: $isShowingHerbSelectView) {
-            HerbsSelectView(herbs: Array(selectedHerbs))
-        }
+//        .toolbar {
+//            selectHerbs
+//        }
+//        .sheet(isPresented: $isShowingHerbSelectView) {
+//            HerbsSelectView(herbs: Array(selectedHerbs))
+//        }
         .backButtonStyle()
     }
     
@@ -78,30 +76,32 @@ struct HerbsListView: View {
     }
     
     private var herbListView: some View {
-        List(selection: $selectedHerbs) {
-            let hotHerbs = viewModel.getHerbType(type: .hot)
-            if !hotHerbs.isEmpty {
-                createSection(title: .hot, herbs: hotHerbs)
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
+                let hotHerbs = viewModel.getHerbType(type: .hot)
+                if !hotHerbs.isEmpty {
+                    createSection(title: .hot, herbs: hotHerbs)
+                }
+                
+                let warmHerbs = viewModel.getHerbType(type: .warm)
+                if !warmHerbs.isEmpty {
+                    createSection(title: .warm, herbs: warmHerbs)
+                }
+                
+                let coldHerbs = viewModel.getHerbType(type: .cold)
+                if !coldHerbs.isEmpty {
+                    createSection(title: .cold, herbs: coldHerbs)
+                }
             }
-            
-            let warmHerbs = viewModel.getHerbType(type: .warm)
-            if !warmHerbs.isEmpty {
-                createSection(title: .warm, herbs: warmHerbs)
-            }
-            
-            let coldHerbs = viewModel.getHerbType(type: .cold)
-            if !coldHerbs.isEmpty {
-                createSection(title: .cold, herbs: coldHerbs)
-            }
+            .padding()
         }
         .refreshable {
             Task {
                 await viewModel.fetchHerbs()
             }
         }
-        .textInputAutocapitalization(.never)
         .scrollIndicators(.hidden)
-        .environment(\.editMode, .constant(isSelectionModeActive ? .active : .inactive))
+        .background(Color.black)
     }
     
     private var loadingIndicator: some View {
@@ -114,13 +114,24 @@ struct HerbsListView: View {
     
     @ViewBuilder
     private func createSection(title: HerbType, herbs: [Herb]) -> some View {
-        Section(header: Text(title.rawValue)) {
+        Section(header: 
+            Text(title.rawValue)
+                .font(.title2)
+                .bold()
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top, 16)
+        ) {
             ForEach(herbs, id: \.self) { herb in
-                NavigationLink(destination: HerbView(herb: herb)) {
-                    Text(herb.name)
-                }
-                .onTapGesture {
-                    toggleHerbSelection(herb)
+                if isSelectionModeActive {
+                    HerbCell(herb: herb, isSelected: selectedHerbs.contains(herb))
+                        .onTapGesture {
+                            toggleHerbSelection(herb)
+                        }
+                } else {
+                    NavigationLink(destination: HerbView(herb: herb)) {
+                        HerbCell(herb: herb, isSelected: false)
+                    }
                 }
             }
         }
