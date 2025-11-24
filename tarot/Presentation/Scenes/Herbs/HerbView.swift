@@ -103,25 +103,6 @@ struct HerbView: View {
                     }
                     .padding(.bottom, 40)
                     
-                    // Attributes Grid
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
-                        ForestAttributeCell(
-                            title: "Tipo",
-                            value: herb.type.rawValue,
-                            icon: "flame.fill",
-                            accentColor: typeColor
-                        )
-                        
-                        ForestAttributeCell(
-                            title: "Nome Científico",
-                            value: herb.scientificName,
-                            icon: "text.book.closed.fill",
-                            accentColor: .green
-                        )
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 40)
-                    
                     // Description Section
                     VStack(alignment: .leading, spacing: 16) {
                         HStack {

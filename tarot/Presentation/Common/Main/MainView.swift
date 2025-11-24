@@ -83,6 +83,7 @@ struct MainView: View {
             }
             .navigationBarHidden(true)
         }
+        .navigationViewStyle(.stack)
     }
     
     @ViewBuilder

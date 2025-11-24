@@ -39,7 +39,7 @@ struct HerbCell: View {
                         .frame(width: 50, height: 50)
                         .blur(radius: 5)
                     
-                    Image(systemName: "leaf.fill") // Placeholder icon
+                    Image(systemName: "leaf.fill")
                         .resizable()
                         .scaledToFit()
                         .frame(height: 30)
@@ -56,12 +56,6 @@ struct HerbCell: View {
                         .multilineTextAlignment(.center)
                         .lineLimit(2)
                         .minimumScaleFactor(0.8)
-                    
-                    // Scientific Name (Optional, if space permits)
-                    // Text(herb.scientificName)
-                    //    .font(.system(size: 10, design: .serif))
-                    //    .italic()
-                    //    .foregroundColor(.gray)
                 }
                 .padding(.horizontal, 8)
                 .padding(.bottom, 16)
