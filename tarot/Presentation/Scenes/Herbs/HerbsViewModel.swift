@@ -31,18 +31,6 @@ class HerbsViewModel: ObservableObject {
         }
     }
     
-    func postHerb(_ herb: Herb) async {
-        isLoading = true
-        defer { isLoading = false }
-        
-        do {
-            let response = try await service.postHerb(herb)
-            herbs.append(response)
-        } catch {
-            errorMessage = IdentifiableError(message: "Failed to post herb: \(error.localizedDescription)")
-        }
-    }
-    
     func getHerbType(type: HerbType) -> [Herb] {
         herbs.filter { $0.type == type }
     }

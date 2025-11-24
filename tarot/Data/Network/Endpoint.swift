@@ -33,7 +33,6 @@ enum Endpoint: APIEndpoint {
     case getAlphabet
     case getAstrology
     case getHerbs
-    case postHerb
     case getHooboo
     
     var baseURL: URL? {
@@ -54,7 +53,7 @@ enum Endpoint: APIEndpoint {
             return "/alphabet"
         case .getAstrology:
             return "/astrology"
-        case .getHerbs, .postHerb:
+        case .getHerbs:
             return "/herbs"
         case .getHooboo:
             return "/hoodoo"
@@ -65,8 +64,6 @@ enum Endpoint: APIEndpoint {
         switch self {
         case .getCards,.getRunes, .getDaemons, .getSangoma, .getAlphabet, .getAstrology, .getHerbs, .getHooboo:
             return .get
-        case .postHerb:
-            return .post
         }
     }
 }

@@ -16,43 +16,26 @@ struct HerbsListView: View {
     @State private var isShowingHerbAddView = false
     
     var body: some View {
-            VStack {
-                if viewModel.isLoading {
-                    loadingIndicator
-                } else if !viewModel.herbs.isEmpty {
-                    herbListView
-                } else {
-                    Text("Nenhuma erva encontrada.")
-                        .foregroundColor(.gray)
-//                }
-//                if !viewModel.herbs.isEmpty {
-//                    Button(action: {
-//                        isShowingHerbAddView.toggle()
-//                    }) {
-//                        Text("Adicionar Erva")
-//                            .fontWeight(.bold)
-//                            .frame(maxWidth: .infinity)
-//                            .padding()
-//                            .background(Color.purple)
-//                            .foregroundColor(.white)
-//                            .cornerRadius(16)
-//                    }
-//                    .padding()
-//                    .sheet(isPresented: $isShowingHerbAddView) {
-//                        HerbsAddView()
-//                    }
+        ZStack {
+            Color.black.edgesIgnoringSafeArea(.all)
+            
+            if viewModel.isLoading {
+                loadingIndicator
+            } else {
+                VStack {
+                    if !viewModel.herbs.isEmpty {
+                        herbListView
+                    } else {
+                        Text("Nenhuma erva encontrada.")
+                            .foregroundColor(.gray)
+                    }
                 }
             }
-            .navigationTitle("Ervas")
+        }
+        .navigationTitle("Ervas")
             .onAppear {
                 loadHerbsIfNeeded()
             }
-//        .toolbar {
-//            selectHerbs
-//        }
-//        .sheet(isPresented: $isShowingHerbSelectView) {
-//            HerbsSelectView(herbs: Array(selectedHerbs))
-//        }
         .backButtonStyle()
     }
     
@@ -108,7 +91,7 @@ struct HerbsListView: View {
         LoadingIndicator(
             animation: .circleBars,
             color: .white,
-            size: .medium
+            size: .large
         )
     }
     

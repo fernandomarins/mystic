@@ -17,8 +17,4 @@ class HerbsService {
     func getHerbs() async throws -> Herbs {
         try await apiClient.request(.getHerbs)
     }
-    
-    func postHerb(_ herb: Herb) async throws -> Herb {
-        try await apiClient.post(.postHerb, body: herb)
-    }
 }

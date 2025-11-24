@@ -15,14 +15,17 @@ struct DaemonListView: View {
     @State private var isSearching: Bool = false
     
     var body: some View {
-            VStack {
-                if viewModel.isLoading {
-                    LoadingIndicator(
-                        animation: .circleBars,
-                        color: .white,
-                        size: .medium
-                    )
-                } else {
+        ZStack {
+            Color.black.edgesIgnoringSafeArea(.all)
+            
+            if viewModel.isLoading {
+                LoadingIndicator(
+                    animation: .circleBars,
+                    color: .white,
+                    size: .large
+                )
+            } else {
+                VStack {
                     ScrollView {
                         LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
                             let displayedDaemons = isSearching ? searchResults : viewModel.daemons
@@ -55,9 +58,9 @@ struct DaemonListView: View {
                         }
                     }
                     .scrollIndicators(.hidden)
-                    .background(Color.black) // Ensure background is black for the grid
                 }
             }
+        }
             .onAppear {
                 if viewModel.daemons.isEmpty {
                     Task {
