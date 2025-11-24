@@ -14,6 +14,6 @@ struct tarotApp: App {
         WindowGroup {
             MainView()
         }
-        .modelContainer(for: [CardEntity.self, HerbEntity.self, RuneEntity.self, DaemonEntity.self])
+        .modelContainer(for: [CardEntity.self, HerbEntity.self, RuneEntity.self, DaemonEntity.self, PlanetEntity.self])
     }
 }

@@ -163,8 +163,6 @@ struct ZodiacSignCard: View {
     let signSymbol: String
     let description: String
     
-    @State private var isExpanded = false
-    
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
@@ -181,19 +179,7 @@ struct ZodiacSignCard: View {
             Text(description)
                 .font(.body)
                 .foregroundColor(.white)
-                .lineLimit(isExpanded ? nil : 3)
-            
-            if description.count > 150 {
-                Button(action: {
-                    withAnimation {
-                        isExpanded.toggle()
-                    }
-                }) {
-                    Text(isExpanded ? "Ver menos" : "Ver mais")
-                        .font(.caption)
-                        .foregroundColor(.purple)
-                }
-            }
+                .fixedSize(horizontal: false, vertical: true)
         }
         .padding()
         .background(

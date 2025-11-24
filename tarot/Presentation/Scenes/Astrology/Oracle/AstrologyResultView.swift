@@ -13,7 +13,7 @@ struct AstrologyResultView: View {
     @State private var formMode: FormMode = .add
     @State private var selectedElementIndex: Int? = nil
     
-    let model: AstrologyModel
+    let planets: [PlanetEntity]
     
     var body: some View {
         ZStack {
@@ -162,30 +162,8 @@ struct AstrologyResultView: View {
     }
     
     private func getDefinition(planet: String, sign: String) -> String {
-        switch planet {
-        case "Sol":
-            return model.planets.sunSigns[convertToEnglish(name: sign)] ?? ""
-        case "Lua":
-            return model.planets.moonSigns[convertToEnglish(name: sign)] ?? ""
-        case "Mercúrio":
-            return model.planets.mercurySigns[convertToEnglish(name: sign)] ?? ""
-        case "Vênus":
-            return model.planets.venusSigns[convertToEnglish(name: sign)] ?? ""
-        case "Marte":
-            return model.planets.marsSigns[convertToEnglish(name: sign)] ?? ""
-        case "Júpiter":
-            return model.planets.jupiterSigns[convertToEnglish(name: sign)] ?? ""
-        case "Saturno":
-            return model.planets.saturnSigns[convertToEnglish(name: sign)] ?? ""
-        case "Urano":
-            return model.planets.uranusSigns[convertToEnglish(name: sign)] ?? ""
-        case "Netuno":
-            return model.planets.neptuneSigns[convertToEnglish(name: sign)] ?? ""
-        case "Plutão":
-            return model.planets.plutoSigns[convertToEnglish(name: sign)] ?? ""
-        default:
-            return ""
-        }
+        guard let planetEntity = planets.first(where: { $0.name == planet }) else { return "" }
+        return planetEntity.signDescriptions[convertToEnglish(name: sign)] ?? ""
     }
     
     private func convertToEnglish(name: String) -> String {
@@ -360,8 +338,6 @@ struct PlanetSignCard: View {
     let description: String
     let planetDescription: String
     
-    @State private var isExpanded = false
-    
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
@@ -403,19 +379,7 @@ struct PlanetSignCard: View {
             Text(description)
                 .font(.body)
                 .foregroundColor(.white)
-                .lineLimit(isExpanded ? nil : 3)
-            
-            if description.count > 150 {
-                Button(action: {
-                    withAnimation {
-                        isExpanded.toggle()
-                    }
-                }) {
-                    Text(isExpanded ? "Ver menos" : "Ver mais")
-                        .font(.caption)
-                        .foregroundColor(.purple)
-                }
-            }
+                .fixedSize(horizontal: false, vertical: true)
         }
         .padding()
         .background(
@@ -465,5 +429,5 @@ struct PlanetSignCard: View {
 }
 
 #Preview {
-    AstrologyResultView(model: .init(planets: .init(sunSigns: [:], moonSigns: [:], mercurySigns: [:], venusSigns: [:], marsSigns: [:], jupiterSigns: [:], saturnSigns: [:], uranusSigns: [:], neptuneSigns: [:], plutoSigns: [:])))
+    AstrologyResultView(planets: [])
 }
