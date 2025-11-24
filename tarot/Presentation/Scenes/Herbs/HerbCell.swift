@@ -13,42 +13,61 @@ struct HerbCell: View {
     
     var body: some View {
         ZStack {
-            // Background
+            // Forest Card Background
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color(hex: "1C1C1E"))
+                .fill(
+                    LinearGradient(
+                        colors: [Color(hex: "1A2F1A"), Color(hex: "0F1F0F")],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)
                         .stroke(
-                            isSelected ? Color.purple : Color.white.opacity(0.1),
+                            isSelected ? Color(hex: "90EE90") : Color(hex: "228B22").opacity(0.5),
                             lineWidth: isSelected ? 2 : 1
                         )
                 )
-                .shadow(color: isSelected ? .purple.opacity(0.5) : .black.opacity(0.3), radius: 4, x: 0, y: 2)
+                .shadow(color: isSelected ? Color(hex: "90EE90").opacity(0.5) : Color.black.opacity(0.5), radius: 4, x: 0, y: 2)
             
             VStack(spacing: 12) {
-                // Icon
-                Image(systemName: "leaf.fill") // Placeholder icon
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 40)
-                    .foregroundColor(typeColor)
-                    .padding(.top, 16)
+                // Icon with Glow
+                ZStack {
+                    Circle()
+                        .fill(typeColor.opacity(0.2))
+                        .frame(width: 50, height: 50)
+                        .blur(radius: 5)
+                    
+                    Image(systemName: "leaf.fill") // Placeholder icon
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 30)
+                        .foregroundColor(typeColor)
+                }
+                .padding(.top, 16)
                 
                 VStack(spacing: 4) {
                     // Name
                     Text(herb.name)
-                        .font(.headline)
-                        .bold()
-                        .foregroundColor(.white)
+                        .font(.system(.headline, design: .serif))
+                        .fontWeight(.bold)
+                        .foregroundColor(Color(hex: "F0FFF0")) // Honeydew
                         .multilineTextAlignment(.center)
                         .lineLimit(2)
                         .minimumScaleFactor(0.8)
+                    
+                    // Scientific Name (Optional, if space permits)
+                    // Text(herb.scientificName)
+                    //    .font(.system(size: 10, design: .serif))
+                    //    .italic()
+                    //    .foregroundColor(.gray)
                 }
                 .padding(.horizontal, 8)
                 .padding(.bottom, 16)
             }
         }
-        .frame(height: 140)
+        .frame(height: 150)
     }
     
     private var typeColor: Color {

@@ -19,25 +19,71 @@ struct HerbsListView: View {
     
     var body: some View {
         ZStack {
-            Color.black.edgesIgnoringSafeArea(.all)
+            // Forest Background
+            LinearGradient(
+                colors: [Color(hex: "051A05"), Color(hex: "0A200A"), Color.black],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+            
+            // Fireflies/Magic particles overlay
+            GeometryReader { geometry in
+                ForEach(0..<25, id: \.self) { _ in
+                    Circle()
+                        .fill(Color(hex: "CCFF00").opacity(Double.random(in: 0.1...0.3)))
+                        .frame(width: CGFloat.random(in: 2...4))
+                        .position(
+                            x: CGFloat.random(in: 0...geometry.size.width),
+                            y: CGFloat.random(in: 0...geometry.size.height)
+                        )
+                        .shadow(color: .green, radius: 4)
+                }
+            }
+            .ignoresSafeArea()
             
             if viewModel.isLoading {
                 loadingIndicator
             } else {
-                VStack {
-                    if !viewModel.herbs.isEmpty {
-                        herbListView
-                    } else {
-                        Text("Nenhuma erva encontrada.")
-                            .foregroundColor(.gray)
+                VStack(spacing: 0) {
+                    ScrollView {
+                        VStack(spacing: 24) {
+                            // Forest Header
+                            VStack(spacing: 8) {
+                                Text("Grimório Verde")
+                                    .font(.system(size: 36, weight: .bold, design: .serif))
+                                    .foregroundColor(Color(hex: "90EE90")) // Light Green
+                                    .shadow(color: .green.opacity(0.5), radius: 10)
+                                
+                                Image(systemName: "leaf.fill")
+                                    .font(.system(size: 24))
+                                    .foregroundColor(Color(hex: "228B22")) // Forest Green
+                                    .padding(.top, 4)
+                            }
+                            .padding(.top, 20)
+                            
+                            if !viewModel.herbs.isEmpty {
+                                herbListView
+                            } else {
+                                Text("Nenhuma erva encontrada.")
+                                    .foregroundColor(.gray)
+                                    .padding(.top, 40)
+                            }
+                        }
                     }
+                    .refreshable {
+                        Task {
+                            await viewModel.fetchHerbs(context: modelContext)
+                        }
+                    }
+                    .scrollIndicators(.hidden)
                 }
             }
         }
         .navigationTitle("Ervas")
-            .onAppear {
-                loadHerbsIfNeeded()
-            }
+        .onAppear {
+            loadHerbsIfNeeded()
+        }
         .backButtonStyle()
     }
     
@@ -52,8 +98,9 @@ struct HerbsListView: View {
                         }
                         isSelectionModeActive.toggle()
                     }) {
-                        Text(isSelectionModeActive ? "Feito" : "Selecione as ervas")
-                            .foregroundStyle(.purple)
+                        Text(isSelectionModeActive ? "Feito" : "Selecionar")
+                            .font(.system(.body, design: .serif))
+                            .foregroundStyle(Color(hex: "90EE90"))
                     }
                 }
             }
@@ -61,32 +108,23 @@ struct HerbsListView: View {
     }
     
     private var herbListView: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
-                let hotHerbs = viewModel.getHerbType(type: .hot)
-                if !hotHerbs.isEmpty {
-                    createSection(title: .hot, herbs: hotHerbs)
-                }
-                
-                let warmHerbs = viewModel.getHerbType(type: .warm)
-                if !warmHerbs.isEmpty {
-                    createSection(title: .warm, herbs: warmHerbs)
-                }
-                
-                let coldHerbs = viewModel.getHerbType(type: .cold)
-                if !coldHerbs.isEmpty {
-                    createSection(title: .cold, herbs: coldHerbs)
-                }
+        LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
+            let hotHerbs = viewModel.getHerbType(type: .hot)
+            if !hotHerbs.isEmpty {
+                createSection(title: .hot, herbs: hotHerbs)
             }
-            .padding()
-        }
-        .refreshable {
-            Task {
-                await viewModel.fetchHerbs(context: modelContext)
+            
+            let warmHerbs = viewModel.getHerbType(type: .warm)
+            if !warmHerbs.isEmpty {
+                createSection(title: .warm, herbs: warmHerbs)
+            }
+            
+            let coldHerbs = viewModel.getHerbType(type: .cold)
+            if !coldHerbs.isEmpty {
+                createSection(title: .cold, herbs: coldHerbs)
             }
         }
-        .scrollIndicators(.hidden)
-        .background(Color.black)
+        .padding()
     }
     
     private var loadingIndicator: some View {
