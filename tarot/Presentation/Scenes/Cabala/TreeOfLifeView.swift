@@ -97,7 +97,7 @@ struct TreeOfLifeView: View {
                             ForEach(nodes) { node in
                                 if node.id == 10 {
                                     // Interactive Malkuth
-                                    MalkuthInteractiveNode(node: node, size: 220) { text in
+                                    MalkuthInteractiveNode(node: node, size: 180) { text in
                                         customElementText = text
                                         selectedSephirah = node
                                     }
@@ -114,7 +114,7 @@ struct TreeOfLifeView: View {
                                         ZStack {
                                             SephirahVisual(id: node.id)
                                                 .frame(width: 60, height: 60)
-                                                .shadow(color: node.color.opacity(0.6), radius: 10, x: 0, y: 0)
+                                                .shadow(color: [7, 8, 9].contains(node.id) ? .clear : node.color.opacity(0.6), radius: 10, x: 0, y: 0)
                                             
                                             VStack(spacing: 0) {
                                                 Text(node.number)
@@ -244,22 +244,75 @@ struct SephirahVisual: View {
                     Circle().fill(Color.blue).frame(width: size * 0.4)
                         .offset(y: size * 0.1)
                     
-                case 7: // Netzach: Crescent -> Crescent
-                    Crescent().fill(Color.white)
-                        .rotationEffect(.degrees(90))
-                    Crescent().fill(Color.white).frame(width: size * 0.5, height: size * 0.5)
-                        .rotationEffect(.degrees(90))
-                        .overlay(Crescent().stroke(Color.gray, lineWidth: 1).rotationEffect(.degrees(90)))
+                case 7: // Netzach: Circle with black intersection + inner circle with black intersection
+                    // Outer white circle
+                    Circle()
+                        .fill(Color.white)
                     
-                case 8: // Hod: Crescent -> Red Triangle
-                    Crescent().fill(Color.white)
-                        .rotationEffect(.degrees(90))
-                    Triangle().fill(Color.red).frame(width: size * 0.4, height: size * 0.4)
+                    // Black circle creating intersection (masked to show only overlap)
+                    Circle()
+                        .fill(Color.black)
+                        .offset(y: -size * 0.5)
+                        .mask(
+                            Circle()
+                                .fill(Color.white)
+                        )
                     
-                case 9: // Yesod: Crescent -> Blue Circle
-                    Crescent().fill(Color.white)
-                        .rotationEffect(.degrees(90))
-                    Circle().fill(Color.blue).frame(width: size * 0.4)
+                    // Inner white circle (smaller)
+                    Circle()
+                        .fill(Color.white)
+                        .frame(width: size * 0.5, height: size * 0.5)
+                    
+                    // Inner black circle creating intersection (masked)
+                    Circle()
+                        .fill(Color.black)
+                        .frame(width: size * 0.5, height: size * 0.5)
+                        .offset(y: -size * 0.15)
+                        .mask(
+                            Circle()
+                                .fill(Color.white)
+                                .frame(width: size * 0.5, height: size * 0.5)
+                        )
+                    
+                case 8: // Hod: Circle with black intersection + red triangle
+                    // Outer white circle
+                    Circle()
+                        .fill(Color.white)
+                    
+                    // Black circle creating intersection (masked to show only overlap)
+                    Circle()
+                        .fill(Color.black)
+                        .offset(y: -size * 0.5)
+                        .mask(
+                            Circle()
+                                .fill(Color.white)
+                        )
+                    
+                    // Red triangle in the white crescent area
+                    Triangle()
+                        .fill(Color.red)
+                        .frame(width: size * 0.35, height: size * 0.35)
+                        .offset(y: size * 0.15)
+                    
+                case 9: // Yesod: Circle with black intersection + blue circle
+                    // Outer white circle
+                    Circle()
+                        .fill(Color.white)
+                    
+                    // Black circle creating intersection (masked to show only overlap)
+                    Circle()
+                        .fill(Color.black)
+                        .offset(y: -size * 0.5)
+                        .mask(
+                            Circle()
+                                .fill(Color.white)
+                        )
+                    
+                    // Blue circle in the white crescent area
+                    Circle()
+                        .fill(Color.blue)
+                        .frame(width: size * 0.35)
+                        .offset(y: size * 0.15)
                     
                 case 10: // Malkuth: 4 Drawings (N, E, S, W)
                     MalkuthVisual(size: size)
