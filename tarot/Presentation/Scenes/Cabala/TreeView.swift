@@ -51,7 +51,6 @@ struct TreeView: View {
                             
                             Text(treeData.leiDaCriacao.fundamento)
                                 .font(.body)
-                                .italic()
                                 .foregroundColor(Color.white.opacity(0.8))
                                 .multilineTextAlignment(.center)
                                 .padding(.horizontal)
@@ -73,6 +72,14 @@ struct TreeView: View {
         }
         .onAppear {
             viewModel.fetchTreeData()
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink(destination: TreeOfLifeView(sephirothData: viewModel.treeData?.leiDaCriacao.fluxoDeManifestacao ?? [])) {
+                    Image(systemName: "info.circle")
+                        .foregroundColor(.white)
+                }
+            }
         }
         .backButtonStyle()
     }
