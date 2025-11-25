@@ -11,6 +11,8 @@ struct TreeOfLifeView: View {
     let sephirothData: [FluxoDeManifestacao]
     @State private var selectedSephirah: SephirahNode?
     @State private var customElementText: String?
+    @State private var showFullScreen = false
+    @State private var showInfo = false
     
     // Relative positions (0.0 to 1.0+)
     private let nodes: [SephirahNode] = [
@@ -62,7 +64,7 @@ struct TreeOfLifeView: View {
                             .font(.system(size: 28, weight: .bold, design: .serif))
                             .foregroundColor(.white)
                             .shadow(color: .purple.opacity(0.5), radius: 10, x: 0, y: 0)
-                            .padding(.top, 20)
+                            .padding(.top, 5)
                         
                         ZStack {
                             // Paths
@@ -84,22 +86,24 @@ struct TreeOfLifeView: View {
                                 }
                             }
                             
-                            // Daath (Hidden Sephirah)
-                            Circle()
-                                .stroke(Color.purple.opacity(0.5), lineWidth: 2)
-                                .frame(width: 60, height: 60)
-                                .position(
-                                    x: 0.5 * width,
-                                    y: 0.3 * availableHeight + padding
-                                )
+//                            // Daath (Hidden Sephirah)
+//                            Circle()
+//                                .stroke(Color.purple.opacity(0.5), lineWidth: 2)
+//                                .frame(width: 60, height: 60)
+//                                .position(
+//                                    x: 0.5 * width,
+//                                    y: 0.3 * availableHeight + padding
+//                                )
                             
                             // Sephiroth Nodes
                             ForEach(nodes) { node in
                                 if node.id == 10 {
                                     // Interactive Malkuth
-                                    MalkuthInteractiveNode(node: node, size: 180) { text in
+                                    MalkuthInteractiveNode(node: node, size: 200) { text in
                                         customElementText = text
                                         selectedSephirah = node
+                                        showFullScreen = true
+                                        showInfo = false
                                     }
                                     .position(
                                         x: node.position.x * width,
@@ -110,20 +114,12 @@ struct TreeOfLifeView: View {
                                     Button(action: {
                                         customElementText = nil
                                         selectedSephirah = node
+                                        showFullScreen = true
+                                        showInfo = false
                                     }) {
-                                        ZStack {
-                                            SephirahVisual(id: node.id)
-                                                .frame(width: 60, height: 60)
-                                                .shadow(color: [7, 8, 9].contains(node.id) ? .clear : node.color.opacity(0.6), radius: 10, x: 0, y: 0)
-                                            
-                                            VStack(spacing: 0) {
-                                                Text(node.number)
-                                                    .font(.headline)
-                                                    .fontWeight(.bold)
-                                                    .foregroundColor(textColor(for: node.id))
-                                                    .shadow(color: .black, radius: 2)
-                                            }
-                                        }
+                                        SephirahVisual(id: node.id)
+                                            .frame(width: 75, height: 75)
+//                                                .shadow(color: [7, 8, 9].contains(node.id) ? .clear : node.color.opacity(0.6), radius: 10, x: 0, y: 0)
                                     }
                                     .position(
                                         x: node.position.x * width,
@@ -138,8 +134,50 @@ struct TreeOfLifeView: View {
             }
             .padding(.bottom, 0)
             
-            // Info Modal
-            if let selected = selectedSephirah {
+            // Full-Screen Sephirah View
+            if showFullScreen, let selected = selectedSephirah {
+                ZStack {
+                    Color.black.opacity(0.95)
+                        .ignoresSafeArea()
+                    
+                    VStack(spacing: 40) {
+                        Spacer()
+                        
+                        // Enlarged Sephirah
+                        Button(action: {
+                            showInfo = true
+                        }) {
+                            if selected.id == 10 {
+                                MalkuthVisual(size: 300)
+                                    .frame(width: 300, height: 300)
+                            } else {
+                                SephirahVisual(id: selected.id)
+                                    .frame(width: 300, height: 300)
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                        // Close button
+                        Button(action: {
+                            showFullScreen = false
+                            showInfo = false
+                            selectedSephirah = nil
+                            customElementText = nil
+                        }) {
+                            Image(systemName: "xmark.circle.fill")
+                                .font(.system(size: 40))
+                                .foregroundColor(.white.opacity(0.7))
+                        }
+                        .padding(.bottom, 40)
+                    }
+                }
+                .transition(.opacity)
+                .zIndex(2)
+            }
+            
+            // Info Modal (shown after clicking enlarged Sephirah)
+            if showInfo, let selected = selectedSephirah {
                 VStack {
                     Spacer()
                     VStack(spacing: 16) {
@@ -180,6 +218,8 @@ struct TreeOfLifeView: View {
                         }
                         
                         Button("Fechar") {
+                            showInfo = false
+                            showFullScreen = false
                             selectedSephirah = nil
                             customElementText = nil
                         }
@@ -217,20 +257,59 @@ struct SephirahVisual: View {
                     Circle().fill(Color.yellow).frame(width: size * 0.7)
                     Circle().fill(Color.blue).frame(width: size * 0.4)
                     
-                case 2: // Chokmah: Blue Circle -> White Crescent
+                case 2: // Chokmah: Blue Circle with inner circle with black intersection
                     Circle().fill(Color.blue)
-                    Crescent().fill(Color.white).frame(width: size * 0.6, height: size * 0.6)
-                        .rotationEffect(.degrees(90))
+                    
+                    // Inner white circle (smaller)
+                    Circle()
+                        .fill(Color.white)
+                        .frame(width: size * 0.35, height: size * 0.35)
+                        .overlay(
+                            Circle()
+                                .stroke(Color.black, lineWidth: 2)
+                                .frame(width: size * 0.35, height: size * 0.35)
+                        )
+                    
+                    // Inner black circle creating intersection (masked)
+                    Circle()
+                        .fill(Color.black)
+                        .frame(width: size * 0.5, height: size * 0.5)
+                        .offset(y: -size * 0.25)
+                        .mask(
+                            Circle()
+                                .fill(Color.white)
+                                .frame(width: size * 0.35, height: size * 0.35)
+                        )
                     
                 case 3: // Binah: Blue Circle -> Red Triangle
                     Circle().fill(Color.blue)
-                    Triangle().fill(Color.red).frame(width: size * 0.6, height: size * 0.6)
+                    Triangle().fill(Color.red).frame(width: size * 0.45, height: size * 0.45)
                     
-                case 4: // Chesed: Red Triangle -> White Crescent
+                case 4: // Chesed: Red Triangle with inner circle with black intersection
                     Triangle().fill(Color.red)
-                    Crescent().fill(Color.white).frame(width: size * 0.4, height: size * 0.4)
-                        .rotationEffect(.degrees(90))
-                        .offset(y: size * 0.1)
+                    
+                    // Inner white circle (smaller)
+                    Circle()
+                        .fill(Color.white)
+                        .frame(width: size * 0.35, height: size * 0.35)
+                        .overlay(
+                            Circle()
+                                .stroke(Color.black, lineWidth: 2)
+                                .frame(width: size * 0.35, height: size * 0.35)
+                        )
+                        .offset(y: size * 0.15)
+                    
+                    // Inner black circle creating intersection (masked)
+                    Circle()
+                        .fill(Color.black)
+                        .frame(width: size * 0.35, height: size * 0.35)
+                        .offset(y: 0)
+                        .mask(
+                            Circle()
+                                .fill(Color.white)
+                                .frame(width: size * 0.35, height: size * 0.35)
+                                .offset(y: size * 0.15)
+                        )
                     
                 case 5: // Geburah: Red Triangle -> Green Triangle -> Red Triangle
                     Triangle().fill(Color.red)
@@ -261,17 +340,24 @@ struct SephirahVisual: View {
                     // Inner white circle (smaller)
                     Circle()
                         .fill(Color.white)
-                        .frame(width: size * 0.5, height: size * 0.5)
+                        .frame(width: size * 0.35, height: size * 0.35)
+                        .overlay(
+                            Circle()
+                                .stroke(Color.black, lineWidth: 2)
+                                .frame(width: size * 0.35, height: size * 0.35)
+                        )
+                        .offset(y: size * 0.25)
                     
                     // Inner black circle creating intersection (masked)
                     Circle()
                         .fill(Color.black)
-                        .frame(width: size * 0.5, height: size * 0.5)
-                        .offset(y: -size * 0.15)
+                        .frame(width: size * 0.35, height: size * 0.35)
+                        .offset(y: size * 0.1)
                         .mask(
                             Circle()
                                 .fill(Color.white)
-                                .frame(width: size * 0.5, height: size * 0.5)
+                                .frame(width: size * 0.35, height: size * 0.35)
+                                .offset(y: size * 0.25)
                         )
                     
                 case 8: // Hod: Circle with black intersection + red triangle
@@ -292,7 +378,7 @@ struct SephirahVisual: View {
                     Triangle()
                         .fill(Color.red)
                         .frame(width: size * 0.35, height: size * 0.35)
-                        .offset(y: size * 0.15)
+                        .offset(y: size * 0.25)
                     
                 case 9: // Yesod: Circle with black intersection + blue circle
                     // Outer white circle
@@ -312,7 +398,7 @@ struct SephirahVisual: View {
                     Circle()
                         .fill(Color.blue)
                         .frame(width: size * 0.35)
-                        .offset(y: size * 0.15)
+                        .offset(y: size * 0.25)
                     
                 case 10: // Malkuth: 4 Drawings (N, E, S, W)
                     MalkuthVisual(size: size)
@@ -382,17 +468,44 @@ struct MalkuthInteractiveNode: View {
             }
             .offset(y: -squareSize)
             
-            // East: Yellow Square + White Crescent -> Água de Terra
+            // East: Yellow Square + Circle with black intersection -> Água de Terra
             Button(action: { onSelect("ÁGUA de TERRA") }) {
-                TattwaSquare(bgColor: .yellow, innerShape: AnyView(Crescent().fill(Color.white).rotationEffect(.degrees(90))))
-                    .frame(width: squareSize, height: squareSize)
+                ZStack {
+                    Rectangle().fill(Color.yellow)
+                    
+                    // Inner white circle (smaller)
+                    Circle()
+                        .fill(Color.white)
+                        .frame(width: squareSize * 0.6, height: squareSize * 0.6)
+                        .overlay(
+                            Circle()
+                                .stroke(Color.black, lineWidth: 1.5)
+                                .frame(width: squareSize * 0.6, height: squareSize * 0.6)
+                        )
+                    
+                    // Inner black circle creating intersection (masked)
+                    Circle()
+                        .fill(Color.black)
+                        .frame(width: squareSize * 0.6, height: squareSize * 0.6)
+                        .offset(y: -squareSize * 0.2)
+                        .mask(
+                            Circle()
+                                .fill(Color.white)
+                                .frame(width: squareSize * 0.6, height: squareSize * 0.6)
+                        )
+                }
+                .frame(width: squareSize, height: squareSize)
             }
             .offset(x: squareSize)
             
-            // South: Blue Square + Yellow Square -> Terra de Terra
+            // South: Yellow Square + Blue Square + Yellow Square -> Terra de Terra
             Button(action: { onSelect("TERRA de TERRA") }) {
-                TattwaSquare(bgColor: .blue, innerShape: AnyView(Rectangle().fill(Color.yellow).padding(squareSize * 0.1)))
-                    .frame(width: squareSize, height: squareSize)
+                ZStack {
+                    Rectangle().fill(Color.yellow)
+                    Rectangle().fill(Color.blue).padding(squareSize * 0.15)
+                    Rectangle().fill(Color.yellow).padding(squareSize * 0.3)
+                }
+                .frame(width: squareSize, height: squareSize)
             }
             .offset(y: squareSize)
             
