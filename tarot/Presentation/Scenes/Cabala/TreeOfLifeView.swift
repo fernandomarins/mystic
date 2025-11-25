@@ -233,7 +233,7 @@ struct TreeOfLifeView: View {
                     .shadow(radius: 20)
                 }
                 .transition(.move(edge: .bottom))
-                .zIndex(1)
+                .zIndex(3)
             }
         }
     }
@@ -424,14 +424,41 @@ struct MalkuthVisual: View {
                 .frame(width: squareSize, height: squareSize)
                 .offset(y: -squareSize)
             
-            // East: Yellow Square + White Crescent
-            TattwaSquare(bgColor: .yellow, innerShape: AnyView(Crescent().fill(Color.white).rotationEffect(.degrees(90))))
-                .frame(width: squareSize, height: squareSize)
+            // East: Yellow Square + Circle with black intersection
+            ZStack {
+                Rectangle().fill(Color.yellow)
+                
+                // Inner white circle (smaller)
+                Circle()
+                    .fill(Color.white)
+                    .frame(width: squareSize * 0.6, height: squareSize * 0.6)
+                    .overlay(
+                        Circle()
+                            .stroke(Color.black, lineWidth: 1.5)
+                            .frame(width: squareSize * 0.6, height: squareSize * 0.6)
+                    )
+                
+                // Inner black circle creating intersection (masked)
+                Circle()
+                    .fill(Color.black)
+                    .frame(width: squareSize * 0.6, height: squareSize * 0.6)
+                    .offset(y: -squareSize * 0.2)
+                    .mask(
+                        Circle()
+                            .fill(Color.white)
+                            .frame(width: squareSize * 0.6, height: squareSize * 0.6)
+                    )
+            }
+            .frame(width: squareSize, height: squareSize)
                 .offset(x: squareSize)
             
-            // South: Blue Square + Yellow Square
-            TattwaSquare(bgColor: .blue, innerShape: AnyView(Rectangle().fill(Color.yellow).padding(squareSize * 0.1)))
-                .frame(width: squareSize, height: squareSize)
+            // South: Yellow Square + Blue Square + Yellow Square
+            ZStack {
+                Rectangle().fill(Color.yellow)
+                Rectangle().fill(Color.blue).padding(squareSize * 0.15)
+                Rectangle().fill(Color.yellow).padding(squareSize * 0.3)
+            }
+            .frame(width: squareSize, height: squareSize)
                 .offset(y: squareSize)
             
             // West: Yellow Square + Red Triangle
