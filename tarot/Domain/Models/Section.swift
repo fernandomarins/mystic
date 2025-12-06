@@ -18,6 +18,8 @@ enum SectionName: String {
     case herbs = "Ervas"
     case hoodoo = "Hoodoo"
     case cabala = "Cabala"
+    case banimento = "Banimento"
+    case talisma = "Talismã"
 }
 
 struct Main: Identifiable {

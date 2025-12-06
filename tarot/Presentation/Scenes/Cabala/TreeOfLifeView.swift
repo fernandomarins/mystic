@@ -119,7 +119,6 @@ struct TreeOfLifeView: View {
                                     }) {
                                         SephirahVisual(id: node.id)
                                             .frame(width: 75, height: 75)
-//                                                .shadow(color: [7, 8, 9].contains(node.id) ? .clear : node.color.opacity(0.6), radius: 10, x: 0, y: 0)
                                     }
                                     .position(
                                         x: node.position.x * width,

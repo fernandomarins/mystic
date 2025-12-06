@@ -15,7 +15,9 @@ struct MainView: View {
         .init(id: 3, name: .herbs),
         .init(id: 4, name: .astrology),
         .init(id: 5, name: .bones),
-        .init(id: 6, name: .cabala)
+        .init(id: 6, name: .cabala),
+        .init(id: 7, name: .banimento),
+        .init(id: 8, name: .talisma)
     ]
     
     var body: some View {
@@ -106,6 +108,10 @@ struct MainView: View {
             HoodooListView()
         case .cabala:
             CabalaView()
+        case .banimento:
+            BanimentoView()
+        case .talisma:
+            TalismaView()
         }
     }
 }
@@ -221,6 +227,8 @@ struct MysticalFeatureCell: View {
         case .herbs: return [Color(hex: "7B68EE"), Color(hex: "1C0045")] // Medium Slate Blue to Dark
         case .hoodoo: return [Color(hex: "6A5ACD"), Color(hex: "18003D")] // Slate Blue to Dark
         case .cabala: return [Color(hex: "6A5ACD"), Color(hex: "18003D")] // Gold to Midnight Blue
+        case .banimento: return [Color(hex: "8B0000"), Color(hex: "2A0000")] // Dark Red to Darker Red
+        case .talisma: return [Color(hex: "9D4EDD"), Color(hex: "3C096C")] // Purple to Dark Purple
         }
     }
 }
