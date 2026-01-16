@@ -17,7 +17,10 @@ struct MainView: View {
         .init(id: 5, name: .bones),
         .init(id: 6, name: .cabala),
         .init(id: 7, name: .banimento),
-        .init(id: 8, name: .talisma)
+        .init(id: 8, name: .talisma),
+        .init(id: 9, name: .pontosRiscados),
+        .init(id: 10, name: .dadomancia),
+        .init(id: 11, name: .geomancia)
     ]
     
     var body: some View {
@@ -112,6 +115,12 @@ struct MainView: View {
             BanimentoView()
         case .talisma:
             TalismaView()
+        case .pontosRiscados:
+            PontosRiscadosView()
+        case .dadomancia:
+            DadomanciaView()
+        case .geomancia:
+            GeomanciaView()
         }
     }
 }
@@ -229,6 +238,9 @@ struct MysticalFeatureCell: View {
         case .cabala: return [Color(hex: "6A5ACD"), Color(hex: "18003D")] // Gold to Midnight Blue
         case .banimento: return [Color(hex: "8B0000"), Color(hex: "2A0000")] // Dark Red to Darker Red
         case .talisma: return [Color(hex: "9D4EDD"), Color(hex: "3C096C")] // Purple to Dark Purple
+        case .pontosRiscados: return [Color(hex: "1B4332"), Color(hex: "081C15")] // Forest Green to Darker Green
+        case .dadomancia: return [Color(hex: "5D3FD3"), Color(hex: "1A0033")] // Iris to Dark Deep Blue
+        case .geomancia: return [Color(hex: "8B4513"), Color(hex: "3D2B1F")] // Saddle Brown to Earthy
         }
     }
 }

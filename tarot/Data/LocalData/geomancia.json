@@ -1,0 +1,308 @@
+{
+    "geomancia": [
+        {
+            "id": 1,
+            "name": "Via",
+            "latinName": "Via",
+            "pattern": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "element": "Água",
+            "planet": "Lua (Minguante)",
+            "zodiac": "Câncer",
+            "nature": "Móvel e Neutra",
+            "parity": "Par",
+            "period": "Diurna",
+            "meaning": "Significa mudança, movimento e alternância da fortuna. É favorável para jornadas e viagens, mas indica instabilidade e mudança que pode ser caótica conforme o contexto.",
+            "answer": "TALVEZ"
+        },
+        {
+            "id": 2,
+            "name": "Populus",
+            "latinName": "Populus",
+            "pattern": [
+                2,
+                2,
+                2,
+                2
+            ],
+            "element": "Água",
+            "planet": "Lua (Crescente)",
+            "zodiac": "Câncer",
+            "nature": "Estável e Neutra",
+            "parity": "Par",
+            "period": "Noturna",
+            "meaning": "Representa uma multidão, reunião ou assembleia. É uma figura neutra cujo significado se alinha à natureza do jogo ('bom com o bom, mau com o mau'), simbolizando também a estabilidade por inércia.",
+            "answer": "TALVEZ"
+        },
+        {
+            "id": 3,
+            "name": "Conjunctio",
+            "latinName": "Conjunctio",
+            "pattern": [
+                2,
+                1,
+                1,
+                2
+            ],
+            "element": "Ar",
+            "planet": "Mercúrio",
+            "zodiac": "Virgem",
+            "nature": "Móvel e Neutra",
+            "parity": "Par",
+            "period": "Noturna",
+            "meaning": "Representa a combinação de forças ou pessoas e a recuperação de coisas perdidas. É uma figura neutra que simboliza uma reunião de fatores.",
+            "answer": "TALVEZ"
+        },
+        {
+            "id": 4,
+            "name": "Carcer",
+            "latinName": "Carcer",
+            "pattern": [
+                1,
+                2,
+                2,
+                1
+            ],
+            "element": "Terra",
+            "planet": "Saturno",
+            "zodiac": "Capricórnio",
+            "nature": "Estável e Geralmente Má",
+            "parity": "Par",
+            "period": "Diurna",
+            "meaning": "Significa restrição, atraso, limitação e aprisionamento. Tende a ser desfavorável, indicando perda de liberdade e incapacidade de sair de uma situação, embora possa simbolizar estabilidade.",
+            "answer": "NÃO"
+        },
+        {
+            "id": 5,
+            "name": "Acquisitio",
+            "latinName": "Acquisitio",
+            "pattern": [
+                1,
+                2,
+                1,
+                2
+            ],
+            "element": "Ar",
+            "planet": "Júpiter",
+            "zodiac": "Sagitário",
+            "nature": "Estável e Máxima (Muito Boa)",
+            "parity": "Par",
+            "period": "Diurna",
+            "meaning": "Representa sucesso, lucro e ganho; coisas que estão ao alcance da mão. É extremamente favorável em quase todos os assuntos, especialmente financeiros e de aquisição.",
+            "answer": "SIM"
+        },
+        {
+            "id": 6,
+            "name": "Amissio",
+            "latinName": "Amissio",
+            "pattern": [
+                2,
+                1,
+                2,
+                1
+            ],
+            "element": "Fogo",
+            "planet": "Vênus",
+            "zodiac": "Touro (Detrimento)",
+            "nature": "Móvel e Má (exceto para perder o que não se quer)",
+            "parity": "Par",
+            "period": "Noturna",
+            "meaning": "Representa transitoriedade e perda; indica coisas fora do alcance. É favorável apenas para o amor e situações onde a perda é desejada (como doenças), mas muito desfavorável para o material.",
+            "answer": "NÃO"
+        },
+        {
+            "id": 7,
+            "name": "Laetitia",
+            "latinName": "Laetitia",
+            "pattern": [
+                1,
+                2,
+                2,
+                2
+            ],
+            "element": "Ar",
+            "planet": "Júpiter",
+            "zodiac": "Peixes",
+            "nature": "Móvel e Muito Boa",
+            "parity": "Ímpar",
+            "period": "Noturna",
+            "meaning": "Denota felicidade e saúde. É uma figura positiva que representa alegria e celebração, embora às vezes passageira.",
+            "answer": "SIM"
+        },
+        {
+            "id": 8,
+            "name": "Tristitia",
+            "latinName": "Tristitia",
+            "pattern": [
+                2,
+                2,
+                2,
+                1
+            ],
+            "element": "Terra",
+            "planet": "Saturno",
+            "zodiac": "Aquário",
+            "nature": "Estável e Má",
+            "parity": "Ímpar",
+            "period": "Noturna",
+            "meaning": "Representa tristeza, sofrimento, doença e dor. É geralmente desfavorável, exceto em questões de construção, agricultura e ocultação de segredos (estabelecimento de bases sólidas).",
+            "answer": "NÃO"
+        },
+        {
+            "id": 9,
+            "name": "Albus",
+            "latinName": "Albus",
+            "pattern": [
+                2,
+                2,
+                1,
+                2
+            ],
+            "element": "Água",
+            "planet": "Mercúrio",
+            "zodiac": "Gêmeos",
+            "nature": "Estável e Boa",
+            "parity": "Ímpar",
+            "period": "Diurna",
+            "meaning": "Denota paz, sabedoria e pureza. É uma figura favorável, mas fraca; excelente para começos, negócios, reflexão e meditação.",
+            "answer": "SIM"
+        },
+        {
+            "id": 10,
+            "name": "Rubeus",
+            "latinName": "Rubeus",
+            "pattern": [
+                2,
+                1,
+                2,
+                2
+            ],
+            "element": "Ar",
+            "planet": "Marte",
+            "zodiac": "Escorpião",
+            "nature": "Móvel e Muito Má",
+            "parity": "Ímpar",
+            "period": "Noturna",
+            "meaning": "Associada a paixão, poder, ferocidade e vício. É considerada má em tudo o que é bom e boa em tudo o que é mau, simbolizando paixões descontroladas e sexualidade destrutiva.",
+            "answer": "NÃO"
+        },
+        {
+            "id": 11,
+            "name": "Puella",
+            "latinName": "Puella",
+            "pattern": [
+                1,
+                2,
+                1,
+                1
+            ],
+            "element": "Ar",
+            "planet": "Vênus",
+            "zodiac": "Libra",
+            "nature": "Móvel e Geralmente Boa",
+            "parity": "Ímpar",
+            "period": "Diurna",
+            "meaning": "Simboliza harmonia e felicidade, sendo uma figura favorável em quase todas as questões. Representa gentileza, conciliação, prazer e fertilidade.",
+            "answer": "SIM"
+        },
+        {
+            "id": 12,
+            "name": "Puer",
+            "latinName": "Puer",
+            "pattern": [
+                1,
+                1,
+                2,
+                1
+            ],
+            "element": "Fogo",
+            "planet": "Marte",
+            "zodiac": "Áries",
+            "nature": "Móvel e Geralmente Má (exceto em guerra/amor)",
+            "parity": "Ímpar",
+            "period": "Diurna",
+            "meaning": "Significa impetuosidade, violência, energia e destruição. É geralmente desfavorável, exceto em questões de amor e guerra, simbolizando vigor e competitividade.",
+            "answer": "NÃO"
+        },
+        {
+            "id": 13,
+            "name": "Fortuna Major",
+            "latinName": "Fortuna Major",
+            "pattern": [
+                2,
+                2,
+                1,
+                1
+            ],
+            "element": "Terra",
+            "planet": "Sol",
+            "zodiac": "Leão",
+            "nature": "Estável e Máxima",
+            "parity": "Par",
+            "period": "Diurna",
+            "meaning": "Simboliza grande boa sorte e força interior; é uma figura de poder e sucesso absoluto, fruto dos próprios esforços e talentos.",
+            "answer": "SIM"
+        },
+        {
+            "id": 14,
+            "name": "Fortuna Minor",
+            "latinName": "Fortuna Minor",
+            "pattern": [
+                1,
+                1,
+                2,
+                2
+            ],
+            "element": "Fogo",
+            "planet": "Sol",
+            "zodiac": "Leão",
+            "nature": "Móvel e Boa (mas passageira)",
+            "parity": "Par",
+            "period": "Noturna",
+            "meaning": "Representa força externa e ajuda de terceiros; indica uma fortuna menor que depende mais do ambiente e dos outros do que de si mesmo.",
+            "answer": "SIM"
+        },
+        {
+            "id": 15,
+            "name": "Caput Draconis",
+            "latinName": "Caput Draconis",
+            "pattern": [
+                1,
+                1,
+                1,
+                2
+            ],
+            "element": "Terra",
+            "planet": "Nodo Norte",
+            "zodiac": "—",
+            "nature": "Estável e Boa",
+            "parity": "Ímpar",
+            "period": "Diurna",
+            "meaning": "Representa uma porta de entrada; favorável para começos e ganhos. Sua influência é 'bom com o bom, mau com o mau'.",
+            "answer": "SIM"
+        },
+        {
+            "id": 16,
+            "name": "Cauda Draconis",
+            "latinName": "Cauda Draconis",
+            "pattern": [
+                2,
+                1,
+                1,
+                1
+            ],
+            "element": "Fogo",
+            "planet": "Nodo Sul",
+            "zodiac": "—",
+            "nature": "Móvel e Má",
+            "parity": "Ímpar",
+            "period": "Noturna",
+            "meaning": "Representa uma porta de saída; favorável para perdas e fins, mas geralmente desfavorável. Traz 'bom com o mau e mau com o bom'.",
+            "answer": "NÃO"
+        }
+    ]
+}
