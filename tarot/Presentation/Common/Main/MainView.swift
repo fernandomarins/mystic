@@ -10,17 +10,17 @@ import SwiftUI
 struct MainView: View {
     private let sections: [Main] = [
         .init(id: 0, name: .tarot),
-        .init(id: 1, name: .runes),
-        .init(id: 2, name: .daemons),
-        .init(id: 3, name: .herbs),
-        .init(id: 4, name: .astrology),
-        .init(id: 5, name: .bones),
-        .init(id: 6, name: .cabala),
-        .init(id: 7, name: .banimento),
-        .init(id: 8, name: .talisma),
-        .init(id: 9, name: .pontosRiscados),
-        .init(id: 10, name: .dadomancia),
-        .init(id: 11, name: .geomancia)
+        .init(id: 1, name: .geomancia),
+        .init(id: 2, name: .runes),
+        .init(id: 3, name: .daemons),
+        .init(id: 4, name: .herbs),
+        .init(id: 5, name: .astrology),
+        .init(id: 6, name: .bones),
+        .init(id: 7, name: .cabala),
+        .init(id: 9, name: .banimento),
+        .init(id: 9, name: .talisma),
+        .init(id: 10, name: .pontosRiscados),
+        .init(id: 11, name: .dadomancia)
     ]
     
     var body: some View {

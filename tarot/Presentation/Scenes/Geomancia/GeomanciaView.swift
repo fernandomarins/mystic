@@ -11,6 +11,7 @@ struct GeomanciaView: View {
     @StateObject private var viewModel = GeomanciaViewModel()
     @Environment(\.presentationMode) var presentationMode
     @State private var isShowingReading = false
+    @State private var isShowingTapper = false
     
     // Premium Earthy Color Palette
     private let bgGradient = LinearGradient(
@@ -94,6 +95,9 @@ struct GeomanciaView: View {
         .onAppear {
             viewModel.fetchForms()
         }
+        .fullScreenCover(isPresented: $isShowingTapper) {
+            GeomanciaTapperView()
+        }
     }
     
     private var headerView: some View {
@@ -141,6 +145,46 @@ struct GeomanciaView: View {
                     .italic()
                     .foregroundColor(Color(hex: "E0E0E0").opacity(0.8))
                     .padding(.horizontal, 20)
+                
+                // Sortilégio Entry (Tapper)
+                Button(action: { isShowingTapper = true }) {
+                    HStack(spacing: 20) {
+                        Image(systemName: "hand.tap.fill")
+                            .font(.system(size: 24))
+                            .foregroundColor(Color(hex: "D4AF37"))
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Sortilégio Geomântico")
+                                .font(.system(size: 18, weight: .bold, design: .serif))
+                                .foregroundColor(.white)
+                            
+                            Text("Gere figuras manualmente através de toques")
+                                .font(.system(size: 13))
+                                .foregroundColor(.white.opacity(0.6))
+                        }
+                        
+                        Spacer()
+                        
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(Color(hex: "D4AF37").opacity(0.6))
+                    }
+                    .padding(20)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(LinearGradient(
+                                colors: [Color(hex: "1F1F1F"), Color(hex: "2A2A2A")],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color(hex: "D4AF37").opacity(0.3), lineWidth: 1)
+                            )
+                            .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 4)
+                    )
+                }
+                .padding(.horizontal, 20)
                 
                 // Anatomy Legend (O Zigurate)
                 VStack(alignment: .leading, spacing: 12) {
@@ -258,189 +302,3 @@ struct GeomanciaGridCell: View {
     }
 }
 
-// Special component to draw the dots
-struct GeomanticSymbolView: View {
-    let pattern: [Int] // [Line1, Line2, Line3, Line4]
-    let color: Color
-    var dotSize: CGFloat = 10
-    var spacing: CGFloat = 12
-    
-    var body: some View {
-        VStack(spacing: spacing) {
-            ForEach(0..<4) { index in
-                HStack(spacing: spacing) {
-                    if pattern[index] == 1 {
-                        // Single dot
-                        dot
-                    } else {
-                        // Double dots
-                        dot
-                        dot
-                    }
-                }
-                .frame(maxWidth: .infinity)
-            }
-        }
-    }
-    
-    private var dot: some View {
-        Circle()
-            .fill(color)
-            .frame(width: dotSize, height: dotSize)
-            .shadow(color: color.opacity(0.5), radius: 2)
-    }
-}
-
-struct GeomanciaDetailView: View {
-    let item: GeomanciaMeaning
-    @Environment(\.dismiss) var dismiss
-    
-    var body: some View {
-        ZStack {
-            // Background
-            LinearGradient(
-                colors: [Color(hex: "2D1B10"), Color(hex: "0F0C08")],
-                startPoint: .top,
-                endPoint: .bottom
-            ).ignoresSafeArea()
-            
-            // Decorative elements
-            VStack {
-                Spacer()
-                Image(systemName: "globe.americas.fill")
-                    .foregroundColor(Color(hex: "8B4513").opacity(0.05))
-                    .font(.system(size: 300))
-                    .offset(y: 150)
-            }
-            .ignoresSafeArea()
-            
-            ScrollView {
-                VStack(spacing: 35) {
-                    // Pull indicator
-                    Capsule()
-                        .fill(.white.opacity(0.2))
-                        .frame(width: 36, height: 5)
-                        .padding(.top, 12)
-                    
-                    // Card Layout
-                    VStack(spacing: 0) {
-                        // Top Section with Dot Pattern
-                        VStack(spacing: 25) {
-                            GeomanticSymbolView(pattern: item.pattern, color: Color(hex: "D4AF37"), dotSize: 14, spacing: 20)
-                                .padding(30)
-                                .background(
-                                    Circle()
-                                        .fill(Color(hex: "D4AF37").opacity(0.05))
-                                        .overlay(Circle().stroke(Color(hex: "D4AF37").opacity(0.2), lineWidth: 1))
-                                )
-                                .shadow(color: Color(hex: "D4AF37").opacity(0.3), radius: 20)
-                            
-                            VStack(spacing: 8) {
-                                Text(item.name)
-                                    .font(.system(size: 32, weight: .bold, design: .serif))
-                                    .foregroundColor(.white)
-                                
-                                
-                                HStack(spacing: 8) {
-                                    if let planet = item.planet {
-                                        BadgeView(text: planet, icon: "sparkles", color: .white.opacity(0.6))
-                                    }
-                                    
-                                    if let zodiac = item.zodiac {
-                                        BadgeView(text: zodiac, icon: "star.fill", color: .white.opacity(0.6))
-                                    }
-                                }
-                                
-                                HStack(spacing: 8) {
-                                    BadgeView(text: item.parity, icon: "equal.circle", color: .white.opacity(0.6))
-                                    BadgeView(text: item.period, icon: item.period == "Diurna" ? "sun.max.fill" : "moon.fill", color: .white.opacity(0.6))
-                                }
-                                
-                                HStack(spacing: 8) {
-                                    BadgeView(text: item.element, icon: "drop.fill", color: Color(hex: "D4AF37").opacity(0.8))
-                                    BadgeView(text: item.nature, icon: "scope", color: Color(hex: "D4AF37").opacity(0.8))
-                                }
-                                .padding(.top, 5)
-                            }
-                        }
-                        .padding(.vertical, 40)
-                        .frame(maxWidth: .infinity)
-                        .background(Color.white.opacity(0.03))
-                        
-                        // Content
-                        VStack(spacing: 30) {
-                            VStack(alignment: .leading, spacing: 12) {
-                                Text("SENTIDO TRADICIONAL")
-                                    .font(.system(size: 14, weight: .bold))
-                                    .foregroundColor(Color(hex: "D4AF37").opacity(0.6))
-                                    .tracking(2)
-                                
-                                Text(item.meaning)
-                                    .font(.system(size: 18, weight: .medium, design: .serif))
-                                    .foregroundColor(.white.opacity(0.9))
-                                    .lineSpacing(6)
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            // Answer
-                            VStack(spacing: 12) {
-                                Text("O ORÁCULO DIZ:")
-                                    .font(.system(size: 12, weight: .bold))
-                                    .foregroundColor(.white.opacity(0.4))
-                                    .tracking(2)
-                                
-                                Text(item.answer)
-                                    .font(.system(size: 28, weight: .black, design: .serif))
-                                    .foregroundColor(Color(hex: "D4AF37"))
-                                    .shadow(color: Color(hex: "D4AF37").opacity(0.5), radius: 10)
-                            }
-                            .padding(.vertical, 20)
-                        }
-                        .padding(30)
-                    }
-                    .background(
-                        RoundedRectangle(cornerRadius: 32)
-                            .fill(.ultraThinMaterial)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 32)
-                                    .stroke(Color(hex: "D4AF37").opacity(0.2), lineWidth: 1)
-                            )
-                    )
-                    .padding(.horizontal, 20)
-                    
-                    // Close button
-                    Button(action: { dismiss() }) {
-                        Text("Voltar ao Grimório")
-                            .font(.system(size: 18, weight: .semibold))
-                            .foregroundColor(.black)
-                            .frame(maxWidth: .infinity)
-                            .height(56)
-                            .background(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .fill(Color(hex: "D4AF37"))
-                            )
-                            .shadow(color: Color(hex: "D4AF37").opacity(0.4), radius: 10)
-                    }
-                    .padding(.horizontal, 40)
-                    .padding(.bottom, 20)
-                }
-            }
-        }
-    }
-}
-
-struct BadgeView: View {
-    let text: String
-    let icon: String
-    let color: Color
-    
-    var body: some View {
-        Label(text, systemImage: icon)
-            .font(.system(size: 11, weight: .bold))
-            .foregroundColor(color)
-            .padding(.horizontal, 10)
-            .padding(.vertical, 4)
-            .background(Capsule().fill(.white.opacity(0.05)))
-            .overlay(Capsule().stroke(color.opacity(0.2), lineWidth: 0.5))
-    }
-}

@@ -17,7 +17,25 @@
             "parity": "Par",
             "period": "Diurna",
             "meaning": "Significa mudança, movimento e alternância da fortuna. É favorável para jornadas e viagens, mas indica instabilidade e mudança que pode ser caótica conforme o contexto.",
-            "answer": "TALVEZ"
+            "answer": "TALVEZ",
+            "otherNames": "Caminhante, vela, jornada",
+            "images": "Uma estrada",
+            "keyword": "Mudança",
+            "quality": "Móvel",
+            "outerElement": "Água",
+            "innerElement": "Água",
+            "anatomy": "O estômago",
+            "bodyType": "Em forma de pera (isto é, maior abaixo da cintura do que acima dela) e de altura média, com tendência a ganhar peso e suar facilmente. Pessoas desta figura tendem a ter pele pálida, rostos redondos e dentes pequenos. Um olho pode ser de uma cor diferente do outro, ou pode ter uma marca de nascimento ou mancha por perto.",
+            "characterType": "Paciente e silencioso, com uma vida interior profunda que raramente aparece na superfície. Lento para se irritar, mas uma vez irritado, igualmente lento para perdoar. Gosta de viajar e de se mudar de um lugar para outro.",
+            "color": "Branco, salpicado de azul",
+            "commentary": "Via é uma figura de movimento direcionado e mudança, equilibrando a estabilidade difusa e sem forma de Populus. Estas duas figuras, como Fortuna Major e Fortuna Minor, compartilham o mesmo simbolismo astrológico, mas têm estruturas elementares opostas. Aqui, no entanto, a oposição é entre passividade completa e atividade completa. Com todos os quatro elementos ativos, Via representa os elementos em um constante estado de mudança, cada um dando lugar ao próximo em um ciclo sem fim. Há, no entanto, uma certa qualidade passiva e reflexiva compartilhada por essas figuras tão opostas. Apesar da figura de linguagem comum, as estradas na verdade não vão a lugar nenhum; são os viajantes que as seguem que vão a algum lugar, deixando mais da estrada para trás a cada passo.",
+            "divinatoryMeaning": "Via em uma leitura geomântica representa a mudança em todas as suas formas e favorece todas as questões em que a mudança seja uma vantagem. É favorável para jornadas de todos os tipos, reais e metafóricas, mas desfavorável sempre que for desejável deixar as coisas inalteradas.",
+            "strengthenedHouses": [
+                4
+            ],
+            "weakenedHouses": [
+                10
+            ]
         },
         {
             "id": 2,
@@ -36,7 +54,25 @@
             "parity": "Par",
             "period": "Noturna",
             "meaning": "Representa uma multidão, reunião ou assembleia. É uma figura neutra cujo significado se alinha à natureza do jogo ('bom com o bom, mau com o mau'), simbolizando também a estabilidade por inércia.",
-            "answer": "TALVEZ"
+            "answer": "TALVEZ",
+            "otherNames": "Congregação, multidão, caminho duplo",
+            "images": "Uma multidão",
+            "keyword": "Estabilidade",
+            "quality": "Estável",
+            "outerElement": "Água",
+            "innerElement": "Água",
+            "anatomy": "Os seios e o diafragma",
+            "bodyType": "Alto e relativamente magro, com quadris estreitos e rosto longo, dentes grandes e pele mais escura do que a origem étnica da pessoa normalmente sugeriria. Pessoas desta figura costumam ter uma marca ou mancha perto de um olho, ou um olho de tamanho ou cor diferente do outro. O rosto costuma ser mais atraente do que o corpo. Homens desta figura costumam ter uma barba espessa.",
+            "characterType": "Pessoas desta figura são passivas e receptivas, assumindo as características daqueles que as rodeiam, e são mais felizes quando estão na companhia de amigos. Suas emoções são mais fortes que seu intelecto. Um inesperado desejo de vagar as torna amantes de viagens e descontentes quando precisam permanecer em um lugar por muito tempo.",
+            "color": "Verde mar ou marrom avermelhado escuro",
+            "commentary": "Populus é uma figura de dispersão e multiplicidade, equilibrando o movimento focado de Via. Seus símbolos astrológicos (Lua, Câncer e Água) são todos imagens de passividade, reflexão e ação indireta; eles representam padrões de experiência que não têm direção ou foco próprios, mas simplesmente respondem a energias vindas de fora. A estrutura elemental da figura mostra todos os quatro elementos como passivos e latentes, mas a natureza receptiva da Água é o que mais se aproxima de expressar a natureza da figura em termos elementares. Como uma multidão, Populus não tem movimento ou direção específica até receber a energia de outra figura. Sua estabilidade é uma função da pura inércia, em vez de qualquer força especial própria.",
+            "divinatoryMeaning": "Populus em um mapa geomântico representa um encontro ou assembleia de pessoas, ou uma grande quantidade de qualquer outra coisa. Uma figura passiva que assume as qualidades das figuras que interagem com ela, Populus tende a ser afortunada com figuras afortunadas e desafortunada com figuras desafortunadas. Ainda assim, é geralmente favorável em assuntos que se beneficiam da reflexão silenciosa, e desfavorável em assuntos que exigem ação focada.",
+            "strengthenedHouses": [
+                4
+            ],
+            "weakenedHouses": [
+                10
+            ]
         },
         {
             "id": 3,
@@ -55,7 +91,25 @@
             "parity": "Par",
             "period": "Noturna",
             "meaning": "Representa a combinação de forças ou pessoas e a recuperação de coisas perdidas. É uma figura neutra que simboliza uma reunião de fatores.",
-            "answer": "TALVEZ"
+            "answer": "TALVEZ",
+            "otherNames": "Associação, reunião",
+            "images": "Uma encruzilhada",
+            "keyword": "Interação",
+            "quality": "Móvel",
+            "outerElement": "Terra",
+            "innerElement": "Ar",
+            "anatomy": "Os intestinos e a barriga",
+            "bodyType": "Muito atraente, com uma constituição esguia e delicada e altura média. O rosto é longo e bonito, com um nariz esguio e olhos atraentes. As coxas são finas. Homens desta figura que têm barba mantêm-na curta e bem aparada.",
+            "characterType": "Inteligente e comunicativo, gosta de luxos e não se preocupa com questões de honestidade e legalidade. Pessoas desta figura têm muitos amigos e tendem a gastar mais dinheiro do que ganham.",
+            "color": "Roxo ou cinza pálido, às vezes preto salpicado de azul",
+            "commentary": "Conjunctio é uma figura de contato e união, equilibrando a figura isolada e limitada Carcer. Representa a união de opostos em todos os níveis e os potenciais resultantes para mudança. Aqui o simbolismo astrológico de Mercúrio, Virgem e Terra liga-se a antigas imagens mágicas de fertilidade, e a estrutura elemental é aberta à energia na linha de Fogo e à manifestação na linha de Terra. Ar e Água, os elementos ativos nesta figura, são pensados na filosofia mágica como reinos intermediários que unem as duas extremidades do espectro elemental; Ar, o elemento interno desta figura, também tem um papel aqui como um símbolo de interação. Como uma encruzilhada, Conjunctio forma um contexto no qual o movimento pode levar em direções inesperadas e trazer energias e pessoas em trajetórias altamente diferentes para a interação.",
+            "divinatoryMeaning": "Conjunctio em um mapa geomântico mostra a presença de uma combinação de forças. Tende a ser favorável ou desfavorável dependendo de outras figuras e circunstâncias, mas é confiavelmente favorável em qualquer questão sobre a recuperação de coisas perdidas ou roubadas. Tradicionalmente é uma figura de temperança. É favorável para assuntos em que as coisas precisam entrar em contato, e desfavorável para qualquer situação que exija solidão, separação e clarificação.",
+            "strengthenedHouses": [
+                6
+            ],
+            "weakenedHouses": [
+                12
+            ]
         },
         {
             "id": 4,
@@ -74,7 +128,25 @@
             "parity": "Par",
             "period": "Diurna",
             "meaning": "Significa restrição, atraso, limitação e aprisionamento. Tende a ser desfavorável, indicando perda de liberdade e incapacidade de sair de uma situação, embora possa simbolizar estabilidade.",
-            "answer": "NÃO"
+            "answer": "NÃO",
+            "otherNames": "Constrito, fechadura",
+            "images": "Um cercado",
+            "keyword": "Isolamento",
+            "quality": "Estável",
+            "outerElement": "Terra",
+            "innerElement": "Terra",
+            "anatomy": "Os joelhos e a parte inferior das pernas",
+            "bodyType": "Altura média e constituição magra e nervosa, com pescoço longo, orelhas e boca pequenas, e olhos que tendem a olhar para baixo o tempo todo. Pessoas desta figura frequentemente têm fortes tensões musculares, especialmente nos ombros e ao redor da boca.",
+            "characterType": "Tímido, especialmente em relação a dinheiro e propriedade, mas teimoso. Pessoas desta figura tendem a economizar mais do que gastam e são detalhistas quanto à sua aparência.",
+            "color": "Branco, avermelhado ou pardo (marrom pálido)",
+            "commentary": "Carcer é uma figura de restrição e isolamento, equilibrando a natureza aberta e interativa de Conjunctio. Este padrão de significados tem dois lados, pois a restrição pode ser uma fonte de força e foco, bem como uma limitação. Isso é mostrado em seu simbolismo astrológico, pois Saturno, Capricórnio e Terra estabelecem uma imagem de rigidez e fixação, mas também de energia gasta em trabalho produtivo. A estrutura elemental desenvolve o mesmo tema; Fogo e Terra representam energia e expressão material, mas também permanecem nas duas extremidades do espectro elemental, incapazes de entrar em contato um com o outro porque nenhum dos elementos intermediários está lá para preencher a lacuna.",
+            "divinatoryMeaning": "Carcer em um mapa geomântico representa solidez, restrição, vinculação ou até mesmo aprisionamento. Sempre pressagia atraso. Em questões financeiras, pode representar ganância. É desfavorável na maioria das questões, mas favorece qualquer coisa que envolva estabilidade, segurança e isolamento.",
+            "strengthenedHouses": [
+                10
+            ],
+            "weakenedHouses": [
+                4
+            ]
         },
         {
             "id": 5,
@@ -93,7 +165,25 @@
             "parity": "Par",
             "period": "Diurna",
             "meaning": "Representa sucesso, lucro e ganho; coisas que estão ao alcance da mão. É extremamente favorável em quase todos os assuntos, especialmente financeiros e de aquisição.",
-            "answer": "SIM"
+            "answer": "SIM",
+            "otherNames": "Segurar internamente, riqueza interior, algo ganho ou apanhado",
+            "images": "Uma bolsa segurada com a boca para cima, como se fosse para receber algo",
+            "keyword": "Ganho",
+            "quality": "Estável",
+            "outerElement": "Fogo",
+            "innerElement": "Ar",
+            "anatomy": "Os quadris e coxas",
+            "bodyType": "Baixo, mas de constituição forte, com peito cheio e cor de pele mais escura do que a etnia da pessoa sugeriria normalmente. Braços e pernas são curtos, e o pescoço é curto e grosso. O rosto é redondo, a cabeça grande, a boca e os olhos pequenos.",
+            "characterType": "Feroz e apaixonado, com um gosto insaciável pela vida, mas um senso igualmente intenso de justiça e equidade.",
+            "color": "Vermelho, amarelo ou verde",
+            "commentary": "Acquisitio é uma figura de ganho e sucesso, equilibrando a imagem de perda em Amissio. Em seu simbolismo astrológico, Júpiter é o planeta tradicional da boa sorte, enquanto Sagitário e Fogo representam energia direcionada a objetivos. Seu elemento interno e estrutura elemental enfatizam que o ganho real de qualquer tipo existe apenas em uma rede de interação e busca manifestação produtiva; todo o dinheiro do mundo é inútil se ninguém o aceitar em troca, ou se simplesmente se acumular intocado. A estrutura elemental também sugere o ponto nada menos que importante de que o ganho material, apesar de todo o seu potencial de interação e riqueza material, não leva necessariamente à realização dos desejos de alguém ou ao aprofundamento de sua vida interior.",
+            "divinatoryMeaning": "Acquisitio em uma leitura geomântica prediz sucesso, lucro e ganho, e muitas vezes significa que algo desejado está ao seu alcance. Tradicionalmente, Acquisitio é uma figura de prudência. Representa ganho em todos os sentidos e favorece qualquer situação em que se deseje ganhar algo. É desfavorável sempre que se deseja a perda, como doenças, enfrentar coisas que se teme e sair de situações difíceis.",
+            "strengthenedHouses": [
+                9
+            ],
+            "weakenedHouses": [
+                3
+            ]
         },
         {
             "id": 6,
@@ -112,7 +202,25 @@
             "parity": "Par",
             "period": "Noturna",
             "meaning": "Representa transitoriedade e perda; indica coisas fora do alcance. É favorável apenas para o amor e situações onde a perda é desejada (como doenças), mas muito desfavorável para o material.",
-            "answer": "NÃO"
+            "answer": "NÃO",
+            "otherNames": "Segurar externamente, riqueza exterior, algo escapou ou foi perdido",
+            "images": "Uma bolsa segurada com a boca para baixo, deixando o conteúdo cair",
+            "keyword": "Perda",
+            "quality": "Móvel",
+            "outerElement": "Terra",
+            "innerElement": "Fogo",
+            "anatomy": "O pescoço e a garganta",
+            "bodyType": "Altura média e estrutura corporal de ossos grandes, com pescoco longo, cabeca grande, ombros e pes grandes, e rosto redondo. A boca e pequena e os olhos sao atraentes. Homens desta figura tendem a ter pelos faciais, mulheres tem cabelos longos e grossos; em ambos os casos pode haver uma cicatriz visivel.",
+            "characterType": "Direto e as vezes indelicado, rapido em responder emocionalmente a qualquer situacão, profundamente preocupado com a honra pessoal, mas nem sempre honesto.",
+            "color": "Branco, salpicado com citrino (amarelo esverdeado)",
+            "commentary": "Amissio é uma figura de transitoriedade e perda, equilibrando a imagem de ganho de Acquisitio. Central ao seu significado é o reconhecimento da dura verdade de que todas as coisas passam. Seus símbolos astrológicos, Vênus, Touro e Terra, apontam para o desejo de coisas materiais como um dos exemplos clássicos de impermanência na vida humana; tanto o desejo quanto a coisa desejada certamente passarão com o tempo, e assim a experiência do desejo traz consigo a certeza de que a experiência da perda se seguirá. Da mesma forma, a estrutura elemental da figura tem apenas Fogo e Água; sem Ar para juntá-los ou Terra para trazê-los à manifestação, esses dois elementos opostos se separam, e qualquer contato entre eles é impermanente e sem resultado.",
+            "divinatoryMeaning": "Amissio em uma leitura geomântica representa perda em todos os sentidos, positivo ou negativo, de perder o coração a perder dinheiro. Muitas vezes representa algo fora do alcance de alguém. Tradicionalmente, esta também é uma figura de generosidade. É favorável em qualquer assunto onde a perda é o que você deseja; isso inclui coisas como amor e sexualidade (perder o coração), recuperação de doenças (perder sua doença), enfrentar coisas que você teme (perder seu medo) e sair de situações difíceis (perder seus problemas). É desfavorável sempre que você espera ganhar algo da situação.",
+            "strengthenedHouses": [
+                2
+            ],
+            "weakenedHouses": [
+                8
+            ]
         },
         {
             "id": 7,
@@ -131,7 +239,25 @@
             "parity": "Ímpar",
             "period": "Noturna",
             "meaning": "Denota felicidade e saúde. É uma figura positiva que representa alegria e celebração, embora às vezes passageira.",
-            "answer": "SIM"
+            "answer": "SIM",
+            "otherNames": "Barbado, rindo, cantando, torre alta, cabeça erguida, candelabro, montanha alta",
+            "images": "Uma torre",
+            "keyword": "Alegria",
+            "quality": "Móvel",
+            "outerElement": "Água",
+            "innerElement": "Fogo",
+            "anatomy": "Os pés",
+            "bodyType": "Alto e musculoso, com mãos, pés, traços faciais e testa grandes. Pessoas desta figura geralmente têm cabelos ásperos e rebeldes, e um ar desajeitado, como um filhote de cachorro.",
+            "characterType": "Honesto e de boa índole, com uma forte qualidade de inocência que às vezes pode se expressar como uma tolice sem noção. Pessoas desta figura costumam ter crenças religiosas fortes e profundamente arraigadas.",
+            "color": "Verde pálido brilhante",
+            "commentary": "Laetitia é uma figura de alegria, equilibrando o simbolismo severo de Tristitia. Representa a felicidade de todo tipo e nível, desde os prazeres passageiros mais momentâneos até os alcances mais elevados da experiência humana. Em seu simbolismo astrológico, Júpiter tem seu papel habitual como o planeta da boa sorte, e Peixes aquoso e o elemento externo, Água, representam a vida emocional, o contexto em que a alegria é geralmente experimentada. O elemento interno e a estrutura elemental em geral, no entanto, enfatizam o papel da energia na obtenção da felicidade; é por meio do fluxo livre da força criativa, em nós mesmos como no universo, que a alegria vem a ser.",
+            "divinatoryMeaning": "Laetitia em uma leitura geomântica é uma figura muito positiva que representa qualquer forma de ascensão. Significa movimento ascendente, o que é favorável na carreira do consulente (sucesso), estado emocional (felicidade) ou vitalidade (saúde). Tradicionalmente é uma figura de fortitude e, portanto, é favorável na maioria das questões, mas é desfavorável para qualquer questão em que estabilidade e raízes profundas sejam necessárias, e muito desfavorável quando um segredo precisa ser guardado.",
+            "strengthenedHouses": [
+                12
+            ],
+            "weakenedHouses": [
+                6
+            ]
         },
         {
             "id": 8,
@@ -150,7 +276,25 @@
             "parity": "Ímpar",
             "period": "Noturna",
             "meaning": "Representa tristeza, sofrimento, doença e dor. É geralmente desfavorável, exceto em questões de construção, agricultura e ocultação de segredos (estabelecimento de bases sólidas).",
-            "answer": "NÃO"
+            "answer": "NÃO",
+            "otherNames": "Cruzado, diminuído, amaldiçoado, de cabeça para baixo, torre caída, cruz",
+            "images": "Um poço, uma estaca cravada para baixo",
+            "keyword": "Tristeza",
+            "quality": "Estável",
+            "outerElement": "Ar",
+            "innerElement": "Terra",
+            "anatomy": "Os tornozelos",
+            "bodyType": "Alta e magra, com articulações ossudas, pés grandes e pele mais escura do que a etnia da pessoa normalmente sugeriria. O rosto é longo, os dentes grandes e o cabelo áspero e desgrenhado.",
+            "characterType": "Não convencional e idealista, não se preocupa com expectativas sociais e propenso à desonestidade. Pessoas desta figura têm temperamentos rápidos e guardam mágoas por muito tempo.",
+            "color": "Bronzeado ou azul celeste",
+            "commentary": "Tristitia é uma figura de tristeza e dificuldade, equilibrando o simbolismo alegre de Laetitia. Seu simbolismo astrológico é complexo; Saturno tem ligações tradicionais com ideias de dor e problemas, e estas são reforçadas pelo Ar turbulento, mas Aquário carrega significados de criatividade e benevolência que podem parecer difíceis de relacionar com o simbolismo de Saturno. A estrutura elemental e o elemento interno enfatizam a Terra em exclusão a todo o resto, e isso também pode parecer difícil de conectar aos outros símbolos astrológicos. O nível mais profundo de significado onde esses paradoxos se resolvem é simplesmente que o sofrimento é a única fonte segura de sabedoria; muitas vezes, é apenas quando estamos 'presos', pegos em uma situação dolorosa que não sabemos como resolver, que aprendemos a enfrentar o mundo de maneiras mais criativas.",
+            "divinatoryMeaning": "Em uma leitura geomântica, Tristitia representa qualquer movimento descendente. Humores baixos (tristeza), vitalidade reduzida (doença) e expectativas diminuídas (fracasso) caem dentro de seu âmbito, embora também possa significar estabilidade e solidez, o afundamento de raízes profundas no solo. Desfavorável na maioria dos assuntos, é favorável para questões que envolvem estabilidade e paciência. É muito favorável em todas as questões ligadas à construção e à Terra, onde sua qualidade de 'fixidez' ou permanência é desejada, e para qualquer situação em que um segredo precise ser guardado.",
+            "strengthenedHouses": [
+                11
+            ],
+            "weakenedHouses": [
+                5
+            ]
         },
         {
             "id": 9,
@@ -169,7 +313,25 @@
             "parity": "Ímpar",
             "period": "Diurna",
             "meaning": "Denota paz, sabedoria e pureza. É uma figura favorável, mas fraca; excelente para começos, negócios, reflexão e meditação.",
-            "answer": "SIM"
+            "answer": "SIM",
+            "otherNames": "Nenhum",
+            "images": "Um cálice em pé",
+            "keyword": "Paz",
+            "quality": "Estável",
+            "outerElement": "Ar",
+            "innerElement": "Água",
+            "anatomy": "Os ombros e pulmões",
+            "bodyType": "Em forma de maçã — isto é, maior acima da cintura do que abaixo dela — e de altura média. A cabeça é grande, o rosto redondo, os olhos relativamente pequenos. Homens desta figura costumam ter uma barba espessa.",
+            "characterType": "Pacífico, gentil e amoroso, com um traço de timidez. Pessoas desta figura tendem a fazer amigos facilmente, mas mantêm poucos deles, e muitas vezes gastam dinheiro mais livremente do que podem pagar.",
+            "color": "Branco brilhante, salpicado de vermelho",
+            "commentary": "Albus é uma figura de paz e desapego, equilibrando a figura passional Rubeus. Seus símbolos astrológicos (Mercúrio, Gêmeos e Ar) apontam para o modo como o desapego mais frequentemente se expressou no mundo ocidental — o caminho do intelecto, que se afasta da experiência direta para ideias abstratas. Mais profundamente, porém, Albus é uma figura de Água, que é sua única linha ativa e também seu elemento interno; representa a consciência mergulhada inteiramente em sua própria vida interior e afastada da ação no mundo exterior da experiência. Em sua forma mais elevada, esse foco interior pode levar a mente atenta à transcendência pelos caminhos do misticismo, mas também pode se tornar um refúgio da vida que termina em esterilidade, isolamento e loucura.",
+            "divinatoryMeaning": "Albus em um mapa geomântico representa paz, sabedoria e pureza; é geralmente uma figura favorável, mas muitas vezes fraca, e onde ocorre, você pode precisar buscar ajuda de outras pessoas. É tradicionalmente uma figura de castidade. Albus favorece o progresso silencioso e o uso da inteligência, sendo favorável na maioria das questões comerciais e financeiras; também é favorável para começos. É desfavorável em assuntos que exigem coragem e energia, ou em qualquer situação que envolva conflito ou mudança disruptiva.",
+            "strengthenedHouses": [
+                3
+            ],
+            "weakenedHouses": [
+                9
+            ]
         },
         {
             "id": 10,
@@ -188,7 +350,25 @@
             "parity": "Ímpar",
             "period": "Noturna",
             "meaning": "Associada a paixão, poder, ferocidade e vício. É considerada má em tudo o que é bom e boa em tudo o que é mau, simbolizando paixões descontroladas e sexualidade destrutiva.",
-            "answer": "NÃO"
+            "answer": "NÃO",
+            "otherNames": "Fervente, perigo",
+            "images": "Um cálice virado de cabeça para baixo",
+            "keyword": "Paixão",
+            "quality": "Móvel",
+            "outerElement": "Água",
+            "innerElement": "Ar",
+            "anatomy": "Os órgãos genitais e o sistema reprodutor",
+            "bodyType": "Forte e musculoso, com pele mais avermelhada ou marrom do que a etnia da pessoa sugeriria. O rosto é rude e frequentemente tem manchas vermelhas ou estigmas. Pessoas desta figura têm vozes profundas e cabelos que se recusam a ficar arrumados. Homens desta figura têm barbas esparsas.",
+            "characterType": "Temperamental, apaixonado e problemático, gosta de festas, brigas e romance. Vícios em álcool ou drogas são comuns em pessoas desta figura. Rubeus definitivamente significa um passeio pelo lado selvagem!",
+            "color": "Vermelho, salpicado ou listrado de marrom",
+            "commentary": "Rubeus é uma figura de paixão e envolvimento na vida, equilibrando o desapego abstrato de Albus. Seus símbolos astrológicos (Marte, Escorpião e Água) são as imagens padrão de energia apaixonada na linguagem simbólica dos céus. Seu elemento interno e a única parte ativa de sua estrutura elemental, no entanto, são ambos Ar. A lição aqui é que o envolvimento apaixonado no mundo vem do foco em como nos relacionamos com os outros e com o próprio mundo. Na pior das hipóteses, isso se torna facilmente uma embriaguez cega com as aparências, mas também tem o potencial de abrir o caminho para uma participação alegre na experiência da vida.",
+            "divinatoryMeaning": "Rubeus em um mapa geomântico é uma figura desafiadora que representa paixão, prazer, ferocidade e violência. Antigos livros de geomancia a descrevem como 'boa em tudo o que é mau e má em tudo o que é bom'. É desfavorável na maioria das situações, mas favorável em questões que envolvem sexualidade, intoxicantes e violência.",
+            "strengthenedHouses": [
+                8
+            ],
+            "weakenedHouses": [
+                2
+            ]
         },
         {
             "id": 11,
@@ -207,7 +387,25 @@
             "parity": "Ímpar",
             "period": "Diurna",
             "meaning": "Simboliza harmonia e felicidade, sendo uma figura favorável em quase todas as questões. Representa gentileza, conciliação, prazer e fertilidade.",
-            "answer": "SIM"
+            "answer": "SIM",
+            "otherNames": "Beleza, pureza",
+            "images": "Um espelho; uma figura feminina com seios exagerados",
+            "keyword": "Harmonia",
+            "quality": "Estável",
+            "outerElement": "Ar",
+            "innerElement": "Água",
+            "anatomy": "Os rins e a região lombar",
+            "bodyType": "Atraente, com altura média e um corpo macio, um pouco roliço. O pescoço é longo, o rosto redondo, a boca pequena, as sobrancelhas e os olhos atraentes, e os ombros largos. Pessoas desta figura cantam bem e falam com uma voz atraente.",
+            "characterType": "Passional e altamente emocional, com temperamento rápido. Pessoas desta figura são intensamente conscientes de sua aparência e apaixonam-se e desapaixonam-se facilmente.",
+            "color": "Branco, salpicado de verde",
+            "commentary": "Puella é uma figura de energia sexual feminina, equilibrando a figura masculina Puer. Puella é equilibrada e harmoniosa, mas ambivalente. Seus símbolos astrológicos (Vênus, Libra e Ar) sugerem opostos polares mantidos juntos em harmonia e interação por meio do amor, enquanto seu elemento interno regente, Água, sugere que suas energias estão voltadas para dentro, em uma vida interior reflexiva. A estrutura elemental é a chave para esta figura; com propósito e energia, receptividade interior e a estabilidade de uma base material, Puella carece apenas de relacionamento e interação para ser completa. Ela busca unir-se aos outros, onde seu oposto Puer busca apenas ser recebido — uma distinção que tem muito a dizer sobre a complexidade dos relacionamentos entre os sexos.",
+            "divinatoryMeaning": "Puella em uma leitura geomântica representa harmonia e felicidade que podem não durar indefinidamente; é uma figura favorável na maioria das questões, mas inconstante. É especialmente favorável para questões que envolvem amor e amizade, e traz uma resposta positiva a qualquer questão que envolva felicidade a curto prazo. Devido à sua inconstância, no entanto, é desfavorável em qualquer situação em que se deseje permanência.",
+            "strengthenedHouses": [
+                7
+            ],
+            "weakenedHouses": [
+                1
+            ]
         },
         {
             "id": 12,
@@ -226,7 +424,25 @@
             "parity": "Ímpar",
             "period": "Diurna",
             "meaning": "Significa impetuosidade, violência, energia e destruição. É geralmente desfavorável, exceto em questões de amor e guerra, simbolizando vigor e competitividade.",
-            "answer": "NÃO"
+            "answer": "NÃO",
+            "otherNames": "Imberbe, Amarelo, Guerreiro, Homem, Espada",
+            "images": "Uma espada; uma figura masculina com testículos exagerados",
+            "keyword": "Energia",
+            "quality": "Móvel",
+            "outerElement": "Fogo",
+            "innerElement": "Ar",
+            "anatomy": "A cabeça",
+            "bodyType": "Baixo, solidamente construído e musculoso, com rosto vermelho e olhos pequenos. Tom de pele mais marrom ou avermelhado do que a etnia sugeriria. Dentes irregulares e, em homens, barba esparsa.",
+            "characterType": "Imprudente, entusiasta e impensado, com muita energia e muito pouco tato ou autocontrole. A personalidade básica do adolescente masculino, com autoafirmação cobrindo muita insegurança e inexperiência. Pessoas desta figura tendem a se meter em problemas por não pensar antes de agir.",
+            "color": "Branco, salpicado de vermelho",
+            "commentary": "Puer é uma figura de energia sexual masculina, equilibrando a figura feminina Puella. Instável e vigoroso, representa conflito, mudança súbita e transformação, com todos os aspectos construtivos e destrutivos que isso implica. Seu simbolismo astrológico (Marte, Áries e Fogo) reforça esse padrão de significado. Suas linhas elementais e elemento interno, em contraste, apontam para um nível mais profundo de interpretação: Puer possui energia e propósito, interações com outros e expressão material, mas nenhuma vida interior receptiva. Todos os aspectos de sua natureza são projetados para fora, no mundo da experiência, como um ato de criação ou uma fonte de ilusão. Como um jovem guerreiro partindo em uma busca, carrega a lança de Fogo, a espada de Ar e o disco ou escudo de Terra, mas deve buscar o cálice de Água em outro lugar - uma imagem que tem muito a ver com o significado interior da lendária busca pelo Santo Graal.",
+            "divinatoryMeaning": "Puer em uma leitura geomântica representa energia apaixonada, força, busca e mudança súbita. Na tradição geomântica, esta figura também está associada à justiça. Sempre que energia, entusiasmo, coragem e mudança são desejáveis, Puer pode ser favorável, embora mesmo assim possa ser problemático devido à sua natureza impensada. É sempre desfavorável em assuntos onde estabilidade, prudência e maturidade são vantagens.",
+            "strengthenedHouses": [
+                1
+            ],
+            "weakenedHouses": [
+                7
+            ]
         },
         {
             "id": 13,
@@ -245,7 +461,25 @@
             "parity": "Par",
             "period": "Diurna",
             "meaning": "Simboliza grande boa sorte e força interior; é uma figura de poder e sucesso absoluto, fruto dos próprios esforços e talentos.",
-            "answer": "SIM"
+            "answer": "SIM",
+            "otherNames": "Fortuna interior, proteção que entra, o maior presságio, ajuda interna ou oculta",
+            "images": "Um vale pelo qual flui um rio",
+            "keyword": "Poder",
+            "quality": "Estável",
+            "outerElement": "Fogo",
+            "innerElement": "Terra",
+            "anatomy": "O coração e o peito",
+            "bodyType": "Altura média e constituição esguia; as pernas são frequentemente assimétricas, com uma mais longa ou mais grossa que a outra. A cor da pele tende a ser mais amarela do que a etnia da pessoa normalmente sugeriria. Um rosto redondo, dentes atraentes e grandes olhos luminosos.",
+            "characterType": "Generoso, honesto, confiável e justo, com um traço ambicioso, mas um comportamento modesto e uma maneira fácil. Gosta de gastar dinheiro.",
+            "color": "Verde, amarelo ou dourado",
+            "commentary": "Fortuna Major é uma figura de força interior e sucesso resultante, equilibrando a força exterior de Fortuna Minor. Seus símbolos astrológicos (Sol, Leão e Fogo) são imagens metafóricas padrão para força e vitória, mas sua estrutura elemental leva a algumas direções inesperadas. Fogo e Ar são passivos nesta figura, com Água e Terra ativas, e o elemento interno é a Terra; como o vale que é sua imagem, Fortuna Major representa uma forma natural de eventos que traz sucesso sem esforço aparente. Embora muitas vezes tenhamos a tendência de pensar no sucesso como uma questão de ação vigorosa e luta, o verdadeiro sucesso ocorre porque nossa vida interior é refletida em nossas circunstâncias exteriores (como sempre é, para o bem ou para o mal) sem qualquer esforço consciente. Este é um dos segredos centrais da magia.",
+            "divinatoryMeaning": "Fortuna Major em um mapa geomântico prediz grande boa sorte, embora o caminho até lá possa ser difícil às vezes. É uma figura de poder e sucesso que se desenrola naturalmente, em vez de ter que ser forçada, e é especialmente favorável sempre que o consulente deseja ganhar algo. Muitas vezes prevê um começo difícil levando a um resultado muito bom. Tradicionalmente é uma figura de nobreza. Fortuna Major é favorável para quase todas as questões, exceto aquelas que envolvem escapar de uma situação difícil; a resposta de Fortuna Major à dificuldade é seguir em frente e fazer uma limonada com os limões da vida.",
+            "strengthenedHouses": [
+                5
+            ],
+            "weakenedHouses": [
+                11
+            ]
         },
         {
             "id": 14,
@@ -264,7 +498,25 @@
             "parity": "Par",
             "period": "Noturna",
             "meaning": "Representa força externa e ajuda de terceiros; indica uma fortuna menor que depende mais do ambiente e dos outros do que de si mesmo.",
-            "answer": "SIM"
+            "answer": "SIM",
+            "otherNames": "Fortuna externa, proteção que sai, presságio menor, ajuda externa ou aparente",
+            "images": "Uma montanha com um cajado no topo",
+            "keyword": "Rapidez",
+            "quality": "Móvel",
+            "outerElement": "Ar",
+            "innerElement": "Fogo",
+            "anatomy": "A coluna",
+            "bodyType": "Altura média e constituição pesada, com ossos fortes. O rosto é redondo e pálido, o nariz e a testa grandes, e os olhos escuros. Pessoas desta figura têm cabelos grossos, ásperos e desgrenhados, e os homens tendem a ter barbas de comprimento moderado.",
+            "characterType": "Ousado, orgulhoso e presunçoso, com um traço de insegurança e humildade por baixo da bravata, e muita generosidade e um forte senso de honra.",
+            "color": "Ouro ou amarelo",
+            "commentary": "Fortuna Minor é uma figura de força exterior e sucesso, equilibrando a força interior de Fortuna Major. Essas duas figuras têm o mesmo simbolismo astrológico, mas a estrutura elemental oposta; elas representam o mesmo tipo de experiência — o sucesso — mas têm fontes nitidamente diferentes. Fortuna Minor representa o sucesso que é trazido por ajuda externa ou circunstâncias, em vez da força inata simbolizada por Fortuna Major. Ganho facilmente, o sucesso de Fortuna Minor é igualmente perdido com facilidade, e produz os melhores resultados em situações onde uma mudança rápida é esperada ou desejada. Esses fatores ecoam no simbolismo por uma mudança inesperada no elemento externo; Leão é um signo de fogo, mas Fortuna Minor costuma receber o elemento externo Ar, representando o papel da ajuda externa nesta figura, bem como a instabilidade dos resultados.",
+            "divinatoryMeaning": "Fortuna Minor em uma leitura geomântica representa o sucesso instável. É tradicionalmente uma figura de inconstância, e também de generosidade, e avisa que o que você ganha pode não ficar com você por muito tempo. É muito favorável sempre que você deseja prosseguir rapidamente e desfavorável para assuntos em que a inconstância ou instabilidade seja um problema.",
+            "strengthenedHouses": [
+                5
+            ],
+            "weakenedHouses": [
+                11
+            ]
         },
         {
             "id": 15,
@@ -278,12 +530,30 @@
             ],
             "element": "Terra",
             "planet": "Nodo Norte",
-            "zodiac": "—",
+            "zodiac": "Virgem",
             "nature": "Estável e Boa",
             "parity": "Ímpar",
             "period": "Diurna",
             "meaning": "Representa uma porta de entrada; favorável para começos e ganhos. Sua influência é 'bom com o bom, mau com o mau'.",
-            "answer": "SIM"
+            "answer": "SIM",
+            "otherNames": "Soleira interna, soleira que entra, fronteira superior, árvore alta, cajado vertical, entrando para fora",
+            "images": "Um portal com pegadas levando em direção a ele",
+            "keyword": "Início",
+            "quality": "Estável",
+            "outerElement": "Terra",
+            "innerElement": "Terra",
+            "anatomy": "O braço direito",
+            "bodyType": "Altura média e constituição esguia, com um rosto atraente e expressivo. Pessoas indicadas por esta figura têm cabelos abundantes e traços faciais proeminentes.",
+            "characterType": "Calmo, confiável e de boa índole. Uma bondade instintiva é uma das características mais marcantes das pessoas desta figura.",
+            "color": "Branco, salpicado de citrino",
+            "commentary": "Caput Draconis é uma figura de oportunidades e inícios, equilibrando o simbolismo de finais de Cauda Draconis. Como o equivalente geomântico do nodo norte ou ascendente da Lua, Caput Draconis compartilha muito do mesmo foco em mudanças drásticas que Cauda, mas o nodo norte — o ponto em que a Lua cruza o caminho do Sol para o céu do norte — compartilha um pouco do simbolismo de Vênus e Júpiter, os dois benéficos ou forças positivas na astrologia tradicional. Esta figura representa, portanto, a mudança para melhor e é um sinal particularmente positivo para começos. A Terra, que é tanto seu elemento interno quanto externo, e sua estrutura elemental em geral, sugerem solo fértil, precisando apenas da energia da semente e da luz solar; ainda assim, muito depende da semente que lá é plantada.",
+            "divinatoryMeaning": "Em uma leitura geomântica, Caput Draconis representa inícios e novas possibilidades. Tende a variar em significado com sua companhia, tornando-se mais favorável com figuras favoráveis e mais desfavorável com figuras desfavoráveis, mas muitas vezes prediz um bom resultado com alguma dificuldade no início. Caput Draconis é favorável em todos os assuntos que tenham a ver com começos, e desfavorável em questões onde terminar algo é desejável.",
+            "strengthenedHouses": [
+                6
+            ],
+            "weakenedHouses": [
+                12
+            ]
         },
         {
             "id": 16,
@@ -297,12 +567,30 @@
             ],
             "element": "Fogo",
             "planet": "Nodo Sul",
-            "zodiac": "—",
+            "zodiac": "Sagitário",
             "nature": "Móvel e Má",
             "parity": "Ímpar",
             "period": "Noturna",
             "meaning": "Representa uma porta de saída; favorável para perdas e fins, mas geralmente desfavorável. Traz 'bom com o mau e mau com o bom'.",
-            "answer": "NÃO"
+            "answer": "NÃO",
+            "otherNames": "Soleira externa, soleira que sai, fronteira inferior, saindo para fora",
+            "images": "Um portal com pegadas saindo dele",
+            "keyword": "Fim",
+            "quality": "Móvel",
+            "outerElement": "Fogo",
+            "innerElement": "Fogo",
+            "anatomy": "O braço esquerdo",
+            "bodyType": "Corpo longo e esguio, mais atraente por trás do que pela frente, com mãos de dedos longos. O rosto é longo e magro, com uma face forte e um nariz grande.",
+            "characterType": "Corrupto, perigoso, destrutivo e autodestrutivo, sem escrúpulos ou consciência. Pessoas desta figura são obcecadas por suas próprias necessidades e desejos percebidos e os perseguem sem levar em conta ninguém ou nada mais.",
+            "color": "Verde, branco, carmesim escuro ou marrom bronzeado pálido",
+            "commentary": "Cauda Draconis é um símbolo de finais e conclusões, equilibrando o simbolismo de inícios em Caput Draconis. Seu simbolismo astrológico é o do nodo sul ou descendente da Lua — o ponto em que a Lua cruza o caminho do Sol para entrar no céu do sul. Este ponto tem um pouco do mesmo simbolismo que Marte e Saturno, as duas forças maléficas ou negativas na astrologia tradicional, e por isso Cauda Draconis simboliza rupturas, perdas e finais. Seus elementos interno e externo são ambos Fogo; a estrutura elemental, que carece apenas de Terra, sugere uma situação próxima da conclusão e, portanto, madura para uma mudança radical.",
+            "divinatoryMeaning": "Em uma leitura geomântica, Cauda Draconis representa fim, conclusão e desapego do passado. Uma figura com uma mensagem complexa, traz o bem com o mal e o mal com o bem, mas é tradicionalmente uma figura de generosidade. É favorável em qualquer situação em que algo esteja chegando ao fim, mas desfavorável para a maioria das outras questões.",
+            "strengthenedHouses": [
+                9
+            ],
+            "weakenedHouses": [
+                3
+            ]
         }
     ]
 }

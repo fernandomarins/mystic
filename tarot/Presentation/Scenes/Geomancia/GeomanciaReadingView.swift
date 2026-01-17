@@ -6,11 +6,20 @@
 //
 
 import SwiftUI
+import CoreGraphics
 
 struct GeomanciaReadingView: View {
     @StateObject private var viewModel = GeomanciaReadingViewModel()
+    var initialMothers: [[Int]]? = nil // Optional initial data
+    
     @Environment(\.dismiss) var dismiss
     @State private var isShowingHouses = false
+    @State private var isShowingInsights = false
+    @State private var selectedMeaning: GeomanciaMeaning?
+    @State private var showCopyConfirmation = false
+    @State private var isShowingPDFPreview = false
+    @State private var isShowingPerfection = false
+    @State private var isShowingHouseSum = false
     
     // Theme Colors
     private let bgGradient = LinearGradient(
@@ -51,6 +60,13 @@ struct GeomanciaReadingView: View {
             .padding(.top, 10)
         }
         .navigationBarHidden(true)
+        .onAppear {
+            if let mothers = initialMothers {
+                // If provided with mothers, set them and jump to Shield Step
+                viewModel.reading.mothers = mothers
+                viewModel.currentStep = 2
+            }
+        }
     }
     
     // MARK: - Subviews
@@ -228,34 +244,71 @@ struct GeomanciaReadingView: View {
                     // M1..M4
                     HStack(spacing: 10) {
                         ForEach(0..<4) { i in
-                            ShieldFigureCell(title: "M\(i+1)", pattern: viewModel.reading.mothers[i], viewModel: viewModel)
+                            ShieldFigureCell(
+                                title: "M\(i+1)",
+                                pattern: viewModel.reading.mothers[i],
+                                viewModel: viewModel,
+                                onTap: { meaning in selectedMeaning = meaning }
+                            )
                         }
                     }
                     
                     // F1..F4
                     HStack(spacing: 10) {
                         ForEach(0..<4) { i in
-                            ShieldFigureCell(title: "F\(i+1)", pattern: viewModel.reading.daughters[i], viewModel: viewModel)
+                            ShieldFigureCell(
+                                title: "F\(i+1)",
+                                pattern: viewModel.reading.daughters[i],
+                                viewModel: viewModel,
+                                onTap: { meaning in selectedMeaning = meaning }
+                            )
                         }
                     }
                     
                     // S1..S4
                     HStack(spacing: 10) {
                         ForEach(0..<4) { i in
-                            ShieldFigureCell(title: "S\(i+9)", pattern: viewModel.reading.nieces[i], viewModel: viewModel)
+                            ShieldFigureCell(
+                                title: "S\(i+9)",
+                                pattern: viewModel.reading.nieces[i],
+                                viewModel: viewModel,
+                                onTap: { meaning in selectedMeaning = meaning }
+                            )
                         }
                     }
                     
-                    // Witnesses (Right & Left)
+                    // Witnesses (Left & Right)
                     HStack(spacing: 30) {
-                        ShieldFigureCell(title: "T. Dir. (13)", pattern: viewModel.reading.rightWitness, viewModel: viewModel)
-                        ShieldFigureCell(title: "T. Esq. (14)", pattern: viewModel.reading.leftWitness, viewModel: viewModel)
+                        ShieldFigureCell(
+                            title: "T. Esq. (14)",
+                            pattern: viewModel.reading.leftWitness,
+                            viewModel: viewModel,
+                            onTap: { meaning in selectedMeaning = meaning }
+                        )
+                        ShieldFigureCell(
+                            title: "T. Dir. (13)",
+                            pattern: viewModel.reading.rightWitness,
+                            viewModel: viewModel,
+                            onTap: { meaning in selectedMeaning = meaning }
+                        )
                     }
                     
                     // The Judge and Reconciler
                     HStack(spacing: 40) {
-                        ShieldFigureCell(title: "O JUIZ (15)", pattern: viewModel.reading.judge, viewModel: viewModel, isHighlight: true)
-                        ShieldFigureCell(title: "RECONCILIADOR", pattern: viewModel.reading.reconciler, viewModel: viewModel, isHighlight: true)
+                        ShieldFigureCell(
+                            title: "O JUIZ (15)",
+                            pattern: viewModel.reading.judge,
+                            viewModel: viewModel,
+                            isHighlight: true,
+                            onTap: { meaning in selectedMeaning = meaning }
+                        )
+                        ShieldFigureCell(
+                            title: "RECONCILIADOR",
+                            pattern: viewModel.reading.reconciler,
+                            viewModel: viewModel,
+                            isHighlight: true,
+                            onTap: { meaning in selectedMeaning = meaning }
+                        )
                     }
                 }
                 .padding(.horizontal, 10)
@@ -265,7 +318,7 @@ struct GeomanciaReadingView: View {
                     VStack(spacing: 12) {
                         HStack {
                             Image(systemName: "exclamationmark.triangle.fill")
-                            Text("Aviso de Greer")
+                            Text("Aviso")
                                 .font(.system(size: 14, weight: .black))
                         }
                         .foregroundColor(Color.red)
@@ -302,42 +355,44 @@ struct GeomanciaReadingView: View {
                 
                 // Final Verdict Section
                 if let judgeMeaning = viewModel.meaning(for: viewModel.reading.judge) {
-                    VStack(spacing: 20) {
-                        HStack {
-                            Rectangle().fill(accentGold.opacity(0.3)).frame(height: 1)
-                            Text("JUÍZ")
-                                .font(.system(size: 14, weight: .black))
-                                .foregroundColor(accentGold)
-                                .tracking(4)
-                            Rectangle().fill(accentGold.opacity(0.3)).frame(height: 1)
-                        }
-                        
-                        VStack(spacing: 12) {
-                            Text(judgeMeaning.name)
-                                .font(.system(size: 36, weight: .black, design: .serif))
-                                .foregroundColor(.white)
+                    Button(action: { selectedMeaning = judgeMeaning }) {
+                        VStack(spacing: 20) {
+                            HStack {
+                                Rectangle().fill(accentGold.opacity(0.3)).frame(height: 1)
+                                Text("JUÍZ")
+                                    .font(.system(size: 14, weight: .black))
+                                    .foregroundColor(accentGold)
+                                    .tracking(4)
+                                Rectangle().fill(accentGold.opacity(0.3)).frame(height: 1)
+                            }
                             
-                            Text(judgeMeaning.answer)
-                                .font(.system(size: 20, weight: .bold))
-                                .foregroundColor(accentGold)
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 8)
-                                .background(Capsule().border(accentGold.opacity(0.5), width: 1))
+                            VStack(spacing: 12) {
+                                Text(judgeMeaning.name)
+                                    .font(.system(size: 36, weight: .black, design: .serif))
+                                    .foregroundColor(.white)
+                                
+                                Text(judgeMeaning.answer)
+                                    .font(.system(size: 20, weight: .bold))
+                                    .foregroundColor(accentGold)
+                                    .padding(.horizontal, 20)
+                                    .padding(.vertical, 8)
+                                    .background(Capsule().border(accentGold.opacity(0.5), width: 1))
+                            }
+                            
+                            Text(judgeMeaning.meaning)
+                                .font(.system(size: 16, design: .serif))
+                                .foregroundColor(.white.opacity(0.8))
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal, 30)
+                                .lineSpacing(4)
+                            
+                            HStack(spacing: 15) {
+                                BadgeView(text: judgeMeaning.parity, icon: "equal.circle", color: .white.opacity(0.6))
+                                BadgeView(text: judgeMeaning.period, icon: judgeMeaning.period == "Diurna" ? "sun.max.fill" : "moon.fill", color: .white.opacity(0.6))
+                            }
                         }
-                        
-                        Text(judgeMeaning.meaning)
-                            .font(.system(size: 16, design: .serif))
-                            .foregroundColor(.white.opacity(0.8))
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal, 30)
-                            .lineSpacing(4)
-                        
-                        HStack(spacing: 15) {
-                            BadgeView(text: judgeMeaning.parity, icon: "equal.circle", color: .white.opacity(0.6))
-                            BadgeView(text: judgeMeaning.period, icon: judgeMeaning.period == "Diurna" ? "sun.max.fill" : "moon.fill", color: .white.opacity(0.6))
-                        }
+                        .padding(.top, 20)
                     }
-                    .padding(.top, 20)
                 }
                 
                 // Reconciler Section
@@ -361,54 +416,257 @@ struct GeomanciaReadingView: View {
                     .padding(.top, 10)
                 }
                 
-                // Advanced Insights (O Zigurate)
-                VStack(spacing: 20) {
-                    HStack {
-                        Rectangle().fill(accentGold.opacity(0.1)).frame(height: 1)
-                        Text("INSIGHTS AVANÇADOS")
-                            .font(.system(size: 10, weight: .black))
-                            .foregroundColor(accentGold.opacity(0.6))
-                            .tracking(2)
-                        Rectangle().fill(accentGold.opacity(0.1)).frame(height: 1)
+                // Action Buttons
+                VStack(spacing: 15) {
+                    // Button to see 12 Houses
+                    Button(action: { isShowingHouses = true }) {
+                        HStack {
+                            Image(systemName: "house.circle.fill")
+                            Text("Explorar as 12 Casas")
+                                .font(.system(size: 16, weight: .bold))
+                        }
+                        .foregroundColor(accentGold)
+                        .padding(.horizontal, 24)
+                        .height(50)
+                        .frame(maxWidth: .infinity)
+                        .background(
+                            Capsule()
+                                .stroke(accentGold.opacity(0.5), lineWidth: 1)
+                                .background(accentGold.opacity(0.05).clipShape(Capsule()))
+                        )
                     }
                     
-                    VStack(spacing: 12) {
-                        HStack(spacing: 12) {
-                            insightBox(title: "Velocidade", value: viewModel.timingVerdict, icon: "clock.fill")
+                    // Button for Advanced Insights
+                    Button(action: { isShowingInsights = true }) {
+                        HStack {
+                            Image(systemName: "sparkles.rectangle.stack.fill")
+                            Text("Insights Avançados")
+                                .font(.system(size: 16, weight: .bold))
                         }
-                        
-                        HStack(spacing: 12) {
-                            insightBox(title: "Parte da Fortuna", value: "Casa \(viewModel.partOfFortuneHouse)", icon: "sparkles")
-                            insightBox(title: "Índice (Espírito)", value: "Casa \(viewModel.spiritIndexHouse)", icon: "bolt.fill")
-                        }
+                        .foregroundColor(.white.opacity(0.9))
+                        .padding(.horizontal, 24)
+                        .height(50)
+                        .frame(maxWidth: .infinity)
+                        .background(
+                            Capsule()
+                                .stroke(.white.opacity(0.2), lineWidth: 1)
+                                .background(Color.white.opacity(0.05).clipShape(Capsule()))
+                        )
                     }
-                    .padding(.horizontal, 25)
+                    
+                    // Button for Perfection Checker
+                    Button(action: { isShowingPerfection = true }) {
+                        HStack {
+                            Image(systemName: "checkmark.seal.fill")
+                            Text("Verificar Perfeição")
+                                .font(.system(size: 16, weight: .bold))
+                        }
+                        .foregroundColor(.white.opacity(0.9))
+                        .padding(.horizontal, 24)
+                        .height(50)
+                        .frame(maxWidth: .infinity)
+                        .background(
+                            Capsule()
+                                .stroke(.white.opacity(0.2), lineWidth: 1)
+                                .background(Color.white.opacity(0.05).clipShape(Capsule()))
+                        )
+                    }
+                    
+                    // Button for House Sum Calculator
+                    Button(action: { isShowingHouseSum = true }) {
+                        HStack {
+                            Image(systemName: "plus.forwardslash.minus")
+                            Text("Soma de Casas")
+                                .font(.system(size: 16, weight: .bold))
+                        }
+                        .foregroundColor(.white.opacity(0.9))
+                        .padding(.horizontal, 24)
+                        .height(50)
+                        .frame(maxWidth: .infinity)
+                        .background(
+                            Capsule()
+                                .stroke(.white.opacity(0.2), lineWidth: 1)
+                                .background(Color.white.opacity(0.05).clipShape(Capsule()))
+                        )
+                    }
+                    
+                    // Button to Export Summary
+                    Button(action: {
+                        UIPasteboard.general.string = viewModel.exportReadingSummary()
+                        withAnimation { showCopyConfirmation = true }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            withAnimation { showCopyConfirmation = false }
+                        }
+                    }) {
+                        HStack {
+                            Image(systemName: showCopyConfirmation ? "checkmark" : "doc.on.doc")
+                            Text(showCopyConfirmation ? "Copiado!" : "Copiar Resumo")
+                                .font(.system(size: 16, weight: .bold))
+                        }
+                        .foregroundColor(.white.opacity(0.7))
+                        .padding(.horizontal, 24)
+                        .height(50)
+                        .frame(maxWidth: .infinity)
+                        .background(
+                            Capsule()
+                                .stroke(.white.opacity(0.1), lineWidth: 1)
+                                .background(Color.white.opacity(0.02).clipShape(Capsule()))
+                        )
+                    }
                 }
-                .padding(.top, 20)
                 
-                // Button to see 12 Houses
-                Button(action: { isShowingHouses = true }) {
-                    HStack {
-                        Image(systemName: "house.circle.fill")
-                        Text("Explorar as 12 Casas")
-                            .font(.system(size: 16, weight: .bold))
+                // Button to Export PDF
+                if #available(iOS 16.0, *) {
+                    Button(action: { isShowingPDFPreview = true }) {
+                        HStack {
+                            Image(systemName: "square.and.arrow.up")
+                            Text("Exportar PDF (Mapa)")
+                                .font(.system(size: 16, weight: .bold))
+                        }
+                        .foregroundColor(.white.opacity(0.9))
+                        .padding(.horizontal, 24)
+                        .height(50)
+                        .frame(maxWidth: .infinity)
+                        .background(
+                            Capsule()
+                                .fill(Color(hex: "D4AF37").opacity(0.8))
+                                .shadow(color: Color(hex: "D4AF37").opacity(0.2), radius: 5, y: 2)
+                        )
                     }
-                    .foregroundColor(accentGold)
-                    .padding(.horizontal, 24)
-                    .height(50)
-                    .background(
-                        Capsule()
-                            .stroke(accentGold.opacity(0.5), lineWidth: 1)
-                            .background(accentGold.opacity(0.05).clipShape(Capsule()))
-                    )
+                    .sheet(isPresented: $isShowingPDFPreview) {
+                        // Preview Sheet with Share
+                        NavigationView {
+                            VStack {
+                                GeomanciaPDFView(reading: viewModel.reading, viewModel: viewModel)
+                                    .scaleEffect(0.6)
+                                    .frame(width: 360, height: 500)
+                                    .padding()
+                                    .background(Color.gray.opacity(0.1))
+                                    .cornerRadius(12)
+                                    .shadow(radius: 5)
+                                
+                                Spacer()
+                                
+                                ShareLink(item: renderPDF(), preview: SharePreview("Leitura Geomântica", image: Image(systemName: "scroll.fill"))) {
+                                    Label("Compartilhar PDF", systemImage: "square.and.arrow.up")
+                                        .font(.headline)
+                                        .foregroundColor(.white)
+                                        .frame(maxWidth: .infinity)
+                                        .height(50)
+                                        .background(Capsule().fill(Color(hex: "D4AF37")))
+                                        .padding(.horizontal, 40)
+                                }
+                                .padding(.bottom, 20)
+                            }
+                            .navigationTitle("Pré-visualização")
+                            .navigationBarTitleDisplayMode(.inline)
+                            .toolbar {
+                                ToolbarItem(placement: .navigationBarLeading) {
+                                    Button("Cancelar") { isShowingPDFPreview = false }
+                                }
+                            }
+                        }
+                    }
                 }
-                .padding(.top, 10)
-                .padding(.bottom, 40)
             }
+            .padding(.horizontal, 40)
+            .padding(.top, 20)
+            .padding(.bottom, 40)
             .padding(.top, 10)
             .sheet(isPresented: $isShowingHouses) {
                 GeomanciaHousesView(viewModel: viewModel)
             }
+            .sheet(isPresented: $isShowingInsights) {
+                GeomanciaInsightsView(viewModel: viewModel)
+            }
+            .sheet(isPresented: $isShowingPerfection) {
+                GeomanciaPerfectionView(viewModel: viewModel)
+            }
+            .sheet(isPresented: $isShowingHouseSum) {
+                GeomanciaHouseSumView(viewModel: viewModel)
+            }
+            .sheet(item: $selectedMeaning) { meaning in
+                GeomanciaDetailView(item: meaning)
+                    .presentationDetents([.large])
+                    .presentationDragIndicator(.visible)
+            }
+            .overlay(
+                Group {
+                    if showCopyConfirmation {
+                        VStack {
+                            Spacer()
+                            Text("Resumo copiado!")
+                                .font(.system(size: 14, weight: .bold))
+                                .foregroundColor(.black)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 12)
+                                .background(Capsule().fill(Color(hex: "D4AF37")))
+                                .shadow(radius: 10)
+                                .padding(.bottom, 100)
+                                .transition(.move(edge: .bottom).combined(with: .opacity))
+                        }
+                        .zIndex(100)
+                    }
+                }
+            )
+            .sheet(isPresented: $isShowingPDFPreview) {
+                // Preview Sheet with Share
+                NavigationView {
+                    VStack {
+                        GeomanciaPDFView(reading: viewModel.reading, viewModel: viewModel)
+                            .scaleEffect(0.6)
+                            .frame(width: 360, height: 500)
+                            .padding()
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(12)
+                            .shadow(radius: 5)
+                        
+                        Spacer()
+                        
+                        ShareLink(item: renderPDF(), preview: SharePreview("Leitura Geomântica", image: Image(systemName: "scroll.fill"))) {
+                            Label("Compartilhar PDF", systemImage: "square.and.arrow.up")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .height(50)
+                                .background(Capsule().fill(Color(hex: "D4AF37")))
+                                .padding(.horizontal, 40)
+                        }
+                        .padding(.bottom, 20)
+                    }
+                    .navigationTitle("Pré-visualização")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button("Cancelar") { isShowingPDFPreview = false }
+                        }
+                    }
+                }
+            }
+    }
+    
+    // PDF Rendering Helper
+    @MainActor
+    @available(iOS 16.0, *)
+    private func renderPDF() -> URL {
+        let renderer = ImageRenderer(content: GeomanciaPDFView(reading: viewModel.reading, viewModel: viewModel))
+        
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("leitura_geomancia.pdf")
+        
+        renderer.render { size, context in
+            var box = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+            
+            guard let pdf = CGContext(url as CFURL, mediaBox: &box, nil) else {
+                return
+            }
+            
+            pdf.beginPDFPage(nil)
+            context(pdf)
+            pdf.endPDFPage()
+            pdf.closePDF()
+        }
+        
+        return url
     }
     
     private var navigationFooter: some View {
@@ -444,21 +702,6 @@ struct GeomanciaReadingView: View {
         .padding(.bottom, 30)
     }
     
-    private func insightBox(title: String, value: String, icon: String) -> some View {
-        VStack(spacing: 8) {
-            Label(title.uppercased(), systemImage: icon)
-                .font(.system(size: 8, weight: .bold))
-                .foregroundColor(accentGold.opacity(0.6))
-            
-            Text(value)
-                .font(.system(size: 14, weight: .bold))
-                .foregroundColor(.white)
-                .multilineTextAlignment(.center)
-        }
-        .padding(.vertical, 12)
-        .frame(maxWidth: .infinity)
-        .background(RoundedRectangle(cornerRadius: 16).fill(Color.white.opacity(0.04)).overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.white.opacity(0.1), lineWidth: 1)))
-    }
 }
 
 // MARK: - Helper Components
@@ -468,39 +711,48 @@ struct ShieldFigureCell: View {
     let pattern: [Int]
     let viewModel: GeomanciaReadingViewModel
     var isHighlight: Bool = false
+    var onTap: ((GeomanciaMeaning) -> Void)?
     
     var body: some View {
-        VStack(spacing: 6) {
-            Text(title)
-                .font(.system(size: 10, weight: .bold))
-                .foregroundColor(isHighlight ? Color(hex: "D4AF37") : .white.opacity(0.4))
-            
+        Button(action: {
+            if let meaning = viewModel.meaning(for: pattern) {
+                onTap?(meaning)
+            }
+        }) {
             VStack(spacing: 6) {
-                GeomanticSymbolView(pattern: pattern, color: isHighlight ? Color(hex: "D4AF37") : .white, dotSize: 6, spacing: 6)
-            }
-            .padding(10)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(isHighlight ? Color(hex: "D4AF37").opacity(0.1) : Color.white.opacity(0.05))
-                    .overlay(RoundedRectangle(cornerRadius: 12).stroke(isHighlight ? Color(hex: "D4AF37").opacity(0.3) : .clear, lineWidth: 1))
-            )
-            
-            if let figure = viewModel.meaning(for: pattern) {
-                VStack(spacing: 2) {
-                    Text(figure.name)
-                        .font(.system(size: 9, weight: .bold))
-                        .foregroundColor(.white.opacity(0.8))
-                    
-                    if let planet = figure.planet {
-                        Text(planet)
-                            .font(.system(size: 7, weight: .medium))
-                            .foregroundColor(Color(hex: "D4AF37").opacity(0.6))
-                    }
+                Text(title)
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundColor(isHighlight ? Color(hex: "D4AF37") : .white.opacity(0.4))
+                
+                VStack(spacing: 6) {
+                    GeomanticSymbolView(pattern: pattern, color: isHighlight ? Color(hex: "D4AF37") : .white, dotSize: 6, spacing: 6)
                 }
-                .lineLimit(1)
+                .padding(10)
+                .frame(maxWidth: .infinity)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(isHighlight ? Color(hex: "D4AF37").opacity(0.1) : Color.white.opacity(0.05))
+                        .overlay(RoundedRectangle(cornerRadius: 12).stroke(isHighlight ? Color(hex: "D4AF37").opacity(0.3) : .clear, lineWidth: 1))
+                )
+                
+                if let figure = viewModel.meaning(for: pattern) {
+                    VStack(spacing: 2) {
+                        Text(figure.name)
+                            .font(.system(size: 9, weight: .bold))
+                            .foregroundColor(.white.opacity(0.8))
+                        
+                        if let planet = figure.planet {
+                            Text(planet)
+                                .font(.system(size: 7, weight: .medium))
+                                .foregroundColor(Color(hex: "D4AF37").opacity(0.6))
+                        }
+                    }
+                    .lineLimit(1)
+                }
             }
-        }
-        .frame(minWidth: 60)
+            .frame(minWidth: 60)
+        } // End Button
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
@@ -659,9 +911,23 @@ struct HouseCard: View {
                 GeomanticSymbolView(pattern: pattern, color: .white, dotSize: 5, spacing: 5)
                 
                 if let meaning = viewModel.meaning(for: pattern) {
-                    Text(meaning.name)
-                        .font(.system(size: 14, weight: .bold, design: .serif))
-                        .foregroundColor(.white)
+                    HStack(spacing: 6) {
+                        Text(meaning.name)
+                            .font(.system(size: 14, weight: .bold, design: .serif))
+                            .foregroundColor(.white)
+                        
+                        // Strength/Weakness indicators
+                        if let strengthened = meaning.strengthenedHouses, strengthened.contains(house.id) {
+                            Image(systemName: "crown.fill")
+                                .font(.system(size: 10))
+                                .foregroundColor(.yellow)
+                                .shadow(color: .yellow.opacity(0.5), radius: 2)
+                        } else if let weakened = meaning.weakenedHouses, weakened.contains(house.id) {
+                            Image(systemName: "arrow.down.circle.fill")
+                                .font(.system(size: 10))
+                                .foregroundColor(.red.opacity(0.8))
+                        }
+                    }
                 }
             }
             .padding(.vertical, 10)
@@ -758,6 +1024,13 @@ struct GeomanciaHouseDetailView: View {
                                     Text(figureMeaning.name)
                                         .font(.system(size: 32, weight: .bold, design: .serif))
                                         .foregroundColor(.white)
+                                    
+                                    if let keyword = figureMeaning.keyword {
+                                        Text(keyword.uppercased())
+                                            .font(.system(size: 14, weight: .black))
+                                            .foregroundColor(accentGold.opacity(0.6))
+                                            .tracking(4)
+                                    }
                                 }
                                 
                                 HStack(spacing: 12) {
@@ -766,14 +1039,56 @@ struct GeomanciaHouseDetailView: View {
                                 }
                             }
                             
-                            VStack(alignment: .leading, spacing: 20) {
-                                VStack(alignment: .leading, spacing: 10) {
-                                    Text("ESSÊNCIA DA FIGURA")
+                            // House Compatibility Section
+                            if let strengthened = figureMeaning.strengthenedHouses, strengthened.contains(house.id) {
+                                compatibilityBadge(title: "FIGURA FORTALECIDA", desc: "Nesta casa, a essência da figura se expressa com máxima harmonia e poder.", color: .yellow)
+                            } else if let weakened = figureMeaning.weakenedHouses, weakened.contains(house.id) {
+                                compatibilityBadge(title: "FIGURA ENFRAQUECIDA", desc: "Nesta casa, a figura encontra resistência ou dificuldade em manifestar seu potencial positivo.", color: .red)
+                            }
+                            
+                            VStack(alignment: .leading, spacing: 25) {
+                                // Basic Meaning
+                                detailSection(title: "ESSÊNCIA DA FIGURA", text: figureMeaning.meaning)
+                                
+                                // Detailed Divinatory Meaning
+                                if let divMeaning = figureMeaning.divinatoryMeaning {
+                                    detailSection(title: "SIGNIFICADO DIVINATÓRIO", text: divMeaning)
+                                }
+                                
+                                // Physical & Character
+                                if let body = figureMeaning.bodyType {
+                                    detailSection(title: "TIPO FÍSICO / APARÊNCIA", text: body)
+                                }
+                                
+                                if let character = figureMeaning.characterType {
+                                    detailSection(title: "TEMPERAMENTO / CARÁTER", text: character)
+                                }
+                                
+                                // Correspondences Grid
+                                VStack(alignment: .leading, spacing: 15) {
+                                    Text("CORRESPONDÊNCIAS")
                                         .font(.system(size: 12, weight: .black))
                                         .foregroundColor(accentGold.opacity(0.5))
-                                    Text(figureMeaning.meaning)
-                                        .font(.system(size: 16))
-                                        .foregroundColor(.white.opacity(0.9))
+                                    
+                                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 15) {
+                                        if let anatomy = figureMeaning.anatomy {
+                                            miniInfoCell(title: "Anatomia", text: anatomy, icon: "figure.human")
+                                        }
+                                        if let color = figureMeaning.color {
+                                            miniInfoCell(title: "Cor", text: color, icon: "paintpalette")
+                                        }
+                                        if let outer = figureMeaning.outerElement {
+                                            miniInfoCell(title: "Elemento Ext.", text: outer, icon: "sparkles")
+                                        }
+                                        if let inner = figureMeaning.innerElement {
+                                            miniInfoCell(title: "Elemento Int.", text: inner, icon: "bolt.fill")
+                                        }
+                                    }
+                                }
+                                
+                                // Commentary
+                                if let commentary = figureMeaning.commentary {
+                                    detailSection(title: "COMENTÁRIO ESOTÉRICO", text: commentary)
                                 }
                             }
                             .padding(25)
@@ -795,6 +1110,69 @@ struct GeomanciaHouseDetailView: View {
                 }
             }
         }
+    }
+    
+    // MARK: - Helper Subviews
+    
+    private func compatibilityBadge(title: String, desc: String, color: Color) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 8) {
+                Image(systemName: color == .yellow ? "crown.fill" : "arrow.down.circle.fill")
+                    .foregroundColor(color)
+                Text(title)
+                    .font(.system(size: 10, weight: .black))
+                    .foregroundColor(color)
+                    .tracking(1)
+            }
+            
+            Text(desc)
+                .font(.system(size: 13, weight: .medium))
+                .foregroundColor(.white.opacity(0.8))
+                .lineSpacing(4)
+        }
+        .padding(15)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(color.opacity(0.1))
+                .overlay(RoundedRectangle(cornerRadius: 16).stroke(color.opacity(0.2), lineWidth: 1))
+        )
+        .padding(.horizontal, 25)
+    }
+    
+    private func detailSection(title: String, text: String) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(title)
+                .font(.system(size: 12, weight: .black))
+                .foregroundColor(accentGold.opacity(0.5))
+            Text(text)
+                .font(.system(size: 16))
+                .foregroundColor(.white.opacity(0.9))
+                .lineSpacing(4)
+        }
+    }
+    
+    private func miniInfoCell(title: String, text: String, icon: String) -> some View {
+        HStack(spacing: 12) {
+            Image(systemName: icon)
+                .font(.system(size: 14))
+                .foregroundColor(accentGold)
+                .frame(width: 32, height: 32)
+                .background(Circle().fill(accentGold.opacity(0.1)))
+            
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.system(size: 9, weight: .bold))
+                    .foregroundColor(.white.opacity(0.4))
+                Text(text)
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundColor(.white.opacity(0.9))
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .padding(10)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(RoundedRectangle(cornerRadius: 12).fill(Color.white.opacity(0.04)))
     }
 }
 

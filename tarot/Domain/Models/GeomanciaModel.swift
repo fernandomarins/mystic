@@ -28,6 +28,22 @@ struct GeomanciaMeaning: Decodable, Identifiable, Hashable {
     let period: String
     let meaning: String
     let answer: String
+    
+    // New detailed fields
+    let otherNames: String?
+    let images: String?
+    let keyword: String?
+    let quality: String?
+    let outerElement: String?
+    let innerElement: String?
+    let anatomy: String?
+    let bodyType: String?
+    let characterType: String?
+    let color: String?
+    let commentary: String?
+    let divinatoryMeaning: String?
+    let strengthenedHouses: [Int]?
+    let weakenedHouses: [Int]?
 }
 
 struct GeomanciaReading: Identifiable, Hashable {
