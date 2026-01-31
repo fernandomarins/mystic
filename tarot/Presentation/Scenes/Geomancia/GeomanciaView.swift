@@ -12,6 +12,8 @@ struct GeomanciaView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var isShowingReading = false
     @State private var isShowingTapper = false
+    @State private var isShowingQuiz = false
+    @State private var isShowingReminderFeedback = false
     
     // Premium Earthy Color Palette
     private let bgGradient = LinearGradient(
@@ -97,6 +99,9 @@ struct GeomanciaView: View {
         }
         .fullScreenCover(isPresented: $isShowingTapper) {
             GeomanciaTapperView()
+        }
+        .sheet(isPresented: $isShowingQuiz) {
+            GeomanciaQuizView(viewModel: viewModel)
         }
     }
     
@@ -184,6 +189,123 @@ struct GeomanciaView: View {
                             .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 4)
                     )
                 }
+                .padding(.horizontal, 20)
+                
+                // Quiz Entry
+                Button(action: { isShowingQuiz = true }) {
+                    HStack(spacing: 20) {
+                        Image(systemName: "brain.head.profile")
+                            .font(.system(size: 24))
+                            .foregroundColor(Color(hex: "D4AF37"))
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Quiz de Conhecimento")
+                                .font(.system(size: 18, weight: .bold, design: .serif))
+                                .foregroundColor(.white)
+                            
+                            Text("Teste sua maestria sobre as 16 figuras")
+                                .font(.system(size: 13))
+                                .foregroundColor(.white.opacity(0.6))
+                        }
+                        
+                        Spacer()
+                        
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(Color(hex: "D4AF37").opacity(0.6))
+                    }
+                    .padding(20)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(LinearGradient(
+                                colors: [Color(hex: "1A1A1A"), Color(hex: "252525")],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color(hex: "D4AF37").opacity(0.3), lineWidth: 1)
+                            )
+                    )
+                }
+                .padding(.horizontal, 20)
+                
+                // Quiz History Entry
+                NavigationLink(destination: QuizHistoryView()) {
+                    HStack(spacing: 20) {
+                        Image(systemName: "clock.arrow.circlepath")
+                            .font(.system(size: 24))
+                            .foregroundColor(Color(hex: "D4AF37"))
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Histórico de Quizzes")
+                                .font(.system(size: 18, weight: .bold, design: .serif))
+                                .foregroundColor(.white)
+                            
+                            Text("Reveja suas respostas e acompanhe seu progresso")
+                                .font(.system(size: 13))
+                                .foregroundColor(.white.opacity(0.6))
+                        }
+                        
+                        Spacer()
+                        
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(Color(hex: "D4AF37").opacity(0.6))
+                    }
+                    .padding(20)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(LinearGradient(
+                                colors: [Color(hex: "1C1C1C"), Color(hex: "272727")],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color(hex: "D4AF37").opacity(0.3), lineWidth: 1)
+                            )
+                    )
+                }
+                .padding(.horizontal, 20)
+                
+                // Quiz Reminders (Notifications)
+                VStack(alignment: .leading, spacing: 15) {
+                    Toggle(isOn: Binding(
+                        get: { QuizNotificationManager.shared.isEnabled },
+                        set: { QuizNotificationManager.shared.isEnabled = $0 }
+                    )) {
+                        HStack(spacing: 20) {
+                            Image(systemName: QuizNotificationManager.shared.isEnabled ? "bell.badge.fill" : "bell.slash.fill")
+                                .font(.system(size: 24))
+                                .foregroundColor(QuizNotificationManager.shared.isEnabled ? Color(hex: "D4AF37") : .white.opacity(0.3))
+                            
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Lembretes de Quiz")
+                                    .font(.system(size: 18, weight: .bold, design: .serif))
+                                    .foregroundColor(.white)
+                                
+                                Text(QuizNotificationManager.shared.isEnabled ? "7 perguntas diárias ativas" : "Receba perguntas diárias")
+                                    .font(.system(size: 13))
+                                    .foregroundColor(.white.opacity(0.6))
+                            }
+                        }
+                    }
+                    .tint(Color(hex: "D4AF37"))
+                }
+                .padding(20)
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(LinearGradient(
+                            colors: [Color(hex: "1A1A1A"), Color(hex: "252525")],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color(hex: "D4AF37").opacity(0.3), lineWidth: 1)
+                        )
+                )
                 .padding(.horizontal, 20)
                 
                 // Anatomy Legend (O Zigurate)

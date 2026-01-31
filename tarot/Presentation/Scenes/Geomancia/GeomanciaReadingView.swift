@@ -20,6 +20,7 @@ struct GeomanciaReadingView: View {
     @State private var isShowingPDFPreview = false
     @State private var isShowingPerfection = false
     @State private var isShowingHouseSum = false
+    @State private var isShowingCourt = false
     
     // Theme Colors
     private let bgGradient = LinearGradient(
@@ -163,7 +164,7 @@ struct GeomanciaReadingView: View {
             }
             
             LazyVGrid(columns: [GridItem(.flexible(), spacing: 20), GridItem(.flexible(), spacing: 20)], spacing: 20) {
-                ForEach(0..<4) { mIndex in
+                ForEach([1, 0, 3, 2], id: \.self) { mIndex in
                     VStack(spacing: 12) {
                         Text("Mãe \(mIndex + 1)")
                             .font(.system(size: 14, weight: .black))
@@ -241,9 +242,9 @@ struct GeomanciaReadingView: View {
                 
                 // The Grid Layout (Shield)
                 VStack(spacing: 25) {
-                    // M1..M4
+                    // M4..M1 (Traditional Right-to-Left)
                     HStack(spacing: 10) {
-                        ForEach(0..<4) { i in
+                        ForEach((0..<4).reversed(), id: \.self) { i in
                             ShieldFigureCell(
                                 title: "M\(i+1)",
                                 pattern: viewModel.reading.mothers[i],
@@ -253,9 +254,9 @@ struct GeomanciaReadingView: View {
                         }
                     }
                     
-                    // F1..F4
+                    // F4..F1 (Traditional Right-to-Left)
                     HStack(spacing: 10) {
-                        ForEach(0..<4) { i in
+                        ForEach((0..<4).reversed(), id: \.self) { i in
                             ShieldFigureCell(
                                 title: "F\(i+1)",
                                 pattern: viewModel.reading.daughters[i],
@@ -265,11 +266,11 @@ struct GeomanciaReadingView: View {
                         }
                     }
                     
-                    // S1..S4
+                    // S12..S9 (Traditional Right-to-Left)
                     HStack(spacing: 10) {
-                        ForEach(0..<4) { i in
+                        ForEach((0..<4).reversed(), id: \.self) { i in
                             ShieldFigureCell(
-                                title: "S\(i+9)",
+                                title: "S\(i+1)",
                                 pattern: viewModel.reading.nieces[i],
                                 viewModel: viewModel,
                                 onTap: { meaning in selectedMeaning = meaning }
@@ -293,23 +294,23 @@ struct GeomanciaReadingView: View {
                         )
                     }
                     
-                    // The Judge and Reconciler
-                    HStack(spacing: 40) {
-                        ShieldFigureCell(
-                            title: "O JUIZ (15)",
-                            pattern: viewModel.reading.judge,
-                            viewModel: viewModel,
-                            isHighlight: true,
-                            onTap: { meaning in selectedMeaning = meaning }
-                        )
-                        ShieldFigureCell(
-                            title: "RECONCILIADOR",
-                            pattern: viewModel.reading.reconciler,
-                            viewModel: viewModel,
-                            isHighlight: true,
-                            onTap: { meaning in selectedMeaning = meaning }
-                        )
-                    }
+                    // The Judge (Row Alone)
+                    ShieldFigureCell(
+                        title: "O JUIZ (15)",
+                        pattern: viewModel.reading.judge,
+                        viewModel: viewModel,
+                        isHighlight: true,
+                        onTap: { meaning in selectedMeaning = meaning }
+                    )
+                    
+                    // The Reconciler (Below Judge)
+                    ShieldFigureCell(
+                        title: "RECONCILIADOR (16)",
+                        pattern: viewModel.reading.reconciler,
+                        viewModel: viewModel,
+                        isHighlight: true,
+                        onTap: { meaning in selectedMeaning = meaning }
+                    )
                 }
                 .padding(.horizontal, 10)
                 
@@ -398,12 +399,13 @@ struct GeomanciaReadingView: View {
                 // Reconciler Section
                 if let reconcilerMeaning = viewModel.meaning(for: viewModel.reading.reconciler) {
                     VStack(spacing: 15) {
-                        HStack {
+                        HStack(spacing: 12) {
                             Rectangle().fill(accentGold.opacity(0.1)).frame(height: 1)
                             Text("O RECONCILIADOR")
-                                .font(.system(size: 10, weight: .black))
+                                .font(.system(size: 11, weight: .black))
                                 .foregroundColor(accentGold.opacity(0.6))
                                 .tracking(2)
+                                .fixedSize(horizontal: true, vertical: false)
                             Rectangle().fill(accentGold.opacity(0.1)).frame(height: 1)
                         }
                         
@@ -433,6 +435,24 @@ struct GeomanciaReadingView: View {
                             Capsule()
                                 .stroke(accentGold.opacity(0.5), lineWidth: 1)
                                 .background(accentGold.opacity(0.05).clipShape(Capsule()))
+                        )
+                    }
+                    
+                    // Button for Court Overview
+                    Button(action: { isShowingCourt = true }) {
+                        HStack {
+                            Image(systemName: "scalemass.fill")
+                            Text("O Tribunal e o Veredito")
+                                .font(.system(size: 16, weight: .bold))
+                        }
+                        .foregroundColor(.white.opacity(0.9))
+                        .padding(.horizontal, 24)
+                        .height(50)
+                        .frame(maxWidth: .infinity)
+                        .background(
+                            Capsule()
+                                .stroke(.white.opacity(0.2), lineWidth: 1)
+                                .background(Color.white.opacity(0.05).clipShape(Capsule()))
                         )
                     }
                     
@@ -581,6 +601,9 @@ struct GeomanciaReadingView: View {
             }
             .sheet(isPresented: $isShowingPerfection) {
                 GeomanciaPerfectionView(viewModel: viewModel)
+            }
+            .sheet(isPresented: $isShowingCourt) {
+                GeomanciaCourtView(viewModel: viewModel)
             }
             .sheet(isPresented: $isShowingHouseSum) {
                 GeomanciaHouseSumView(viewModel: viewModel)
@@ -761,14 +784,26 @@ struct ShieldFigureCell: View {
 struct GeomanciaHousesView: View {
     @ObservedObject var viewModel: GeomanciaReadingViewModel
     @Environment(\.dismiss) var dismiss
-    
-    // Columns for the houses grid
-    private let columns = [
-        GridItem(.flexible(), spacing: 15),
-        GridItem(.flexible(), spacing: 15)
-    ]
+    @State private var showInfo = false
     
     private let accentGold = Color(hex: "D4AF37")
+    
+    // Computed property for unique figures and where they appear
+    private var uniqueFiguresInventory: [(meaning: GeomanciaMeaning, houseIds: [Int])] {
+        var inventory: [Int: [Int]] = [:] // Figure ID -> [House IDs]
+        
+        for house in viewModel.housesData {
+            let pattern = viewModel.figurePattern(forHouse: house.id)
+            if let meaning = viewModel.meaning(for: pattern) {
+                inventory[meaning.id, default: []].append(house.id)
+            }
+        }
+        
+        return inventory.compactMap { (id, houses) in
+            guard let meaning = viewModel.meanings.first(where: { $0.id == id }) else { return nil }
+            return (meaning, houses.sorted())
+        }.sorted { $0.meaning.name < $1.meaning.name }
+    }
     
     var body: some View {
         ZStack {
@@ -786,12 +821,20 @@ struct GeomanciaHousesView: View {
                         Text("As 12 Casas")
                             .font(.system(size: 28, weight: .bold, design: .serif))
                             .foregroundColor(.white)
-                        Text("Derrame das Figuras no Destino")
+                        Text("Panorama do Destino")
                             .font(.system(size: 14))
                             .foregroundColor(accentGold.opacity(0.7))
                     }
                     
                     Spacer()
+                    
+                    Button(action: { showInfo = true }) {
+                        Image(systemName: "info.circle")
+                            .font(.system(size: 18, weight: .bold))
+                            .foregroundColor(accentGold)
+                            .padding(10)
+                            .background(Circle().fill(accentGold.opacity(0.1)))
+                    }
                     
                     Button(action: { dismiss() }) {
                         Image(systemName: "xmark")
@@ -801,54 +844,96 @@ struct GeomanciaHousesView: View {
                             .background(Circle().fill(.white.opacity(0.1)))
                     }
                 }
-                .padding(25)
+                .padding(.horizontal, 25)
+                .padding(.top, 25)
+                .padding(.bottom, 15)
+                
+                // Highlight Clear Button (only if something is highlighted)
+                HStack {
+                    Spacer()
+                    if viewModel.highlightedPattern != nil {
+                        Button(action: { viewModel.highlightedPattern = nil }) {
+                            HStack {
+                                Image(systemName: "xmark.circle.fill")
+                                Text("Limpar Destaque")
+                            }
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundColor(accentGold)
+                        }
+                        .padding(.trailing, 25)
+                    }
+                }
+                .padding(.bottom, 10)
                 
                 ScrollView {
                     VStack(spacing: 25) {
-                        // Intro Card
+                        // Inventory Section (Horizontal Scroll)
                         VStack(alignment: .leading, spacing: 12) {
-                            Text("SOBRE ESTA LEITURA")
-                                .font(.system(size: 10, weight: .black))
-                                .foregroundColor(accentGold)
-                                .tracking(2)
+                            HStack {
+                                Text("INVENTÁRIO DE FIGURAS")
+                                    .font(.system(size: 10, weight: .black))
+                                    .foregroundColor(accentGold)
+                                    .tracking(2)
+                                Spacer()
+                                Text("\(uniqueFiguresInventory.count) figuras únicas")
+                                    .font(.system(size: 10))
+                                    .foregroundColor(.white.opacity(0.4))
+                            }
+                            .padding(.horizontal, 20)
                             
-                            Text("Aqui as primeiras 12 figuras do escudo são distribuídas para detalhar cada área da sua vida em relação à sua pergunta.")
-                                .font(.system(size: 14, weight: .medium))
-                                .foregroundColor(.white.opacity(0.7))
-                                .lineSpacing(4)
-                        }
-                        .padding(20)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(RoundedRectangle(cornerRadius: 16).fill(Color.white.opacity(0.03)))
-                        .padding(.horizontal, 20)
-                        
-                        // Grid of Houses
-                        LazyVGrid(columns: columns, spacing: 15) {
-                            ForEach(viewModel.housesData, id: \.id) { house in
-                                Button(action: { viewModel.selectedHouse = house }) {
-                                    HouseCard(house: house, pattern: viewModel.figurePattern(forHouse: house.id), viewModel: viewModel)
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack(spacing: 12) {
+                                    ForEach(uniqueFiguresInventory, id: \.meaning.id) { item in
+                                        Button(action: {
+                                            if viewModel.highlightedPattern == item.meaning.pattern {
+                                                viewModel.highlightedPattern = nil
+                                            } else {
+                                                viewModel.highlightedPattern = item.meaning.pattern
+                                            }
+                                        }) {
+                                            VStack(spacing: 6) {
+                                                GeomanticSymbolView(pattern: item.meaning.pattern, color: viewModel.highlightedPattern == item.meaning.pattern ? accentGold : .white.opacity(0.4), dotSize: 4, spacing: 4)
+                                                Text(item.meaning.name)
+                                                    .font(.system(size: 9, weight: .bold))
+                                                    .foregroundColor(viewModel.highlightedPattern == item.meaning.pattern ? accentGold : .white.opacity(0.4))
+                                            }
+                                            .padding(.vertical, 10)
+                                            .padding(.horizontal, 15)
+                                            .background(
+                                                RoundedRectangle(cornerRadius: 15)
+                                                    .fill(viewModel.highlightedPattern == item.meaning.pattern ? accentGold.opacity(0.1) : Color.white.opacity(0.02))
+                                                    .overlay(
+                                                        RoundedRectangle(cornerRadius: 15)
+                                                            .stroke(viewModel.highlightedPattern == item.meaning.pattern ? accentGold : .clear, lineWidth: 1)
+                                                    )
+                                            )
+                                        }
+                                    }
                                 }
-                                .buttonStyle(ScaleButtonStyle())
+                                .padding(.horizontal, 20)
                             }
                         }
-                        .padding(.horizontal, 20)
+                        .padding(.vertical, 15)
+                        .background(Color.white.opacity(0.02))
+                        
+                        // Geomantic Wheel (Circular) - NOW THE ONLY VIEW
+                        GeomanticWheelView(viewModel: viewModel)
+                            .padding(.top, 20)
                         
                         // Interpretation Tips
                         VStack(alignment: .leading, spacing: 20) {
                             HStack {
                                 Rectangle().fill(accentGold.opacity(0.3)).frame(height: 1)
-                                Text("GUIA DE INTERPRETAÇÃO")
-                                    .font(.system(size: 9, weight: .black))
-                                    .foregroundColor(accentGold)
+                                Text("DICAS DE COMPARAÇÃO")
+                                    .font(.system(size: 10, weight: .black))
+                                    .foregroundColor(accentGold.opacity(0.8))
                                     .tracking(2)
                                 Rectangle().fill(accentGold.opacity(0.3)).frame(height: 1)
                             }
                             
                             VStack(alignment: .leading, spacing: 15) {
-                                interpretationRule(icon: "1.circle.fill", title: "Identifique a Casa", desc: "Trabalho (6 e 10), Amor (5 e 7), Magia (8 e 12), Dinheiro (2 e 8).")
-                                interpretationRule(icon: "2.circle.fill", title: "Analise a Figura", desc: "Veja se a figura na casa é favorável ou difícil.")
-                                interpretationRule(icon: "3.circle.fill", title: "Consulte o Juiz", desc: "O Juiz no Escudo confirma ou nega o que a casa sugere.")
-                                interpretationRule(icon: "4.circle.fill", title: "Companhia das Casas", desc: "Casas vizinhas (1-2, 3-4, etc.) trabalham em pares. Repetições nesses pares ligam os assuntos.")
+                                interpretationRule(icon: "sparkles", title: "Repetições", desc: "Figuras repetidas em casas diferentes indicam que esses dois assuntos estão ligados nesta leitura.")
+                                interpretationRule(icon: "hand.tap.fill", title: "Destaque & Detalhes", desc: "Toque em uma casa na roda para selecioná-la e ver o resumo central. Toque em 'Detalhes' para ver o conteúdo completo.")
                             }
                         }
                         .padding(25)
@@ -862,13 +947,17 @@ struct GeomanciaHousesView: View {
         .sheet(item: $viewModel.selectedHouse) { house in
             GeomanciaHouseDetailView(house: house, pattern: viewModel.figurePattern(forHouse: house.id), viewModel: viewModel)
         }
+        .sheet(isPresented: $showInfo) {
+            GeomanciaHousesInfoView()
+        }
     }
     
     private func interpretationRule(icon: String, title: String, desc: String) -> some View {
         HStack(alignment: .top, spacing: 15) {
             Image(systemName: icon)
                 .foregroundColor(accentGold)
-                .font(.system(size: 18))
+                .font(.system(size: 16))
+                .frame(width: 20)
             
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
@@ -883,68 +972,9 @@ struct GeomanciaHousesView: View {
     }
 }
 
-struct HouseCard: View {
-    let house: GeomanciaReadingViewModel.HouseDefinition
-    let pattern: [Int]
-    let viewModel: GeomanciaReadingViewModel
-    
-    private let accentGold = Color(hex: "D4AF37")
-    
-    var body: some View {
-        VStack(spacing: 12) {
-            HStack {
-                Text(house.icon)
-                Text("CASA \(house.id)")
-                    .font(.system(size: 10, weight: .black))
-                    .foregroundColor(accentGold.opacity(0.8))
-                    .tracking(1)
-                
-                Spacer()
-                
-                Image(systemName: "arrow.up.right.circle.fill")
-                    .font(.system(size: 12))
-                    .foregroundColor(accentGold.opacity(0.3))
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            
-            VStack(spacing: 8) {
-                GeomanticSymbolView(pattern: pattern, color: .white, dotSize: 5, spacing: 5)
-                
-                if let meaning = viewModel.meaning(for: pattern) {
-                    HStack(spacing: 6) {
-                        Text(meaning.name)
-                            .font(.system(size: 14, weight: .bold, design: .serif))
-                            .foregroundColor(.white)
-                        
-                        // Strength/Weakness indicators
-                        if let strengthened = meaning.strengthenedHouses, strengthened.contains(house.id) {
-                            Image(systemName: "crown.fill")
-                                .font(.system(size: 10))
-                                .foregroundColor(.yellow)
-                                .shadow(color: .yellow.opacity(0.5), radius: 2)
-                        } else if let weakened = meaning.weakenedHouses, weakened.contains(house.id) {
-                            Image(systemName: "arrow.down.circle.fill")
-                                .font(.system(size: 10))
-                                .foregroundColor(.red.opacity(0.8))
-                        }
-                    }
-                }
-            }
-            .padding(.vertical, 10)
-            
-            Text(house.name.replacingOccurrences(of: "Casa \(house.id) — ", with: ""))
-                .font(.system(size: 11, weight: .bold))
-                .foregroundColor(accentGold)
-                .lineLimit(1)
-        }
-        .padding(15)
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(.ultraThinMaterial)
-                .overlay(RoundedRectangle(cornerRadius: 20).stroke(accentGold.opacity(0.1), lineWidth: 1))
-        )
-    }
-}
+
+
+
 
 // MARK: - House Detail View
 
@@ -955,6 +985,8 @@ struct GeomanciaHouseDetailView: View {
     @Environment(\.dismiss) var dismiss
     
     private let accentGold = Color(hex: "D4AF37")
+    
+    @State private var showQuestions = false
     
     var body: some View {
         ZStack {
@@ -1002,10 +1034,66 @@ struct GeomanciaHouseDetailView: View {
                             .padding(.horizontal, 40)
                     }
                     .padding(.top, 20)
+
+                    // Example Questions Section
+                    if let questions = house.exampleQuestions, !questions.isEmpty {
+                        VStack(spacing: 15) {
+                            Button(action: { withAnimation(.spring()) { showQuestions.toggle() } }) {
+                                HStack {
+                                    Image(systemName: "questionmark.bubble.fill")
+                                        .font(.system(size: 18))
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text("Perguntas de Exemplo")
+                                            .font(.system(size: 16, weight: .bold))
+                                        Text(showQuestions ? "Ocultar lista" : "Toque para ver sugestões")
+                                            .font(.system(size: 11))
+                                            .opacity(0.7)
+                                    }
+                                    Spacer()
+                                    Image(systemName: showQuestions ? "chevron.up.circle.fill" : "chevron.down.circle.fill")
+                                        .font(.system(size: 20))
+                                }
+                                .foregroundColor(.black)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 15)
+                                .background(RoundedRectangle(cornerRadius: 16).fill(accentGold))
+                                .shadow(color: accentGold.opacity(0.3), radius: 10, x: 0, y: 5)
+                            }
+                            .padding(.horizontal, 25)
+                            
+                            if showQuestions {
+                                VStack(alignment: .leading, spacing: 12) {
+                                    ForEach(questions, id: \.self) { question in
+                                        HStack(alignment: .top, spacing: 10) {
+                                            Text("•")
+                                                .foregroundColor(accentGold)
+                                                .font(.system(size: 16, weight: .bold))
+                                            Text(question)
+                                                .font(.system(size: 14))
+                                                .foregroundColor(.white.opacity(0.8))
+                                                .fixedSize(horizontal: false, vertical: true)
+                                        }
+                                    }
+                                }
+                                .padding(20)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .background(RoundedRectangle(cornerRadius: 16).fill(Color.white.opacity(0.04)))
+                                .padding(.horizontal, 25)
+                                .transition(.opacity.combined(with: .move(edge: .top)))
+                            }
+                        }
+                    }
                     
                     // Figure Section
                     if let figureMeaning = viewModel.meaning(for: pattern) {
                         VStack(spacing: 25) {
+                            // House Compatibility Section (PROMINENT AT START)
+                            if let strengthened = figureMeaning.strengthenedHouses, strengthened.contains(house.id) {
+                                compatibilityBadge(title: "FIGURA FORTALECIDA", desc: "Nesta casa, a essência da figura se expressa com máxima harmonia e poder.", color: .yellow)
+                            } else if let weakened = figureMeaning.weakenedHouses, weakened.contains(house.id) {
+                                compatibilityBadge(title: "FIGURA ENFRAQUECIDA", desc: "Nesta casa, a figura encontra resistência ou dificuldade em manifestar seu potencial positivo.", color: .red)
+                            }
+
                             HStack {
                                 Rectangle().fill(accentGold.opacity(0.2)).frame(height: 1)
                                 Text("A FIGURA NA CASA")
@@ -1037,13 +1125,6 @@ struct GeomanciaHouseDetailView: View {
                                     BadgeView(text: figureMeaning.element, icon: "drop.fill", color: accentGold.opacity(0.8))
                                     BadgeView(text: figureMeaning.nature, icon: "scope", color: accentGold.opacity(0.8))
                                 }
-                            }
-                            
-                            // House Compatibility Section
-                            if let strengthened = figureMeaning.strengthenedHouses, strengthened.contains(house.id) {
-                                compatibilityBadge(title: "FIGURA FORTALECIDA", desc: "Nesta casa, a essência da figura se expressa com máxima harmonia e poder.", color: .yellow)
-                            } else if let weakened = figureMeaning.weakenedHouses, weakened.contains(house.id) {
-                                compatibilityBadge(title: "FIGURA ENFRAQUECIDA", desc: "Nesta casa, a figura encontra resistência ou dificuldade em manifestar seu potencial positivo.", color: .red)
                             }
                             
                             VStack(alignment: .leading, spacing: 25) {
@@ -1173,6 +1254,332 @@ struct GeomanciaHouseDetailView: View {
         .padding(10)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(RoundedRectangle(cornerRadius: 12).fill(Color.white.opacity(0.04)))
+    }
+}
+
+// MARK: - Geomantic Wheel (Circular UI)
+
+struct GeomanticWheelView: View {
+    let viewModel: GeomanciaReadingViewModel
+    @State private var selectedHouseId: Int? = 1
+    
+    private let accentGold = Color(hex: "D4AF37")
+    private let occupationColor = Color(hex: "FFD700") // Gold
+    private let conjunctionColor = Color(hex: "00FFFF") // Cyan
+    private let mutationColor = Color(hex: "FF00FF") // Magenta/Purple
+    
+    private var perfection: GeomanciaReadingViewModel.PerfectionResult? {
+        guard let houseId = selectedHouseId else { return nil }
+        return viewModel.checkPerfection(quesitedHouse: houseId)
+    }
+    
+    private func highlightColor(for houseId: Int) -> Color? {
+        guard let perfection = perfection, perfection.isPerfected else { return nil }
+        
+        // H1 is always involved
+        if houseId == 1 {
+            switch perfection.type {
+            case .occupation: return occupationColor
+            case .conjunction: return conjunctionColor
+            case .mutation: return mutationColor
+            case .none: return nil
+            }
+        }
+        
+        // Target house
+        if let selectedId = selectedHouseId, houseId == selectedId {
+            switch perfection.type {
+            case .occupation: return occupationColor
+            case .conjunction: return conjunctionColor
+            case .mutation: return mutationColor
+            case .none: return nil
+            }
+        }
+        
+        // Bridge houses in mutation
+        if perfection.type == .mutation {
+            // Mutation logic checks all neighbor pairs. We'd need to expose which pair was found.
+            // For now, let's just highlight H1 and Target.
+        }
+        
+        // Bridge houses in conjunction
+        if perfection.type == .conjunction {
+            // Conjunction details might contain "passa para a Casa X"
+            if perfection.description.contains("Casa \(houseId)") {
+                return conjunctionColor
+            }
+        }
+        
+        return nil
+    }
+
+    var body: some View {
+        GeometryReader { geometry in
+            let size = min(geometry.size.width, geometry.size.height)
+            let center = CGPoint(x: geometry.size.width / 2, y: geometry.size.height / 2)
+            let radius = size * 0.35
+            
+            ZStack {
+                // Outer Design Elements
+                Circle()
+                    .stroke(accentGold.opacity(0.1), lineWidth: 40)
+                    .frame(width: radius * 2.8, height: radius * 2.8)
+                
+                Circle()
+                    .stroke(accentGold.opacity(0.05), lineWidth: 1)
+                    .frame(width: radius * 2.4, height: radius * 2.4)
+                
+                // Connection Lines
+                ForEach(1...12, id: \.self) { i in
+                    let angle = angle(for: i)
+                    Path { path in
+                        path.move(to: center)
+                        let x = center.x + cos(angle) * (radius)
+                        let y = center.y + sin(angle) * (radius)
+                        path.addLine(to: CGPoint(x: x, y: y))
+                    }
+                    .stroke(accentGold.opacity(0.08), lineWidth: 1)
+                }
+
+                // Houses Nodes
+                ForEach(viewModel.housesData) { house in
+                    let angle = angle(for: house.id)
+                    let pattern = viewModel.figurePattern(forHouse: house.id)
+                    let isSelected = selectedHouseId == house.id
+                    let isHighlighted = viewModel.highlightedPattern == nil || viewModel.highlightedPattern == pattern
+                    let pColor = highlightColor(for: house.id)
+                    
+                    VStack(spacing: 4) {
+                        Button(action: {
+                            withAnimation(.spring(response: 0.4, dampingFraction: 0.6)) {
+                                if selectedHouseId == house.id {
+                                    viewModel.selectedHouse = house
+                                } else {
+                                    selectedHouseId = house.id
+                                    viewModel.highlightedPattern = pattern
+                                }
+                            }
+                        }) {
+                            ZStack {
+                                Circle()
+                                    .fill(isSelected ? accentGold.opacity(0.2) : Color.black.opacity(0.4))
+                                    .overlay(
+                                        Circle()
+                                            .stroke(isSelected ? accentGold : accentGold.opacity(0.3), lineWidth: isSelected ? 2 : 1)
+                                    )
+                                    // Perfection Glow
+                                    .overlay(
+                                        Circle()
+                                            .stroke(pColor ?? .clear, lineWidth: 3)
+                                            .blur(radius: 4)
+                                            .opacity(pColor != nil ? 0.8 : 0)
+                                    )
+                                    .frame(width: isSelected ? 65 : 52, height: isSelected ? 65 : 52)
+                                    .shadow(color: (pColor ?? (isSelected ? accentGold : Color.clear)).opacity(0.4), radius: 10)
+                                
+                                VStack(spacing: 2) {
+                                    Text("\(house.id)")
+                                        .font(.system(size: 9, weight: .black))
+                                        .foregroundColor(pColor ?? accentGold)
+                                    
+                                    GeomanticSymbolView(
+                                        pattern: pattern,
+                                        color: isHighlighted ? .white : .white.opacity(0.15),
+                                        dotSize: isSelected ? 3.5 : 2.5,
+                                        spacing: isSelected ? 3.5 : 2.5
+                                    )
+                                }
+                            }
+                        }
+                        .buttonStyle(ScaleButtonStyle())
+                    }
+                    .position(
+                        x: center.x + cos(angle) * (radius + (isSelected ? 5 : 0)),
+                        y: center.y + sin(angle) * (radius + (isSelected ? 5 : 0))
+                    )
+                }
+                
+                // Central Info Hub
+                if let houseId = selectedHouseId, 
+                   let house = viewModel.housesData.first(where: { $0.id == houseId }) {
+                    VStack(spacing: 12) {
+                        // Perfection Summary (IF ANY)
+                        if let perfection = perfection, perfection.isPerfected {
+                            HStack(spacing: 6) {
+                                Image(systemName: "sparkles")
+                                Text(perfection.type.rawValue.uppercased())
+                                    .font(.system(size: 10, weight: .black))
+                            }
+                            .foregroundColor(highlightColor(for: houseId) ?? accentGold)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 4)
+                            .background(Capsule().fill((highlightColor(for: houseId) ?? accentGold).opacity(0.1)))
+                        }
+
+                        Text(house.icon)
+                            .font(.system(size: 36))
+                            .scaleEffect(1.2)
+                        
+                        VStack(spacing: 4) {
+                            Text("CASA \(houseId)")
+                                .font(.system(size: 10, weight: .black))
+                                .foregroundColor(accentGold)
+                                .tracking(2)
+                            
+                            if let meaning = viewModel.meaning(for: viewModel.figurePattern(forHouse: houseId)) {
+                                Text(meaning.name)
+                                    .font(.system(size: 20, weight: .bold, design: .serif))
+                                    .foregroundColor(.white)
+                                    .multilineTextAlignment(.center)
+                                
+                                Text(meaning.latinName.uppercased())
+                                    .font(.system(size: 9, weight: .medium))
+                                    .foregroundColor(accentGold.opacity(0.7))
+                                    .tracking(1)
+                            }
+                        }
+                        .frame(maxWidth: radius * 1.6)
+                        
+                        Button(action: { viewModel.selectedHouse = house }) {
+                            HStack(spacing: 4) {
+                                Text("DETALHES")
+                                    .font(.system(size: 10, weight: .black))
+                                Image(systemName: "arrow.right.circle.fill")
+                                    .font(.system(size: 12))
+                            }
+                            .foregroundColor(.black)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(accentGold))
+                        }
+                    }
+                    .padding(25)
+                    .background(
+                        Circle()
+                            .fill(Color.white.opacity(0.02))
+                            .overlay(Circle().stroke(accentGold.opacity(0.1), lineWidth: 1))
+                    )
+                    .transition(.asymmetric(
+                        insertion: .scale(scale: 0.8).combined(with: .opacity),
+                        removal: .opacity
+                    ))
+                    .id("central-\(houseId)")
+                }
+            }
+        }
+        .frame(height: 500)
+    }
+    
+    private func angle(for houseId: Int) -> Double {
+        // Geomantic Wheel standard: House 1 at 180° (Left/West), moving counter-clockwise
+        let step = (2.0 * .pi) / 12.0
+        return .pi - (Double(houseId - 1) * step)
+    }
+}
+
+
+// MARK: - Info & Rules View
+
+struct GeomanciaHousesInfoView: View {
+    @Environment(\.dismiss) var dismiss
+    private let accentGold = Color(hex: "D4AF37")
+    
+    var body: some View {
+        ZStack {
+            Color(hex: "0F0C08").ignoresSafeArea()
+            
+            VStack(spacing: 0) {
+                // Header
+                HStack {
+                    Text("Guia das 12 Casas")
+                        .font(.system(size: 24, weight: .bold, design: .serif))
+                        .foregroundColor(.white)
+                    Spacer()
+                    Button(action: { dismiss() }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.system(size: 24))
+                            .foregroundColor(.white.opacity(0.3))
+                    }
+                }
+                .padding(25)
+                
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 30) {
+                        // Section 1: How to Read
+                        infoSection(
+                            title: "Como Ler as 12 Casas",
+                            icon: "book.fill",
+                            content: [
+                                (
+                                    "Os Significadores",
+                                    "Sempre interprete a primeira casa como o Consulente (você). Se a figura do Quesito (assunto) for favorável, mas a do Consulente não, você conseguirá o que quer, mas poderá se arrepender. Se for o contrário, você não conseguirá, mas isso será para o seu bem."
+                                ),
+                                (
+                                    "A Casa 4: O Fim do Assunto",
+                                    "A Casa 4 indica o resultado final de toda a situação. Enquanto a Casa 1 mostra como você é afetado e a casa do Quesito responde à pergunta direta, a Casa 4 revela o desfecho de longo prazo."
+                                ),
+                                (
+                                    "Passagem e 'Salto'",
+                                    "Observe se os significadores aparecem em outras casas do mapa. Se a figura da Casa 1 aparecer também na Casa 10, seus planos podem exigir estudos ou viagens. A casa para onde a figura 'salta' revela fatores adicionais envolvidos."
+                                )
+                            ]
+                        )
+                        
+                        // Section 2: Perfections
+                        infoSection(
+                            title: "Caminhos da Perfeição",
+                            icon: "sparkles",
+                            content: [
+                                (
+                                    "Ocupação",
+                                    "Ocorre quando a mesma figura está tanto na Casa 1 quanto na Casa do Quesito. É o sinal mais forte de um 'Sim' direto e sucesso imediato."
+                                ),
+                                (
+                                    "Conjunção",
+                                    "Ocorre quando a figura do Consulente está em uma casa vizinha à do Quesito (ou vice-versa). Indica que o objetivo será alcançado através de um pequeno passo ou proximidade."
+                                ),
+                                (
+                                    "Mutação",
+                                    "Ocorre quando as figuras do Consulente e do Quesito se encontram vizinhas em qualquer outro lugar do mapa. Indica que uma mudança de circunstância unirá os dois fatores."
+                                )
+                            ]
+                        )
+                    }
+                    .padding(.horizontal, 25)
+                    .padding(.bottom, 40)
+                }
+            }
+        }
+    }
+    
+    private func infoSection(title: String, icon: String, content: [(String, String)]) -> some View {
+        VStack(alignment: .leading, spacing: 20) {
+            HStack(spacing: 10) {
+                Image(systemName: icon)
+                    .foregroundColor(accentGold)
+                Text(title.uppercased())
+                    .font(.system(size: 14, weight: .black))
+                    .foregroundColor(accentGold)
+                    .tracking(2)
+            }
+            
+            VStack(alignment: .leading, spacing: 18) {
+                ForEach(content, id: \.0) { item in
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text(item.0)
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.white)
+                        
+                        Text(item.1)
+                            .font(.system(size: 14))
+                            .foregroundColor(.white.opacity(0.7))
+                            .lineSpacing(4)
+                    }
+                }
+            }
+            .padding(20)
+            .background(RoundedRectangle(cornerRadius: 20).fill(Color.white.opacity(0.03)))
+        }
     }
 }
 

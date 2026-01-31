@@ -12,6 +12,7 @@ class GeomanciaReadingViewModel: ObservableObject {
     @Published var reading: GeomanciaReading = GeomanciaReading()
     @Published var meanings: [GeomanciaMeaning] = []
     @Published var selectedHouse: HouseDefinition? = nil
+    @Published var highlightedPattern: [Int]? = nil
     
     init() {
         loadMeanings()
@@ -75,21 +76,133 @@ class GeomanciaReadingViewModel: ObservableObject {
         let icon: String
         let description: String
         let quality: String // Angular, Sucedente, Cadente
+        let exampleQuestions: [String]?
     }
     
     let housesData: [HouseDefinition] = [
-        HouseDefinition(id: 1, name: "Casa 1 (I - Vita): A Vida", icon: "🏹", description: "Representa o/a consulente;", quality: "Angular (Forte/Rápida)"),
-        HouseDefinition(id: 2, name: "Casa 2 (II - Lucrum): O Lucro", icon: "💰", description: "Dinheiro e propriedade móvel, lucro, renda, investimentos, posses pessoais, roubos, exceto imóveis (4) e especulação (5);", quality: "Sucedente (Moderada/Estável)"),
-        HouseDefinition(id: 3, name: "Casa 3 (III - Fratres): Os Irmãos", icon: "🧠", description: "Irmãos, vizinhos, cercanias, jornadas curtas, educação básica, conselho, notícias e boatos;", quality: "Cadente (Fraca/Atrasos)"),
-        HouseDefinition(id: 4, name: "Casa 4 (IV - Genitor): O Pai", icon: "🏠", description: "Terreno, agricultura, construção, cidades, mudança de casa, coisas subterrâneas, lugares antigos, idade avançada, o pai, o fim de qualquer questão;", quality: "Angular (Forte/Rápida)"),
-        HouseDefinition(id: 5, name: "Casa 5 (V - Nati): Os Filhos", icon: "❤️", description: "Colheitas bianuais, fertilidade, gravidez, filhos, sexualidade, festas e entretenimentos, comida e bebida, roupas, água, pescaria e chuva, cartas e livros;", quality: "Sucedente (Moderada/Estável)"),
-        HouseDefinition(id: 6, name: "Casa 6 (VI - Valetudo): A Saúde", icon: "⚙️", description: "Empregados, prestadores de serviço, magos contratados, animais domésticos (exceto animais de carga), doenças e ferimentos;", quality: "Cadente (Fraca/Atrasos)"),
-        HouseDefinition(id: 7, name: "Casa 7 (VII - Uxor): O Cônjuge", icon: "🤝", description: "Relações intensas, maridos e esposas, amor e casamento, parcerias, acordos e tratados, conflitos e competições, ladrões e inimigos conhecidos, caça e localização de coisas, médicos", quality: "Angular (Forte/Rápida)"),
-        HouseDefinition(id: 8, name: "Casa 8 (VIII - Mors): A Morte", icon: "☠️", description: "Morte, espíritos, assassinato, magia praticada pelo consulente, pessoas desaparecidas, dinheiro e propriedade emprestados;", quality: "Sucedente (Moderada/Estável)"),
-        HouseDefinition(id: 9, name: "Casa 9 (IX - Iter): As Viagens", icon: "🌍", description: "Jornadas externas e internas, religião e espiritualidade, educação superior, artes, interpretação de sonhos, filosofia oculta e adivinhação;", quality: "Cadente (Fraca/Atrasos)"),
-        HouseDefinition(id: 10, name: "Casa 10 (X - Regnum): O Reino", icon: "👑", description: "Carreira, reputação, lugar na sociedade, política, meteorologia, tratamento médico;", quality: "Angular (Forte/Rápida)"),
-        HouseDefinition(id: 11, name: "Casa 11 (XI - Benefacta): Os Amigos", icon: "🧑‍🤝‍🧑", description: "Amigos, sócios, promessas, fontes de ajuda, esperanças e desejos, colheitas anuais, perguntas que o consulente não quer revelar;", quality: "Sucedente (Moderada/Estável)"),
-        HouseDefinition(id: 12, name: "Casa 12 (XII - Carcer): A Prisão", icon: "🌑", description: "Restrições e limitações, dívidas do consulente, prisão, coisas secretas, inimigos desconhecidos, trabalho feito pelos outros, animais de carga e selvagens.", quality: "Cadente (Fraca/Atrasos)")
+        HouseDefinition(id: 1, name: "Casa 1 (I - Vita): A Vida", icon: "🏹", description: "Tradicionalmente representa o consulente, a pessoa sobre a qual a adivinhação é realizada. Em leituras de nascimento, períodos (dias, anos) ou personalidade, mostra o temperamento e a condição geral do indivíduo. No mapa padrão das casas, é o ponto de partida que identifica você, enquanto o objetivo da sua pergunta (o quesito) será encontrado em outra casa.", quality: "Angular (Forte/Rápida)", exampleQuestions: [
+            "Qual é o meu estado atual nesta situação?",
+            "Como minha personalidade está afetando o problema?",
+            "Qual é a minha disposição física e mental agora?",
+            "Quem sou eu nesta situação?"
+        ]),
+        HouseDefinition(id: 2, name: "Casa 2 (II - Lucrum): O Lucro", icon: "💰", description: "A segunda casa governa tradicionalmente o dinheiro e bens móveis. Qualquer questão relacionada a lucro e perda, renda, investimentos, pertences pessoais, roubos e afins toma a figura na segunda casa como significadora do quesito. As exceções a esta regra são bens imóveis (que pertencem à quarta casa) e investimentos especulativos (que pertencem à quinta).", quality: "Sucedente (Moderada/Estável)", exampleQuestions: [
+            "Meu negócio vai dar lucro ou prejuízo?",
+            "O investimento será rentável?",
+            "Serei pago pelo trabalho que fiz?",
+            "Este é um bom momento para pedir dinheiro emprestado?",
+            "A mesa antiga vale o que o vendedor está pedindo?",
+            "O pacote que enviei chegará com segurança?",
+            "Meu relógio desaparecido foi roubado?",
+            "Meu carro roubado será recuperado?"
+        ]),
+        HouseDefinition(id: 3, name: "Casa 3 (III - Fratres): Os Irmãos", icon: "🧠", description: "Governa tradicionalmente os irmãos e irmãs do consulente, vizinhos e o ambiente imediato. Também rege jornadas de menos de 300 km (200 milhas), educação do pré-escolar ao ensino médio, conselhos, notícias e boatos.", quality: "Cadente (Fraca/Atrasos)", exampleQuestions: [
+            "Meu relacionamento com minha irmã vai melhorar?",
+            "Os vizinhos concordarão com a servidão de passagem?",
+            "Este é um bom fim de semana para dirigir até a praia?",
+            "Devo matricular meu filho na North Central Elementary?",
+            "Vale a pena seguir o conselho do meu vizinho George?",
+            "A notícia é precisa?",
+            "Devo acreditar nos boatos?"
+        ]),
+        HouseDefinition(id: 4, name: "Casa 4 (IV - Genitor): O Pai", icon: "🏠", description: "Governa tradicionalmente a terra, agricultura, construção, cidades e vilas, relocalização e mudança, qualquer coisa subterrânea, qualquer objeto desconhecido, lugares e coisas antigas, velhice, o pai do consulente e o fim de qualquer assunto.", quality: "Angular (Forte/Rápida)", exampleQuestions: [
+            "Vale a pena comprar a propriedade?",
+            "O solo é fértil?",
+            "As rosas vão florescer aqui?",
+            "Devo me mudar para outro apartamento?",
+            "Springfield é um bom lugar para se mudar?",
+            "A mesa é antiga ou uma reprodução moderna?",
+            "O fundo de pensão está em mãos confiáveis?",
+            "Como está meu pai?",
+            "Como a situação atual terminará no final?"
+        ]),
+        HouseDefinition(id: 5, name: "Casa 5 (V - Nati): Os Filhos", icon: "❤️", description: "Governa tradicionalmente as safras de plantas perenes ou bienais, fertilidade, gravidez e crianças. A sexualidade pertence aqui, mas não o amor ou o casamento (que são da sétima). Festas, entretenimento de todos os tipos, comida, bebida e roupas também pertencem à quinta casa, junto com massas de água, pesca e chuva. Por fim, cartas, mensagens e livros pertencem aqui; na Idade Média, era comum perguntar se um livro continha informações precisas — algo muito útil hoje em dia.", quality: "Sucedente (Moderada/Estável)", exampleQuestions: [
+            "A safra de uvas será boa este ano?",
+            "Janis está interessada em mim sexualmente?",
+            "Meu filho ainda não nascido é menino ou menina?",
+            "Como meu filho de quatro anos lidará com um irmãozinho?",
+            "O show valerá o preço do ingresso?",
+            "Sexta-feira que vem é uma boa noite para a festa?",
+            "O novo restaurante asiático da cidade vale a visita?",
+            "O vestido ficará pronto a tempo para o casamento?",
+            "Como será a pesca no lago este fim de semana?",
+            "Vai chover amanhã?",
+            "Receberei uma carta da minha avó?",
+            "As afirmações no livro que estou lendo são precisas?"
+        ]),
+        HouseDefinition(id: 6, name: "Casa 6 (VI - Valetudo): A Saúde", icon: "⚙️", description: "Governa tradicionalmente os funcionários do consulente e pessoas em todas as profissões de serviço, de médicos a encanadores, artistas e profissionais do sexo. Governa praticantes de magia e ocultismo que não sejam o consulente. Também rege animais de estimação e todos os animais domésticos (exceto cavalos, burros, mulas e camelos). Por fim, governa doenças e ferimentos.", quality: "Cadente (Fraca/Atrasos)", exampleQuestions: [
+            "Devo contratar Phyllis?",
+            "Meus funcionários estão roubando do caixa?",
+            "Os encanadores são confiáveis?",
+            "Devo contratar uma banda para a festa?",
+            "Vou encontrar meu cachorro perdido?",
+            "Os porcos terão um bom preço neste outono?",
+            "Quão grave é esta doença?",
+            "Valeria a pena fazer uma leitura de Tarot com Marie?",
+            "Este é um bom momento para fazer um tratamento dentário?",
+            "Vou pegar gripe neste inverno?"
+        ]),
+        HouseDefinition(id: 7, name: "Casa 7 (VII - Uxor): O Cônjuge", icon: "🤝", description: "Governa as relações humanas mais intensas. O cônjuge ou amante do consulente pertence aqui, junto com tudo relacionado ao amor e casamento. Parcerias, acordos e tratados também pertencem à sétima casa, junto com toda forma de conflito e competição, do beisebol à guerra nuclear. Ladrões pertencem à sétima, assim como inimigos conhecidos. Caça, localização de pessoas e médicos (em divinação médica) também são da sétima casa.", quality: "Angular (Forte/Rápida)", exampleQuestions: [
+            "Stanley me ama?",
+            "Este relacionamento vai durar?",
+            "Este é um bom momento para propor casamento?",
+            "Eu e Carol devemos formar uma parceria comercial?",
+            "Devo assinar o contrato?",
+            "O time vencerá o campeonato?",
+            "Os países assinarão o tratado de paz?",
+            "A proposta da minha empresa para o projeto será aceita?",
+            "Seria vantajoso para mim abrir um processo?",
+            "A polícia pegará o ladrão?",
+            "O próximo fim de semana é bom para caçar?",
+            "Poderei entrar em contato com Julie novamente?"
+        ]),
+        HouseDefinition(id: 8, name: "Casa 8 (VIII - Mors): A Morte", icon: "☠️", description: "Governa tradicionalmente a morte e tudo o que se relaciona a ela. Rege questões sobre fantasmas e todas as outras entidades espirituais. Também abrange a magia realizada pelo próprio consulente, ou em seu benefício (enquanto a adivinhação e a filosofia oculta pertencem à nona). Governa a condição de pessoas ausentes ou desaparecidas, e dinheiro ou propriedade que o consulente emprestou a terceiros.", quality: "Sucedente (Moderada/Estável)", exampleQuestions: [
+            "Devo fazer um seguro de vida?",
+            "Quão a sério devo levar as ameaças de Bill?",
+            "Este é um bom momento para fazer um testamento?",
+            "A casa está realmente assombrada?",
+            "O trabalho mágico que estou planejando é apropriado?",
+            "A filha desaparecida do meu vizinho está bem?",
+            "Vou recuperar o livro que emprestei para o Greg?"
+        ]),
+        HouseDefinition(id: 9, name: "Casa 9 (IX - Iter): As Viagens", icon: "🌍", description: "Governa tradicionalmente longas jornadas de todos os tipos, exteriores e interiores. Viagens de mais de 300 km, viagens marítimas, aéreas e espaciais. Também rege a religião e espiritualidade, ensino superior, artes e interpretação de sonhos. A filosofia oculta e a adivinhação, como algo distinto das práticas mágicas (que pertencem à oitava), também residem aqui.", quality: "Cadente (Fraca/Atrasos)", exampleQuestions: [
+            "Poderei ir para a Alemanha este verão?",
+            "Quão congestionado estará o aeroporto?",
+            "Devo seguir meu interesse na religião pagã?",
+            "Conseguirei entrar naquela universidade?",
+            "É um bom momento para voltar a estudar e terminar minha graduação?",
+            "Devo começar aulas de música, ou estaria perdendo tempo?",
+            "O sonho que tive ontem à noite significa alguma coisa?",
+            "Devo estudar geomancia?"
+        ]),
+        HouseDefinition(id: 10, name: "Casa 10 (X - Regnum): O Reino", icon: "👑", description: "Governa a carreira, reputação e posição social do consulente. Representa pessoas em posições de autoridade e a mãe do consulente. A política pertence a esta casa, desde o conselho escolar local até as Nações Unidas. Também rege o estado do tempo (clima). Na divinação médica, governa o tratamento prescrevido.", quality: "Angular (Forte/Rápida)", exampleQuestions: [
+            "Devo procurar um emprego diferente?",
+            "Receberei a promoção?",
+            "Vou me dar bem com meu novo chefe?",
+            "O escritório do condado aprovará minha licença de construção?",
+            "Como mamãe tem passado ultimamente?",
+            "O senador vencerá a reeleição?",
+            "Devo me candidatar a uma vaga no conselho escolar?",
+            "O tempo amanhã estará limpo e seco?",
+            "Devo pedir uma segunda opinião sobre o tratamento proposto?"
+        ]),
+        HouseDefinition(id: 11, name: "Casa 11 (XI - Benefacta): Os Amigos", icon: "🧑‍🤝‍🧑", description: "Governa tradicionalmente amigos, associados, promessas, fontes de ajuda e as esperanças e desejos do consulente. Também rege safras de plantas anuais e qualquer pergunta que o consulente não queira revelar ao divindade.", quality: "Sucedente (Moderada/Estável)", exampleQuestions: [
+            "Como está meu velho amigo de faculdade, Bill?",
+            "Minha amiga Sally cumprirá sua promessa?",
+            "Posso contar com o apoio da associação de moradores?",
+            "Alcançarei meu sonho mais profundo?",
+            "Terei uma boa colheita de ervilhas este ano?",
+            "Não quero dizer qual é minha pergunta — você pode respondê-la de qualquer maneira?"
+        ]),
+        HouseDefinition(id: 12, name: "Casa 12 (XII - Carcer): A Prisão", icon: "🌑", description: "Governa tradicionalmente as partes menos agradáveis da vida, incluindo restrições e limitações, dívidas do consulente, prisão, qualquer coisa secreta e inimigos que o consulente desconhece. Magia feita por outra pessoa para prejudicar o consulente pertence aqui. Também governa gado, cavalos, burros, mulas, camelos e todos os animais selvagens.", quality: "Cadente (Fraca/Atrasos)", exampleQuestions: [
+            "Poderei pagar minhas contas no próximo mês?",
+            "Serei enviado para a prisão?",
+            "Ruth está escondendo algo de mim?",
+            "Alguém no trabalho está tentando me fazer ser demitido?",
+            "O objeto no jardim era uma piada ou alguém tentou lançar um feitiço?",
+            "Este cavalo vale a pena ser comprado?",
+            "O gado terá um bom preço este ano?"
+        ])
     ]
     
     var isCorrupted: Bool {

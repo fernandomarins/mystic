@@ -71,36 +71,36 @@ struct GeomanciaDetailView: View {
     
     var body: some View {
         ZStack {
-            // Background
+            // Background - Consistent with Reading View
             LinearGradient(
-                colors: [Color(hex: "2D1B10"), Color(hex: "0F0C08")],
+                colors: [Color(hex: "1B1212"), Color(hex: "2D1B10")],
                 startPoint: .top,
                 endPoint: .bottom
             ).ignoresSafeArea()
             
-            // Decorative elements
+            // Decorative background symbol
             VStack {
                 Spacer()
-                Image(systemName: "globe.americas.fill")
-                    .foregroundColor(Color(hex: "8B4513").opacity(0.05))
-                    .font(.system(size: 300))
-                    .offset(y: 150)
+                Image(systemName: "circle.grid.cross.fill")
+                    .foregroundColor(accentGold.opacity(0.03))
+                    .font(.system(size: 400))
+                    .offset(y: 200)
             }
             .ignoresSafeArea()
             
             ScrollView {
-                VStack(spacing: 35) {
+                VStack(spacing: 30) {
                     // Pull indicator
                     Capsule()
                         .fill(.white.opacity(0.2))
                         .frame(width: 36, height: 5)
                         .padding(.top, 12)
                     
-                    // Card Layout
+                    // Main Container
                     VStack(spacing: 0) {
-                        // Top Section with Dot Pattern
+                        // Header Section
                         VStack(spacing: 25) {
-                            GeomanticSymbolView(pattern: item.pattern, color: accentGold, dotSize: 14, spacing: 20)
+                            GeomanticSymbolView(pattern: item.pattern, color: accentGold, dotSize: 15, spacing: 20)
                                 .padding(30)
                                 .background(
                                     Circle()
@@ -111,7 +111,7 @@ struct GeomanciaDetailView: View {
                             
                             VStack(spacing: 8) {
                                 Text(item.name)
-                                    .font(.system(size: 32, weight: .bold, design: .serif))
+                                    .font(.system(size: 34, weight: .bold, design: .serif))
                                     .foregroundColor(.white)
                                 
                                 if let otherNames = item.otherNames {
@@ -130,7 +130,6 @@ struct GeomanciaDetailView: View {
                                     if let planet = item.planet {
                                         BadgeView(text: planet, icon: "sparkles", color: .white.opacity(0.6))
                                     }
-                                    
                                     if let zodiac = item.zodiac {
                                         BadgeView(text: zodiac, icon: "star.fill", color: .white.opacity(0.6))
                                     }
@@ -153,11 +152,11 @@ struct GeomanciaDetailView: View {
                         }
                         .padding(.vertical, 40)
                         .frame(maxWidth: .infinity)
-                        .background(Color.white.opacity(0.03))
+                        .background(Color.white.opacity(0.02))
                         
-                        // Content
-                        VStack(spacing: 30) {
-                            // Keyword (New!)
+                        // Body Content
+                        VStack(spacing: 35) {
+                            // 1. Essence Keyword
                             if let keyword = item.keyword {
                                 VStack(spacing: 8) {
                                     Text("ESSÊNCIA")
@@ -165,45 +164,12 @@ struct GeomanciaDetailView: View {
                                         .foregroundColor(accentGold.opacity(0.5))
                                         .tracking(2)
                                     Text(keyword.uppercased())
-                                        .font(.system(size: 24, weight: .bold, design: .serif))
+                                        .font(.system(size: 26, weight: .bold, design: .serif))
                                         .foregroundColor(accentGold)
                                 }
-                                .padding(.top, 10)
-                            }
-
-                            detailSection(title: "SENTIDO TRADICIONAL", text: item.meaning)
-
-                            if let images = item.images {
-                                detailSection(title: "SÍMBOLO VISUAL", text: images)
                             }
                             
-                            if let divMeaning = item.divinatoryMeaning {
-                                detailSection(title: "SIGNIFICADO DIVINATÓRIO", text: divMeaning)
-                            }
-
-                            // Answer
-                            VStack(spacing: 12) {
-                                Text("O ORÁCULO DIZ:")
-                                    .font(.system(size: 12, weight: .bold))
-                                    .foregroundColor(.white.opacity(0.4))
-                                    .tracking(2)
-                                
-                                Text(item.answer)
-                                    .font(.system(size: 28, weight: .black, design: .serif))
-                                    .foregroundColor(accentGold)
-                                    .shadow(color: accentGold.opacity(0.5), radius: 10)
-                            }
-
-                            // Detailed Sections
-                            if let body = item.bodyType {
-                                detailSection(title: "TIPO FÍSICO / APARÊNCIA", text: body)
-                            }
-                            
-                            if let character = item.characterType {
-                                detailSection(title: "TEMPERAMENTO / CARÁTER", text: character)
-                            }
-                            
-                            // Correspondences Grid
+                            // 2. Correspondences (MOVED UP)
                             VStack(alignment: .leading, spacing: 15) {
                                 Text("CORRESPONDÊNCIAS")
                                     .font(.system(size: 12, weight: .black))
@@ -225,45 +191,88 @@ struct GeomanciaDetailView: View {
                                 }
                             }
 
-                            if let commentary = item.commentary {
-                                detailSection(title: "COMENTÁRIO ESOTÉRICO", text: commentary)
+                            // 3. Prognosis (MOVED UP AND RENAMED)
+                            VStack(spacing: 12) {
+                                Text("PROGNÓSTICO")
+                                    .font(.system(size: 12, weight: .black))
+                                    .foregroundColor(accentGold.opacity(0.5))
+                                    .tracking(2)
+                                
+                                Text(item.answer)
+                                    .font(.system(size: 28, weight: .black, design: .serif))
+                                    .foregroundColor(accentGold)
+                                    .shadow(color: accentGold.opacity(0.5), radius: 10)
+                                    .multilineTextAlignment(.center)
                             }
+                            .padding(.vertical, 10)
+                            .frame(maxWidth: .infinity)
+                            .background(RoundedRectangle(cornerRadius: 20).fill(accentGold.opacity(0.05)))
 
-                            // Dignities
+                            // 4. House Relationships
                             if (item.strengthenedHouses?.isEmpty == false) || (item.weakenedHouses?.isEmpty == false) {
                                 VStack(alignment: .leading, spacing: 15) {
-                                    Text("RELACIONAMENTOS")
+                                    Text("DIGNIDADES (NAS CASAS)")
                                         .font(.system(size: 12, weight: .black))
                                         .foregroundColor(accentGold.opacity(0.5))
                                     
-                                    VStack(spacing: 10) {
+                                    HStack(spacing: 12) {
                                         if let strengthened = item.strengthenedHouses, !strengthened.isEmpty {
                                             HStack {
                                                 Image(systemName: "crown.fill").foregroundColor(.yellow)
                                                 Text("Fortalecida:").font(.system(size: 13, weight: .bold))
-                                                Text(strengthened.map { "Casa \($0)" }.joined(separator: ", "))
+                                                Text(strengthened.map { "\($0)" }.joined(separator: ", "))
                                                     .font(.system(size: 13))
                                                 Spacer()
                                             }
                                             .padding(12)
                                             .background(Color.yellow.opacity(0.1))
-                                            .cornerRadius(10)
+                                            .cornerRadius(12)
+                                            .frame(maxWidth: .infinity)
                                         }
                                         
                                         if let weakened = item.weakenedHouses, !weakened.isEmpty {
                                             HStack {
                                                 Image(systemName: "arrow.down.circle.fill").foregroundColor(.red)
                                                 Text("Enfraquecida:").font(.system(size: 13, weight: .bold))
-                                                Text(weakened.map { "Casa \($0)" }.joined(separator: ", "))
+                                                Text(weakened.map { "\($0)" }.joined(separator: ", "))
                                                     .font(.system(size: 13))
                                                 Spacer()
                                             }
                                             .padding(12)
                                             .background(Color.red.opacity(0.1))
-                                            .cornerRadius(10)
+                                            .cornerRadius(12)
+                                            .frame(maxWidth: .infinity)
                                         }
                                     }
                                 }
+                            }
+
+                            // 5. Traditional Meanings
+                            VStack(alignment: .leading, spacing: 25) {
+                                detailSection(title: "SENTIDO TRADICIONAL", text: item.meaning)
+
+                                if let images = item.images {
+                                    detailSection(title: "SÍMBOLO VISUAL", text: images)
+                                }
+                                
+                                if let divMeaning = item.divinatoryMeaning {
+                                    detailSection(title: "SIGNIFICADO DIVINATÓRIO", text: divMeaning)
+                                }
+                            }
+
+                            // 6. Physical & Character
+                            VStack(alignment: .leading, spacing: 25) {
+                                if let body = item.bodyType {
+                                    detailSection(title: "TIPO FÍSICO / APARÊNCIA", text: body)
+                                }
+                                if let character = item.characterType {
+                                    detailSection(title: "TEMPERAMENTO / CARÁTER", text: character)
+                                }
+                            }
+
+                            // 7. Esoteric Commentary
+                            if let commentary = item.commentary {
+                                detailSection(title: "COMENTÁRIO ESOTÉRICO", text: commentary)
                             }
                         }
                         .padding(30)
@@ -276,23 +285,21 @@ struct GeomanciaDetailView: View {
                                     .stroke(accentGold.opacity(0.2), lineWidth: 1)
                             )
                     )
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, 25)
                     
                     // Close button
                     Button(action: { dismiss() }) {
                         Text("Fechar Detalhes")
-                            .font(.system(size: 18, weight: .semibold))
+                            .font(.system(size: 18, weight: .bold))
                             .foregroundColor(.black)
                             .frame(maxWidth: .infinity)
                             .height(56)
-                            .background(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .fill(accentGold)
-                            )
+                            .background(RoundedRectangle(cornerRadius: 16).fill(accentGold))
                             .shadow(color: accentGold.opacity(0.4), radius: 10)
                     }
-                    .padding(.horizontal, 40)
-                    .padding(.bottom, 20)
+                    .padding(.horizontal, 50)
+                    .padding(.bottom, 50)
+                    .padding(.top, 10)
                 }
             }
         }

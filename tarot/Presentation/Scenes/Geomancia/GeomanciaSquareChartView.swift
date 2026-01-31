@@ -162,11 +162,13 @@ struct GeomanciaSquareChartView: View {
                         .foregroundColor(.black.opacity(0.5))
                     
                     HStack(spacing: 15) {
-                        miniFigure(id: 14, label: "TE") // Left Witness
-                        miniFigure(id: 13, label: "TD") // Right Witness
+                        miniFigure(id: 14, label: "T14") // Left Witness
+                        miniFigure(id: 13, label: "T13") // Right Witness
                     }
                     
                     miniFigure(id: 15, label: "JUIZ") // Judge
+                    
+                    miniFigure(id: 16, label: "RECONC.") // Reconciler
                 }
                 .position(x: rect.midX, y: rect.midY)
             }
@@ -282,7 +284,8 @@ struct GeomanciaSquareChartView: View {
         let pattern: [Int]
         if id == 13 { pattern = reading.rightWitness }
         else if id == 14 { pattern = reading.leftWitness }
-        else { pattern = reading.judge }
+        else if id == 15 { pattern = reading.judge }
+        else { pattern = reading.reconciler }
         
         return VStack(spacing: 1) {
             Text(label)
