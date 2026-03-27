@@ -1,0 +1,306 @@
+{
+  "pontos_espirituais": [
+    {
+      "id": 1,
+      "nome": "O Escudo Trancado (Cruz-Círculo Bakongo)",
+      "definicao": "Ferramenta poderosa de defesa, desenhada para criar um perímetro mágico impenetrável. Sua função não é apenas a de um escudo passivo, mas a de uma fortaleza ativa, que identifica, bloqueia e repele energias intrusivas, obsessores espirituais ou qualquer forma de vibração negativa direcionada."
+    },
+    {
+      "id": 2,
+      "nome": "A Sentinela da Lei (Ponto de Defesa Pessoal)",
+      "definicao": "Escudo pessoal dinâmico. Ele invoca a energia do Trono da Lei (Ogum) para ordenar o campo áurico, criar uma fronteira impenetrável e atuar como uma sentinela que 'corta' e 'repele' ativamente qualquer energia direcionada, antes que ela possa se instalar."
+    },
+    {
+      "id": 3,
+      "nome": "A Espada-Espelho (Ponto de Corte e Retorno)",
+      "definicao": "Ponto de ação direta e relatiação justa. Sua função é operador como uma emrgia de precisão da Lei, que identifica um ataque mágico delibrado, o 'corta' pela raiz (compensando o laço com o alvo) e o 'reflete' de volta à sua fonte de origem. Ele funciona sob a regência do Trono da Lei (Ogum, como o 'Corte') e dos Guardiões da Lei (Exu, como o 'Retorno')."
+    },
+    {
+      "id": 4,
+      "nome": "O Círculo das Águas Calmas (Ponto de Dilução e Harmonização)",
+      "definicao": "Atua como vórtice de pacificação. Sua função é dupla: primeoro"
+    },
+    {
+      "id": 5,
+      "nome": "O Ponto das Quatro Direções (A Certa Trancada)",
+      "definicao": "É uma 'fechadura mágica' de alta segurança. Ele não é um ponto de combate, mas sim um selo de isolamento e consagração. Sua função é estabelecer um perímetro sagrado, trancando os qautro portais (cardeais) do ambiente e preenchendo o espaço internao com a vibração elevada da Fé, tornando-o impenetrável e pacífico."
+    },
+    {
+      "id": 6,
+      "nome": "O Cruzeiro de Assentamento (A Bênção das Almas)",
+      "definicao": "Invoca a presença serena e firme das Santas Almass (a linha dos Pretos-Velhos). Sua função é criar um campo de 'assentamento' energético em torno do indivíduo, aterrando as vibrações de medo e ansiedade e dissolvendo perturbações sutis com a fuamaça sagrada de seus cachimbos."
+    },
+    {
+      "id": 7,
+      "nome": "O Corpo Fechado (Ponto de Fechamento de Corpo)",
+      "definicao": "É um sigilo de 'blindagem' pessoal. Sua função é selar temporariamente o campo aúrico, 'fechando as porteiras' (chakras e pontos de troca energética) para impedir a instrusão ou a fixação de energias parasitas. Ele evoca a força da Lei (Ogum) para 'neutralizar' parasitas, e a força dos Guardiões (Exu) para 'trancar' o sistema."
+    },
+    {
+      "id": 8,
+      "nome": "O Anzol Dourado (Ponto de Atração e Magnetismo)",
+      "definicao": "É um 'imã' mágicko. Sua função é criar um poderoso vórtice energético que 'pesca' e 'puxa' ativamente as energias de prosperidade, abrindo os caminhos para que oportunidades, recursos e clientes sejam direcionados de forma contínua para o seu alvo (seja uma pessoa ou um negócio). Ele opera sob a regência do Trono do Amor/Agregação (Oxum), do Trono da Lei/Caminhos (Ogum) e do Trono da Geração (Iemanjá)."
+    },
+    {
+      "id": 9,
+      "nome": "O Aríete da Lei (Ponto de Ruptura e Abertura)",
+      "definicao": "É uma ferramenta de 'impacto' mágico. Sua função é quebrar a estagnação (o 'empacamento') e forçar a abertura dos caminhos. Ele não atrai, ele arromba o bloqueio, permitindo que o fluxo da prosperida, das soluções e das oportunidades volte a circular. Ele opera sob a regência direta da Lei (Ohum, como 'Aríete') e do Movimento (Iansã, como o 'Vento' que direciona)."
+    },
+    {
+      "id": 10,
+      "nome": "A Flecha Direcionada (Ponto de Foco e Concretização)",
+      "definicao": "É uma ferramenta de 'alvo único'. Ele funciona como uma flecha mágicka que coleta toda energia dispersa do praticante e a canaliza em um único vetor de força, direcionado com precisão para um objetivo claro. Ele opera sob a regência da Lei e do Sucesso (Oxóssi, pela precisão) e do Movimento (Iansã, pela velocidade e impulso)."
+    },
+    {
+      "id": 11,
+      "nome": "O Sol Crescente (Ponto de Vitalidade e Expansão Profissional)",
+      "definicao": "É um dínamo energético. Sua função é atuar como um Sol em miniatura, irradiando continuamente energia vital (axé), estimulando o crescimento (expansão), atraindo o sucesso (éxito) e conferindo reconhecimento (visibilidade) ao alvo - seja ele um negócio, um projeto específico ou a carreira de um indivíduo. Ele opera sob regência primária do Trono do Conhecimento (Oxóssi, pela expansão e busca de oportunidades) e evoca a força ígnea da Lei e da Justiça (Ogum e Xangô, pela ação e pelo reconhecimento justo) e a vitalidade da Fé (Oxalá, a luz maior)."
+    },
+    {
+      "id": 12,
+      "nome": "A Roda da Sorte Cigana (Ponto de Movimento e Sorte Inesperada)",
+      "definicao": "É um vórtice dinâmico que invoca a alegria e a magia do Povo Cigano. Sua função é quebrar a estagnação (o 'azar') com o movimento constante da roda e, ao mesmo tempo, atuar como um ímã para a sorte rápida, as mudanças positivas e a prosperidade inesperada. Ele opera sob a vibração direta do Povo Cigano, sob a égide de Santa Sara Kali (a protetora) e dos Mistérios da Lei (Ogum, que abre os caminhos)."
+    },
+    {
+      "id": 13,
+      "nome": "O Coração Radiante (Ponto de Brilho e Carisma)",
+      "definicao": "É um 'amplificador de carisma'. Sua função é desbloquera e irradiar luz interior do indivíduo (seu 'axé' pessoal), tornando-o magnético, cativante e visível. Ele atua como um holofote, atraindo o reconhecimento e sucesso em a'reas que dependem da expressãp e da criatividade. Ele opera sob a regência direta do Trono do Amor (Oxum, pelo magnetismo, carisma e artes) e do Trono da Fé (Oxalá, a luz e o brilho)."
+    },
+    {
+      "id": 14,
+      "nome": "O Tridente da Conquista Material (Ponto de Abertura e Domínio de Exu)",
+      "definicao": "É uma ferramente de ação direcionada, um 'pé de cabra' mágico que invoca a força de Exu em seu aspecto realizador e conquistador no plano material (Exu Tiriri, Exu Veludo, Exu do Ouro). Sua função é quebrar barreiras, abrir caminhos específicos para a matéria, dominar situações de conflito (dispustas, negociações) e 'fisgar' o objetivo material desejado."
+    },
+    {
+      "id": 15,
+      "nome": "O Cruzeiro da Cura e Consolo (A Bênção das Almas)",
+      "definicao": "É um 'assentamento' de cura. Sua função não é atacar a doença de forma agressiva, mas sim 'decantar' o sofrimento, 'absorver' as energias densas da enfermidade e 'derramar' sobre o doente as vibrações de paciência, consolo e alívio, essencias para uma recuperação plena."
+    },
+    {
+      "id": 16,
+      "nome": "O Ponto da Transmutação (Ponto de Intervenção de Omolu)",
+      "definicao": "É um 'campo operatório' magístico. Sua função é invocar o poder de Obaluayê/Omulu para 'paralisar' o processo desequilibrado da doença, 'recolher' as energias mórbidas e 'transmutá-las', forçando o organismo (físico e espiritual) a retornar ao seu estado de equilíbrio e saúde."
+    },
+    {
+      "id": 17,
+      "nome": "A Fonte da Vitalidade (Ponto de Reabastecimento e Vigor)",
+      "definicao": "É um 'reabastecedor' energético. Sua função é conectar o indivíduo diretamente à fonte da vida (a 'Geração' e a 'Fé) e atuar como uma bomba mágica que 'jorra' essa energia nova para dentro do campo áurico, lavando o cansaço e preenchendo o vazio deixado pela doença ou estresse. Ele opera sob a regência do Trono da Geração (Iemanjá, a fonte) e do Trono da Fé (Oxalá, o sopro vital)."
+    },
+    {
+      "id": 18,
+      "nome": "O Ponto do Equilíbrio Integral (A Mandala da Alma)",
+      "definicao": "É uma mandala de alinhamento. Sua função não é atacar ou defender, mas sim 'afinar' o ser. Ele atua como um diapasão cósmico, realinhando os quatro corpos (físico, mental, emocional, espiritual) com o eixo da Centelha Divina, trazendo-os da dissonância (desequilíbrio) para a consonância (harmonia). Ele opera sob a regência direta do Trono da Fé (Oxalá, o supremo equilibrador)."
+    },
+    {
+      "id": 19,
+      "nome": "O Ponto da Saúde Contínua (A Mandala Programadora)",
+      "definicao": "É uma 'mandala programadora'. Sua função é criar um padrão vibratório contínuo (um 'programa') de saúde e equilíbrio no campo áurico e no subconsciente. Ele não ataca a doença, ele impede que ela se instale ao manter o campo em ressonância constante com a vibração da Geração (vida) e da Fé (equilíbrio)."
+    },
+    {
+      "id": 20,
+      "nome": "O Potenciador de Ossãe (O Ponto de Extração de Axé)",
+      "definicao": "É um 'carregador’ ou’ potenciador’ magístico. Sua função é ser um 'assentamento’ temporário que invoca o Orixá Ossãe, o Senhor do Conhecimento Vegetal, para que ele ‘desperte’ o axé (a energia espiritual e curativa) contido na planta e o transfira de forma concentrada para o líquido ou remédio que será utilizado."
+    },
+    {
+      "id": 21,
+      "nome": "O Raio Dissipador (Ponto de Limpeza de Iansã)",
+      "definicao": "É uma ferramenta de 'choque' energético. Sua função é invocar a força do Raio e do Vento de Iansã para quebrar (o raio) a crosta de estagnação e apatia e, imediatamente, dissipar (o vento) os miasmas e pensamentos negativos, limpando o campo de forma rápida e intensa."
+    },
+    {
+      "id": 22,
+      "nome": "A Espiral Desimpregnadora (O Vórtice de Ponto Zero)",
+      "definicao": "É um 'vácuo' energético. Sua função é criar um vórtice de sucção que puxa (recolhe) e anula (neutraliza) todas as formas de energia residual, memórias e programações impregnadas em um objeto ou em um pequeno ambiente, devolvendo-o ao seu 'Ponto Zero'. Ele opera sob a regência direta do Trono da Evolução (Obaluaê/Omolu), o Senhor da transmutação e paralisação dos males."
+    },
+    {
+      "id": 23,
+      "nome": "O Machado de Xangô (Ponto de Julgamento e Quebra de Demanda)",
+      "definicao": "É um 'tribunal' magístico. Sua função é invocar a autoridade do Trono da Justiça (Xangô) para 'julgar' a legalidade de uma demanda. Se a demanda for negativa ou injusta, este Ponto atua com a força do Raio e do Machado, quebrando sua estrutura energética e neutralizando seu poder de ação."
+    },
+    {
+      "id": 24,
+      "nome": "O Laço do Boiadeiro (Ponto de Corte e Recolhimento de Boiadeiro)",
+      "definicao": "É uma 'armadilha' e um 'laço' magístico. Ele invoca a energia da Lei (Ogum/Xangô) manifestada na vibração dos Boiadeiros. Sua função é 'laçar' (puxar para si), 'cortar' (anular) e 'recolher' (conter) energias obsessoras ou laços cármicos/emocionais prejudiciais que insistem em perturbar o campo do indivíduo."
+    },
+    {
+      "id": 25,
+      "nome": "A Vassoura Decantadora (O Ponto de Limpeza de Nanã)",
+      "definicao": "É uma ferramenta de 'decantação' anímica (da alma). Sua função não é 'quebrar' ou 'expulsar', mas sim 'varrer' (recolher) e 'decantar' (transformar) as energias mais profundas e antigas. Ele invoca a vibração do Trono da Evolução (Nanã Buruquê) para atuar sobre padrões kármicos, mágoas ancestrais e memórias densas, permitindo que elas sejam dissolvidas lentamente em seu próprio tempo sagrado."
+    },
+    {
+      "id": 26,
+      "nome": "A Âncora de Iemanjá (Ponto de Descarrego e Estabilidade Emocional)",
+      "definicao": "É um 'aterramento' emocional nas águas sagradas. Sua função é dupla: Ancorar – Ele atua como uma âncora que 'firma' o campo emocional do indivíduo, trazendo estabilidade e impedindo o 'afogamento' na angústia e ansiedade (o equilíbrio). Descarregar – Ele serve como um 'fio terra' magístico que conecta o excesso de energia emocional densa (tristeza, mágoa) diretamente à Calunga Grande (o mar), onde é diluído e neutralizado pela força geradora de Iemanjá."
+    },
+    {
+      "id": 27,
+      "nome": "A Encruzilhada de Exu (Ponto de Despacho e Anulação)",
+      "definicao": "É um 'portal de despacho'. Sua função é criar um vórtice de sucção que puxa a energia densa e os obsessores para o seu centro (a Encruzilhada de Exu), onde são anulados (neutralizados) e, simultaneamente, tranca (fecha) os quatro caminhos, impedindo seu retorno e 'despachando' o que foi recolhido."
+    },
+    {
+      "id": 28,
+      "nome": "O Estrela de Oxalá (O Ponto de Conexão com o Alto)",
+      "definicao": "É um 'portal-antena'. Sua função é criar um campo de luz consagrado (um 'templo' pessoal) que eleva a vibração do praticante e, simultaneamente, atua como um 'farol' ou 'antena' que direciona a prece para o Alto, facilitando a sintonização e a comunicação com a espiritualidade maior (mentores, guias, anjo da guarda). Ele opera sob a regência direta do Trono da Fé (Pai Oxalá)."
+    },
+    {
+      "id": 29,
+      "nome": "A Flecha do Conhecimento (O Ponto do Oraculo)",
+      "definicao": "É um 'sintonizador' da alma. Sua função é 'calibrar' a intuição do praticante, agindo de duas formas: Acalma o 'ruído' da mente racional (clareza mental), permitindo que a voz do subconsciente seja ouvida. Aguça a percepção (como uma flecha), permitindo que o praticante 'puxe' a informação correta do campo energético ou do oráculo. Ele opera sob a regência do Trono do Conhecimento (Pai Oxóssi, o caçador certeiro da informação) e do Trono da Evolução (Mãe Nanã, a sabedoria ancestral e o subconsciente profundo)."
+    },
+    {
+      "id": 30,
+      "nome": "O Coração Crístico (POnto de Irradiação do Amor)",
+      "definicao": "É uma mandala de meditação. Sua função é 'sintonizar' o chakra cardíaco do praticante com a frequência mais elevada do universo: o Amor Incondicional (Vibração Crística/Búdica). Ele atua como um diapasão, acalmando o julgamento (a mente) e abrindo o coração para a compaixão e o perdão. Ele opera sob a regência direta do Trono da Fé (Oxalá, o Amor Crístico) e do Trono do Amor (Oxum, o amor agregador e compassivo)."
+    },
+    {
+      "id": 31,
+      "nome": "A Escada da Justiça (O Ponto de Conselho de Xangô)",
+      "definicao": "É um 'canal de audiência' com a Lei Maior. Sua função é atuar como uma 'escada' que permite ao praticante 'subir' sua questão (decisão, dilema kármico) ao Trono da Justiça (Xangô) e, em troca, receber a clareza e a sabedoria (o conselho) para agir com retidão."
+    },
+    {
+      "id": 32,
+      "nome": "O Vórtice Cósmico (O Ponto de Expansão da Consciência)",
+      "definicao": "É um 'portal-veículo'. Sua função é criar um campo energético sintonizado que serve como um 'portal' seguro para a consciência e como um 'veículo' (Merkabah) para a projeção astral. Ele acalma o plano mental e sintoniza o praticante com as vibrações mais elevadas do cosmos, facilitando a expansão e a meditação profunda. Ele opera sob a regência do Trono Cristalino da Fé (Oxalá, como o 'espaço' infinito) e da Evolução (Nanã, como o 'portal' para o subconsciente e outras dimensões)."
+    },
+    {
+      "id": 33,
+      "nome": "A Ponte Arco-Íris (O Ponto da Renovação de Oxumaré)",
+      "definicao": "É um 'portal de transmutação'. Sua função é criar um campo energético que atua como uma ponte (o Arco-Íris) entre o plano material (onde reside a dificuldade) e o plano espiritual (where reside a solução). Ele invoca a força de Oxumaré para 'sugar' a energia estagnada do ciclo antigo, transmutá-la (como a serpente troca de pele) e devolvê-la como uma bênção de renovação, alegria e prosperidade."
+    },
+    {
+      "id": 34,
+      "nome": "Dikenga (Cruz-Círculo Bakongo)",
+      "definicao": "O Dikenga é um dos símbolos mais antigos e poderosos da tradição Bakongo. Ele representa o ciclo da vida, da morte e do renascimento, o movimento do Sol e a passagem das energias pelos quatro pontos cardeais. Ao riscar este ponto, você cria um portal de equilíbrio e consciência, que pode ser usado para:\n\nOrganizar o espaço energético\nMarcar o centro de um trabalho espiritual ou ritual\nAlinhar corpo, mente, espírito e ancestralidade\n\nEle é símbolo de totalidade, de caminhada e de presença. É como uma bússola espiritual: mostra onde você está e lembra que tudo é ciclo.",
+      "instrucoes": [
+        "Risque primeiro o círculo, em um movimento contínuo e firme, no sentido anti-horário.",
+        "Em seguida, trace a linha vertical de cima para baixo, divindo ao meio.",
+        "Depois, faça a linha horizontal, da esquerda para a direta.",
+        "Ao final, observe se os quatro quadrantes ficaram equilibrados."
+      ],
+      "ideias_de_uso": [
+        "No começo de um ritual, para marcar o centro e chamar a ordem.",
+        "Na entrada de casa, para blindar e harmonizar o fluxo de quem chega.",
+        "Em momentos de decisão, riscando pequeno em papel, para trazer clareza.",
+        "Como base para outros pontos, pois o Dikenga é um 'chão' de sustentação.",
+        "Você também pode usá-lo como prática meditative: sentar diante dele e observar sua respiração, alinhando-se ao ritmo dos quadrantes"
+      ],
+      "como_ativar": "Toque o centro do Dikenga com a ponta da pemba e diga em voz clara:\n\n{italic}Eu abro este ponto como Dikenga, cruz da vida, círculo do tepo. Que haja ordem, equilíbrio e clareza neste espaço. Àșę.{/italic}.",
+      "reforco": "Se quiser reforçar, coloque uma vela branca no centro do símbolo.",
+      "como_desativar": "Quando terminar seu trabalho, volte ao centro do Dikenga, toque-o com a pemba e diga:\n\n{italic}Ciclo encerrado, ponto fechado, caminho em paz{/italic}.\n\nPasse a mão no sentido horário sobre o círculo, apagando-o com calma. Sopre o pó para fora e casa ou do espaço de trabalho, sempre com respeito.",
+      "comentario": "Esse é um dos pontos mais universais. Use-o sem medo, mas sempre com intenção clara. Ele responde ao que você pede: se o risco for feito com dúvida, abre dúvida; se for feito com firmeza, abre ordem."
+    },
+    {
+      "id": 35,
+      "nome": "Setas Cruzadas de Caboclo",
+      "definicao": "As Setas Cruzadas são ponto de força ligado ao povo Caboclo. Representam proteção, abertura de caminho e foco no objetivo. Quando riscadas, evocam a energia da caça, da precisão e da coragem. Também formam uma encruzilhada de flechas, que impede ataques nocivos e fortalece quem está no centro. É um símbolo que fala de direção e propósito, ideal para momentos em que você precisa escolher um rumo ou fortalecer uma decisão.",
+      "instrucoes": [
+        "Comete com o círculo, traçando-o no sentido horário, de forma contínua.",
+        "Desenhe a primeira flecha, da base inferior esquerda para a ponta superior direita.",
+        "Faça a haste reta.",
+        "Acrescente a ponta triangular na extremidade.",
+        "Complete com a rabeta (penas), três risquinhos curtos.",
+        "Em seguida, trace a segunda flecha, da base inferior direita para a ponta superior equerda, cruzando a primeira no centro.",
+        "Garanta que as duas se cruzem de forma clara, sem fundir totalmente as linhas."
+      ],
+      "ideias_de_uso": [
+        "No começo de um ritual, para marcar o centro e chamar a ordem.",
+        "Na entrada de casa, para blindar e harmonizar o fluxo de quem chega.",
+        "Em momentos de decisão, riscando pequeno em papel, para trazer clareza.",
+        "Como base para outros pontos, pois o Dikenga é um 'chão' de sustentação.",
+        "Você também pode usá-lo como prática meditative: sentar diante dele e observar sua respiração, alinhando-se ao ritmo dos quadrantes"
+      ],
+      "como_ativar": "Toque o centro do Dikenga com a ponta da pemba e diga em voz clara:\n\n{italic}Eu abro este ponto como Dikenga, cruz da vida, círculo do tepo. Que haja ordem, equilíbrio e clareza neste espaço. Àșę.{/italic}.",
+      "reforco": "Se quiser reforçar, coloque uma vela branca no centro do símbolo.",
+      "como_desativar": "Quando terminar seu trabalho, volte ao centro do Dikenga, toque-o com a pemba e diga:\n\n{italic}Ciclo encerrado, ponto fechado, caminho em paz{/italic}.\n\nPasse a mão no sentido horário sobre o círculo, apagando-o com calma. Sopre o pó para fora e casa ou do espaço de trabalho, sempre com respeito.",
+      "comentario": "Esse"
+    },
+    {
+      "id": 36,
+      "nome": "Ferradura com Espadas",
+      "definicao": "Ponto de proteção e firmeza espiritual que combina a sorte com o poder de corte de negatividades.",
+      "fonte": "Guia de Pemba"
+    },
+    {
+      "id": 37,
+      "nome": "Tridente Reto",
+      "definicao": "Símbolo de autoridade e governo espiritual, utilizado para firmeza e abertura de caminhos diretos (Exu).",
+      "fonte": "Guia de Pemba"
+    },
+    {
+      "id": 38,
+      "nome": "Tridente Cruzado",
+      "definicao": "Representa movimento intenso, transformação e quebra de demandas em encruzilhadas energéticas.",
+      "fonte": "Guia de Pemba"
+    },
+    {
+      "id": 39,
+      "nome": "Machado Duplo",
+      "definicao": "Representa o equilíbrio perfeito e a justiça divina em harmonia, cortando o erro em ambos os lados.",
+      "fonte": "Guia de Pemba"
+    },
+    {
+      "id": 40,
+      "nome": "Lua e Coração",
+      "definicao": "Símbolo de acolhimento e nutrição emocional, onde a proteção lunar envolve os sentimentos mais profundos.",
+      "fonte": "Guia de Pemba"
+    },
+    {
+      "id": 41,
+      "nome": "Espiral de Raio",
+      "definicao": "Ponto de aceleração energética para promover mudanças rápidas e urgentes no campo vibratório.",
+      "fonte": "Guia de Pemba"
+    },
+    {
+      "id": 42,
+      "nome": "Estrela de Seis Pontas",
+      "definicao": "Símbolo de sabedoria e luz que equilibra as energias espirituais (alto) com as materiais (terra).",
+      "fonte": "Guia de Pemba"
+    },
+    {
+      "id": 43,
+      "nome": "Espiral da Vida",
+      "definicao": "Talismã de expansão, crescimento e proteção contínua que concentra e irradia energia do centro.",
+      "fonte": "Guia de Pemba"
+    },
+    {
+      "id": 44,
+      "nome": "Nó de Origem",
+      "definicao": "Utilizado para invocar a presença e a força dos antepassados, conectando o praticante à sua linhagem.",
+      "fonte": "Guia de Pemba"
+    },
+    {
+      "id": 45,
+      "nome": "Símbolo da Ovelha Roxa",
+      "definicao": "Representa a singularidade, a criatividade e a coragem de seguir um caminho espiritual autêntico.",
+      "fonte": "Guia de Pemba"
+    },
+    {
+      "id": 46,
+      "nome": "Corpo Fechado (Selo)",
+      "definicao": "Disciplina energética e arma espiritual para blindagem completa contra ataques externos.",
+      "fonte": "Guia de Pemba"
+    },
+    {
+      "id": 47,
+      "nome": "Escudo Bakongo (Firmeza)",
+      "definicao": "Firmeza de defesa que impede a instalação de pesos espirituais ou invasões no ambiente sagrado.",
+      "fonte": "Guia de Pemba"
+    },
+    {
+      "id": 48,
+      "nome": "A Sentinela (Invocação)",
+      "definicao": "Ativa a lei e a defesa rigorosa para proteger o espaço de trabalho e a integridade do magista.",
+      "fonte": "Guia de Pemba"
+    },
+    {
+      "id": 49,
+      "nome": "Ponto de Exu (Governo)",
+      "definicao": "Selo de movimento e proteção ativa, focado no governo das passagens e encruzilhadas.",
+      "fonte": "Guia de Pemba"
+    },
+    {
+      "id": 50,
+      "nome": "Ponto de Pombagira (Magnetismo)",
+      "definicao": "Foco no magnetismo pessoal, nos desejos e no equilíbrio das forças emocionais e sensoriais.",
+      "fonte": "Guia de Pemba"
+    }
+  ]
+}

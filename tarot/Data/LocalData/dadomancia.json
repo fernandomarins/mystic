@@ -1,0 +1,112 @@
+{
+    "dadomancia": [
+        {
+            "number": 1,
+            "positiveMeaning": "Determinação / Algo acontece pelo esforço",
+            "negativeMeaning": "Egoísmo.",
+            "answer": "NÃO"
+        },
+        {
+            "number": 2,
+            "positiveMeaning": "União / Namoro / Entendimento",
+            "negativeMeaning": "Isolamento",
+            "answer": "SIM"
+        },
+        {
+            "number": 3,
+            "positiveMeaning": "Socialização / Conversas",
+            "negativeMeaning": "Desorganização",
+            "answer": "NÃO"
+        },
+        {
+            "number": 4,
+            "positiveMeaning": "Algo será realizado",
+            "negativeMeaning": "Imposição / Domínio",
+            "answer": "SIM"
+        },
+        {
+            "number": 5,
+            "positiveMeaning": "Diversão / Aventuras",
+            "negativeMeaning": "Riscos à vista",
+            "answer": "NÃO"
+        },
+        {
+            "number": 6,
+            "positiveMeaning": "Proteção da família / Responsabilidades",
+            "negativeMeaning": "Submissão",
+            "answer": "SIM"
+        },
+        {
+            "number": 7,
+            "positiveMeaning": "Estudos / Mediunidade",
+            "negativeMeaning": "Desequilíbrio",
+            "answer": "NÃO"
+        },
+        {
+            "number": 8,
+            "positiveMeaning": "Prosperidade / Momento positivo / Dinheiro",
+            "negativeMeaning": "Ganância",
+            "answer": "SIM"
+        },
+        {
+            "number": 9,
+            "positiveMeaning": "Momento de espiritualidade / Compaixão",
+            "negativeMeaning": "Melancolia / Depressão",
+            "answer": "NÃO"
+        },
+        {
+            "number": 10,
+            "positiveMeaning": "Momento de força e sucesso",
+            "negativeMeaning": "Excesso de reflexão",
+            "answer": "SIM"
+        },
+        {
+            "number": 11,
+            "positiveMeaning": "Mensagens do Alto / Siga a intuição",
+            "negativeMeaning": "Ilusão",
+            "answer": "NÃO"
+        },
+        {
+            "number": 12,
+            "positiveMeaning": "Momento de estudo / aprender",
+            "negativeMeaning": "Fanatismo",
+            "answer": "SIM"
+        },
+        {
+            "number": 13,
+            "positiveMeaning": "Mudança",
+            "negativeMeaning": "Perdas",
+            "answer": "NÃO"
+        },
+        {
+            "number": 14,
+            "positiveMeaning": "Ter fé / Perseverança",
+            "negativeMeaning": "Falta de fé",
+            "answer": "SIM"
+        },
+        {
+            "number": 15,
+            "positiveMeaning": "Proteção do Alto (haverá)",
+            "negativeMeaning": "Dependência dos outros",
+            "answer": "NÃO"
+        },
+        {
+            "number": 16,
+            "positiveMeaning": "Haverá sabedoria / Use o discernimento",
+            "negativeMeaning": "Visão distorcida (sabe-tudo)",
+            "answer": "SIM"
+        },
+        {
+            "number": 17,
+            "positiveMeaning": "Usar criatividade / Inspiração",
+            "negativeMeaning": "Mentiras",
+            "answer": "NÃO"
+        },
+        {
+            "number": 18,
+            "positiveMeaning": "Haverá justiça / Confie",
+            "negativeMeaning": "Injustiças / Críticas destrutivas",
+            "answer": "SIM"
+        }
+    ]
+}

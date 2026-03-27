@@ -1,0 +1,70 @@
+{
+  "forcas_elementares": [
+    {
+      "nome": "AKASHA",
+      "nome_alternativo": "Éter",
+      "nome_hindu": "Akasha",
+      "qualidade_basica": "Espaço",
+      "principio_oculto": "Substância primordial indiferenciada (Matéria Cósmica) e a causa original (SOM) da Criação. Não faz parte do Cosmos Físico, mas é o material base de todos os outros elementos.",
+      "sentido_correspondente": "Audição / Som",
+      "simbolo": {
+        "forma": "Forma de Ovo ou Duas Curvas Convexas (Vesica Piscis).",
+        "cor": "Índigo/Preto"
+      },
+      "uso_em_magia": "Não é muito utilizada em Talismãs e é considerada perigosa para iniciantes. É usada apenas para obras de desintegração ou eliminação."
+    },
+    {
+      "nome": "AR",
+      "nome_alternativo": "Vayu",
+      "nome_hindu": "Vayu",
+      "qualidade_basica": "Movimento / Movibilidade",
+      "principio_oculto": "É a primeira manifestação de AÇÃO no Plano Físico, a capacidade de se mover livremente. É a qualidade que permite que a vida exista.",
+      "sentido_correspondente": "Tato / Sentir",
+      "simbolo": {
+        "forma": "Círculo",
+        "cor": "Azul. Complementar: Laranja"
+      },
+      "naipes": "Espadas"
+    },
+    {
+      "nome": "FOGO",
+      "nome_alternativo": "Tejas",
+      "nome_hindu": "Tejas",
+      "qualidade_basica": "Expansão / Desejo",
+      "principio_oculto": "A força que impulsiona a ação; o desejo que causa expansão, assim como o fogo físico causa expansão pelo calor. É o motor da vida.",
+      "sentido_correspondente": "Visão / Ver",
+      "simbolo": {
+        "forma": "Triângulo com a ponta para cima",
+        "cor": "Vermelho. Complementar: Verde"
+      },
+      "naipes": "Paus"
+    },
+    {
+      "nome": "ÁGUA",
+      "nome_alternativo": "Apas",
+      "nome_hindu": "Apas",
+      "qualidade_basica": "Contração / Condensação",
+      "principio_oculto": "É o início da solidificação e da forma. O desejo (Fogo) se contrai para ser mantido em um molde-ideia (Planos), antes da fase final de Terra.",
+      "sentido_correspondente": "Paladar / Degustação",
+      "simbolo": {
+        "forma": "Meia-lua ou Crescente",
+        "cor": "Branco/Cinza. Complementar: Preto"
+      },
+      "naipes": "Copas"
+    },
+    {
+      "nome": "TERRA",
+      "nome_alternativo": "Prithivi",
+      "nome_hindu": "Prithivi",
+      "qualidade_basica": "Solidez / Inércia / Resistência",
+      "principio_oculto": "O Elemento final e mais denso. Representa o resultado final desejado; o lugar onde todas as Forças Elementais terminam e se solidificam.",
+      "sentido_correspondente": "Olfato / Cheiro",
+      "simbolo": {
+        "forma": "Quadrado ou Oblongo Amarelo",
+        "cor": "Amarelo. Complementar: Violeta."
+      },
+      "naipes": "Ouros"
+    }
+  ],
+  "observacao_adicional": "As cinco Forças Elementares são, em conjunto, conhecidas coletivamente como PRANA. Elas constituem a totalidade do Plano Físico. Embora cada Elemento seja nomeado separadamente, todos consistem de metade de si mesmos (50%) mais um oitavo (12.5%) de cada um dos outros quatro Elementos.\n\nO movimento de geração é do Akasha do Akasha até a Terra da Terra."
+}
